@@ -10,12 +10,12 @@
 <style>
 body {
   margin: 0;
-  background: black;
+  background: #000;
   font-family: 'Playfair Display', serif;
   overflow: hidden;
 }
 
-/* ENVELOPE */
+/* ENVELOPE SCREEN */
 #envelopeScreen {
   position: fixed;
   width: 100%;
@@ -24,45 +24,59 @@ body {
   justify-content: center;
   align-items: center;
   background: black;
-  z-index: 10;
+  z-index: 999;
 }
 
 .envelope {
-  width: 260px;
-  height: 160px;
-  background: #8B0000;
   position: relative;
-  border: 2px solid gold;
+  width: 280px;
+  height: 180px;
   cursor: pointer;
 }
 
-/* flap */
-.flap {
+/* Envelope body */
+.envelope-body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #a00000;
-  clip-path: polygon(0 0, 100% 0, 50% 60%);
+  background: #c40000;
+  border: 3px solid gold;
+  border-radius: 6px;
+  box-shadow: 0 0 25px rgba(255,215,0,0.5);
+}
+
+/* Flap */
+.flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 140px solid transparent;
+  border-right: 140px solid transparent;
+  border-bottom: 90px solid #a00000;
   transform-origin: top;
   transition: transform 1s ease;
+  z-index: 2;
 }
 
 .envelope.open .flap {
   transform: rotateX(180deg);
 }
 
-/* text */
+/* Envelope text */
 .envelope-text {
   position: absolute;
   width: 100%;
+  bottom: 20px;
   text-align: center;
-  top: 60%;
   color: gold;
   font-size: 1rem;
   letter-spacing: 2px;
+  z-index: 3;
 }
 
-/* Sections */
+/* SCENES */
 .section {
   position: absolute;
   width: 100%;
@@ -73,8 +87,9 @@ body {
   flex-direction: column;
   opacity: 0;
   transform: scale(1.2);
-  transition: 1.5s;
-  color: gold;
+  transition: opacity 1.5s ease, transform 1.5s ease;
+  color: #D4AF37;
+  text-align: center;
 }
 
 .section.active {
@@ -82,7 +97,7 @@ body {
   transform: scale(1);
 }
 
-/* Text animation */
+/* TEXT ANIMATION */
 .text {
   opacity: 0;
   transform: translateY(40px);
@@ -99,10 +114,17 @@ body {
   }
 }
 
-h1 { font-size: 3rem; }
-h2 { font-size: 1.6rem; }
+h1 {
+  font-size: 3rem;
+  letter-spacing: 3px;
+}
 
-/* Glow */
+h2 {
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+}
+
+/* GLOW BACKGROUND */
 .glow {
   position: fixed;
   width: 200%;
@@ -117,7 +139,7 @@ h2 { font-size: 1.6rem; }
   100% { transform: translate(50%, 50%); }
 }
 
-/* Particles */
+/* PARTICLES */
 canvas {
   position: fixed;
   top: 0;
@@ -129,10 +151,11 @@ canvas {
 
 <body>
 
-<!-- ENVELOPE SCREEN -->
+<!-- ENVELOPE -->
 <div id="envelopeScreen">
   <div class="envelope" onclick="openEnvelope()">
     <div class="flap"></div>
+    <div class="envelope-body"></div>
     <div class="envelope-text">Tap to Open</div>
   </div>
 </div>
@@ -140,7 +163,7 @@ canvas {
 <div class="glow"></div>
 <canvas id="particles"></canvas>
 
-<!-- Scenes -->
+<!-- SCENES -->
 <div class="section" id="s1">
   <h2 class="text">Two souls...</h2>
   <h2 class="text delay1">One beautiful journey...</h2>
@@ -190,7 +213,7 @@ function playScenes(){
   }
 }
 
-/* Particles */
+/* PARTICLES */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
