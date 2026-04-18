@@ -16,6 +16,27 @@ body {
   overflow: hidden;
 }
 
+/* Tap screen */
+#startScreen {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  z-index: 10;
+  cursor: pointer;
+}
+
+#startScreen h2 {
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.4; }
+}
+
 /* Sections */
 .section {
   position: absolute;
@@ -26,27 +47,32 @@ body {
   align-items: center;
   flex-direction: column;
   opacity: 0;
-  transition: 1.5s;
+  transform: scale(1.1);
+  transition: 1.5s ease;
 }
 
 .section.active {
   opacity: 1;
+  transform: scale(1);
 }
 
-/* Text */
+/* Text animation */
+.fade {
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+}
+
+.delay1 { animation-delay: 1s; }
+.delay2 { animation-delay: 2s; }
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
 h1 { font-size: 3rem; }
 h2 { font-size: 1.8rem; }
 
-/* Button */
-button {
-  padding: 12px 25px;
-  background: gold;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-}
-
-/* Gold particles */
+/* Particles */
 canvas {
   position: fixed;
   top: 0;
@@ -58,68 +84,59 @@ canvas {
 
 <body>
 
+<!-- Tap to Start -->
+<div id="startScreen" onclick="startExperience()">
+  <h2>Tap to Open Invitation</h2>
+</div>
+
 <canvas id="particles"></canvas>
 
-<audio id="music" src="music.mp3"></audio>
-
-<div class="section active" id="s1">
-  <h2>Two souls...</h2>
-  <h2>One beautiful journey...</h2>
+<!-- Scenes -->
+<div class="section" id="s1">
+  <h2 class="fade">Two souls...</h2>
+  <h2 class="fade delay1">One beautiful journey...</h2>
 </div>
 
 <div class="section" id="s2">
-  <h1>Karan ❤️ Pankti</h1>
+  <h1 class="fade delay1">Karan ❤️ Pankti</h1>
 </div>
 
 <div class="section" id="s3">
-  <h2>Save The Date</h2>
-  <h1>26 November 2026</h1>
-  <h2>Mumbai</h2>
+  <h2 class="fade">Save The Date</h2>
+  <h1 class="fade delay1">26 November 2026</h1>
+  <h2 class="fade delay2">Mumbai</h2>
 </div>
 
 <div class="section" id="s4">
-  <h2>Haldi 🌼</h2>
-  <h2>Mehendi 🌿</h2>
+  <h2 class="fade">Haldi 🌼</h2>
+  <h2 class="fade delay1">Mehendi 🌿</h2>
 </div>
 
 <div class="section" id="s5">
-  <h2>Join us to celebrate love</h2>
-  <button onclick="showRSVP()">RSVP</button>
-</div>
-
-<!-- RSVP FORM -->
-<div class="section" id="rsvp">
-  <h2>RSVP</h2>
-  <form action="https://formspree.io/f/yourid" method="POST">
-    <input type="text" name="name" placeholder="Your Name" required><br><br>
-    <input type="number" name="guests" placeholder="Number of Guests" required><br><br>
-    <button type="submit">Submit</button>
-  </form>
+  <h2 class="fade">We can’t wait to celebrate with you</h2>
 </div>
 
 <script>
-// AUTO PLAY SECTIONS
-let current = 0;
-const sections = document.querySelectorAll('.section');
+let scenes = ["s1","s2","s3","s4","s5"];
+let index = 0;
 
-setInterval(() => {
-  sections[current].classList.remove('active');
-  current = (current + 1) % 5;
-  sections[current].classList.add('active');
-}, 4000);
-
-// MUSIC START ON TAP
-document.body.addEventListener('click', () => {
-  document.getElementById('music').play();
-});
-
-// RSVP SHOW
-function showRSVP(){
-  sections.forEach(s => s.classList.remove('active'));
-  document.getElementById('rsvp').classList.add('active');
+function startExperience(){
+  document.getElementById("startScreen").style.display = "none";
+  playScenes();
 }
 
-// GOLD PARTICLES
+function playScenes(){
+  if(index > 0){
+    document.getElementById(scenes[index-1]).classList.remove("active");
+  }
+  if(index < scenes.length){
+    document.getElementById(scenes[index]).classList.add("active");
+    index++;
+    setTimeout(playScenes, 4000);
+  }
+}
+
+/* Particles */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
@@ -127,13 +144,12 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particles = [];
-
-for(let i=0;i<80;i++){
+for(let i=0;i<60;i++){
   particles.push({
     x: Math.random()*canvas.width,
     y: Math.random()*canvas.height,
     r: Math.random()*2,
-    d: Math.random()*2
+    d: Math.random()*1
   });
 }
 
