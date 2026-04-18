@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karan ❤️ Pankti</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: gold;
+  font-family: 'Playfair Display', serif;
+  overflow: hidden;
+}
+
+/* Sections */
+.section {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0;
+  transition: 1.5s;
+}
+
+.section.active {
+  opacity: 1;
+}
+
+/* Text */
+h1 { font-size: 3rem; }
+h2 { font-size: 1.8rem; }
+
+/* Button */
+button {
+  padding: 12px 25px;
+  background: gold;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+/* Gold particles */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<audio id="music" src="music.mp3"></audio>
+
+<div class="section active" id="s1">
+  <h2>Two souls...</h2>
+  <h2>One beautiful journey...</h2>
+</div>
+
+<div class="section" id="s2">
+  <h1>Karan ❤️ Pankti</h1>
+</div>
+
+<div class="section" id="s3">
+  <h2>Save The Date</h2>
+  <h1>26 November 2026</h1>
+  <h2>Mumbai</h2>
+</div>
+
+<div class="section" id="s4">
+  <h2>Haldi 🌼</h2>
+  <h2>Mehendi 🌿</h2>
+</div>
+
+<div class="section" id="s5">
+  <h2>Join us to celebrate love</h2>
+  <button onclick="showRSVP()">RSVP</button>
+</div>
+
+<!-- RSVP FORM -->
+<div class="section" id="rsvp">
+  <h2>RSVP</h2>
+  <form action="https://formspree.io/f/yourid" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required><br><br>
+    <input type="number" name="guests" placeholder="Number of Guests" required><br><br>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<script>
+// AUTO PLAY SECTIONS
+let current = 0;
+const sections = document.querySelectorAll('.section');
+
+setInterval(() => {
+  sections[current].classList.remove('active');
+  current = (current + 1) % 5;
+  sections[current].classList.add('active');
+}, 4000);
+
+// MUSIC START ON TAP
+document.body.addEventListener('click', () => {
+  document.getElementById('music').play();
+});
+
+// RSVP SHOW
+function showRSVP(){
+  sections.forEach(s => s.classList.remove('active'));
+  document.getElementById('rsvp').classList.add('active');
+}
+
+// GOLD PARTICLES
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for(let i=0;i<80;i++){
+  particles.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*2,
+    d: Math.random()*2
+  });
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "gold";
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  });
+  update();
+}
+
+function update(){
+  particles.forEach(p=>{
+    p.y += p.d;
+    if(p.y > canvas.height){
+      p.y = 0;
+    }
+  });
+}
+
+setInterval(draw,30);
+</script>
+
+</body>
+</html>
