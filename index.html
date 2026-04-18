@@ -10,14 +10,13 @@
 <style>
 body {
   margin: 0;
-  background: #000;
-  color: #D4AF37;
+  background: black;
   font-family: 'Playfair Display', serif;
   overflow: hidden;
 }
 
-/* Tap screen */
-#startScreen {
+/* ENVELOPE */
+#envelopeScreen {
   position: fixed;
   width: 100%;
   height: 100vh;
@@ -26,16 +25,41 @@ body {
   align-items: center;
   background: black;
   z-index: 10;
+}
+
+.envelope {
+  width: 260px;
+  height: 160px;
+  background: #8B0000;
+  position: relative;
+  border: 2px solid gold;
   cursor: pointer;
 }
 
-#startScreen h2 {
-  font-size: 1.5rem;
-  animation: pulse 1.5s infinite;
+/* flap */
+.flap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #a00000;
+  clip-path: polygon(0 0, 100% 0, 50% 60%);
+  transform-origin: top;
+  transition: transform 1s ease;
 }
 
-@keyframes pulse {
-  50% { opacity: 0.5; transform: scale(1.05); }
+.envelope.open .flap {
+  transform: rotateX(180deg);
+}
+
+/* text */
+.envelope-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 60%;
+  color: gold;
+  font-size: 1rem;
+  letter-spacing: 2px;
 }
 
 /* Sections */
@@ -49,7 +73,8 @@ body {
   flex-direction: column;
   opacity: 0;
   transform: scale(1.2);
-  transition: opacity 1.5s ease, transform 1.5s ease;
+  transition: 1.5s;
+  color: gold;
 }
 
 .section.active {
@@ -74,22 +99,15 @@ body {
   }
 }
 
-h1 {
-  font-size: 3rem;
-  letter-spacing: 3px;
-}
-
-h2 {
-  font-size: 1.6rem;
-  letter-spacing: 2px;
-}
+h1 { font-size: 3rem; }
+h2 { font-size: 1.6rem; }
 
 /* Glow */
 .glow {
   position: fixed;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(212,175,55,0.1), transparent);
   animation: moveGlow 8s linear infinite;
   z-index: -2;
 }
@@ -111,9 +129,12 @@ canvas {
 
 <body>
 
-<!-- Tap to Start -->
-<div id="startScreen" onclick="startExperience()">
-  <h2>Tap to Open Invitation</h2>
+<!-- ENVELOPE SCREEN -->
+<div id="envelopeScreen">
+  <div class="envelope" onclick="openEnvelope()">
+    <div class="flap"></div>
+    <div class="envelope-text">Tap to Open</div>
+  </div>
 </div>
 
 <div class="glow"></div>
@@ -149,9 +170,13 @@ canvas {
 let scenes = ["s1","s2","s3","s4","s5"];
 let index = 0;
 
-function startExperience(){
-  document.getElementById("startScreen").style.display = "none";
-  playScenes();
+function openEnvelope(){
+  document.querySelector(".envelope").classList.add("open");
+
+  setTimeout(() => {
+    document.getElementById("envelopeScreen").style.display = "none";
+    playScenes();
+  }, 1000);
 }
 
 function playScenes(){
@@ -161,7 +186,7 @@ function playScenes(){
   if(index < scenes.length){
     document.getElementById(scenes[index]).classList.add("active");
     index++;
-    setTimeout(playScenes, 4500); // slower = royal feel
+    setTimeout(playScenes, 4500);
   }
 }
 
