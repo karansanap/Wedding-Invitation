@@ -15,9 +15,7 @@ body {
   overflow: hidden;
 }
 
-/* =========================
-   SUNRISE EFFECT
-========================= */
+/* 🌅 SUNRISE EFFECT */
 #sunrise {
   position: fixed;
   width: 100%;
@@ -32,14 +30,12 @@ body {
 
 #sunrise.active {
   background: radial-gradient(circle at center,
-    rgba(255, 230, 170, 0.8) 0%,
+    rgba(255, 230, 170, 0.85) 0%,
     rgba(255, 200, 120, 0.4) 50%,
     rgba(247, 240, 230, 1) 100%);
 }
 
-/* =========================
-   ENVELOPE SCREEN
-========================= */
+/* 📦 ENVELOPE SCREEN */
 #envelopeScreen {
   position: fixed;
   width: 100%;
@@ -50,7 +46,7 @@ body {
   z-index: 999;
 }
 
-/* CAMERA ZOOM WRAPPER */
+/* 🔍 ZOOM WRAPPER */
 .zoomWrapper {
   transform: scale(1);
   transition: transform 1.2s ease;
@@ -60,35 +56,29 @@ body {
   transform: scale(1.25);
 }
 
-/* =========================
-   HERO ENVELOPE (VERY LARGE)
-========================= */
+/* 🧧 HERO ENVELOPE */
 .envelope {
   position: relative;
 
-  /* 🔥 BIG HERO SIZE */
-  width: 160vw;   /* goes beyond screen */
+  width: 160vw;
   max-width: 900px;
 
   height: calc(160vw * 0.6);
   max-height: 540px;
 
   cursor: pointer;
-  animation: breathe 4s ease-in-out infinite;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  animation: breathe 4s ease-in-out infinite;
 }
 
-/* breathing effect */
+/* breathing */
 @keyframes breathe {
   0% { transform: scale(1); }
   50% { transform: scale(1.02); }
   100% { transform: scale(1); }
 }
 
-/* BODY */
+/* 📮 BODY */
 .envelope-body {
   position: absolute;
   width: 100%;
@@ -101,7 +91,7 @@ body {
     inset 0 0 25px rgba(255,255,255,0.08);
 }
 
-/* FLAP */
+/* 📩 FLAP */
 .flap {
   position: absolute;
   top: 0;
@@ -118,9 +108,7 @@ body {
   transform: rotateX(180deg);
 }
 
-/* =========================
-   WAX SEAL
-========================= */
+/* 🔴 WAX SEAL (NO TEXT) */
 .seal {
   position: absolute;
   width: 80px;
@@ -135,28 +123,13 @@ body {
   z-index: 3;
 }
 
-.seal::after {
-  content: "K ♥ P";
-  position: absolute;
-  color: gold;
-  font-size: 20px;
-  font-weight: bold;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* =========================
-   CENTER TEXT (ALWAYS CENTERED)
-========================= */
+/* ✨ CENTER TEXT */
 .envelope-text {
   position: absolute;
   width: 100%;
-  text-align: center;
-
-  /* 🔥 PERFECT CENTER */
   top: 50%;
   transform: translateY(-50%);
+  text-align: center;
 
   color: #D4AF37;
   font-size: 1.5rem;
@@ -165,9 +138,7 @@ body {
   pointer-events: none;
 }
 
-/* =========================
-   SCENES
-========================= */
+/* 🎬 SCENES */
 .section {
   position: absolute;
   width: 100%;
@@ -176,9 +147,11 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
   opacity: 0;
   transform: scale(1.15);
   transition: 1.5s ease;
+
   color: #8B5E3C;
   text-align: center;
 }
@@ -201,9 +174,7 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* =========================
-   PARTICLES
-========================= */
+/* 🌟 PARTICLES */
 canvas {
   position: fixed;
   top: 0;
@@ -217,14 +188,13 @@ canvas {
 
 <div id="sunrise"></div>
 
-<!-- ENVELOPE -->
+<!-- 🧧 ENVELOPE -->
 <div id="envelopeScreen">
   <div class="zoomWrapper">
     <div class="envelope" onclick="openEnvelope()">
 
       <div class="flap"></div>
       <div class="envelope-body"></div>
-
       <div class="seal"></div>
 
       <div class="envelope-text">
@@ -237,7 +207,7 @@ canvas {
 
 <canvas id="particles"></canvas>
 
-<!-- SCENES -->
+<!-- 🎬 SCENES -->
 <div class="section" id="s1">
   <h2 class="text">Two souls...</h2>
   <h2 class="text delay1">One beautiful journey...</h2>
@@ -268,6 +238,7 @@ let scenes = ["s1","s2","s3","s4","s5"];
 let index = 0;
 
 function openEnvelope(){
+
   document.querySelector(".zoomWrapper").classList.add("zoom");
   document.querySelector(".envelope").classList.add("open");
   document.getElementById("sunrise").classList.add("active");
