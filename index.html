@@ -10,292 +10,201 @@
 <style>
 body {
   margin: 0;
-  background: #f7f0e6;
   font-family: 'Playfair Display', serif;
-  overflow: hidden;
+  background: #f7f0e6;
+  overflow-x: hidden;
 }
 
-/* 🌅 SUNRISE EFFECT */
-#sunrise {
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  background: radial-gradient(circle at center,
-    rgba(255, 230, 170, 0) 0%,
-    rgba(255, 200, 120, 0) 50%,
-    rgba(247, 240, 230, 1) 100%);
-  z-index: 0;
-  transition: 1.5s ease;
-}
-
-#sunrise.active {
-  background: radial-gradient(circle at center,
-    rgba(255, 230, 170, 0.85) 0%,
-    rgba(255, 200, 120, 0.4) 50%,
-    rgba(247, 240, 230, 1) 100%);
-}
-
-/* 📦 ENVELOPE SCREEN */
+/* ================= ENVELOPE ================= */
 #envelopeScreen {
   position: fixed;
   width: 100%;
   height: 100vh;
+  background: #f7f0e6;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
 }
 
-/* 🔍 ZOOM WRAPPER */
-.zoomWrapper {
-  transform: scale(1);
-  transition: transform 1.2s ease;
-}
-
-.zoomWrapper.zoom {
-  transform: scale(1.25);
-}
-
-/* 🧧 HERO ENVELOPE */
+/* envelope container */
 .envelope {
+  width: 340px;
+  height: 220px;
   position: relative;
-
-  width: 160vw;
-  max-width: 900px;
-
-  height: calc(160vw * 0.6);
-  max-height: 540px;
-
   cursor: pointer;
-
-  animation: breathe 4s ease-in-out infinite;
+  perspective: 1000px;
 }
 
-/* breathing */
-@keyframes breathe {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
-}
-
-/* 📮 BODY */
+/* paper texture */
 .envelope-body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: linear-gradient(145deg, #c40000, #8b0000);
-  border: 5px solid #D4AF37;
-  border-radius: 14px;
+  background:
+    linear-gradient(145deg,#c40000,#7a0000),
+    url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  border-radius: 8px;
   box-shadow:
-    0 30px 80px rgba(0,0,0,0.25),
-    inset 0 0 25px rgba(255,255,255,0.08);
+    0 20px 40px rgba(0,0,0,0.25),
+    inset 0 0 20px rgba(255,255,255,0.08);
 }
 
-/* 📩 FLAP */
+/* flap */
 .flap {
   position: absolute;
-  top: 0;
   width: 100%;
   height: 60%;
-  background: linear-gradient(to bottom, #a00000, #6e0000);
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background:
+    linear-gradient(to bottom,#a00000,#5a0000),
+    url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  clip-path: polygon(0 0,100% 0,50% 100%);
   transform-origin: top;
   transition: transform 1s ease;
-  z-index: 2;
+  z-index: 3;
 }
 
 .envelope.open .flap {
   transform: rotateX(180deg);
 }
 
-/* 🔴 WAX SEAL (NO TEXT) */
+/* wax seal */
 .seal {
   position: absolute;
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle, #b30000, #4a0000);
-  border: 2px solid gold;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle,#b30000,#4a0000);
   border-radius: 50%;
+  top: 70%;
   left: 50%;
-  top: 55%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 25px rgba(212,175,55,0.6);
-  z-index: 3;
+  transform: translate(-50%,-50%);
+  box-shadow:
+    0 8px 15px rgba(0,0,0,0.4),
+    inset 0 0 8px rgba(255,255,255,0.2);
+  z-index: 4;
 }
 
-/* ✨ CENTER TEXT */
-.envelope-text {
+/* tap text */
+.tap-text {
   position: absolute;
-  width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  text-align: center;
-
-  color: #D4AF37;
-  font-size: 1.5rem;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 0.85rem;
+  color: #f1d48a;
   letter-spacing: 2px;
   z-index: 5;
-  pointer-events: none;
 }
 
-/* 🎬 SCENES */
-.section {
+/* inner letter */
+.letter {
   position: absolute;
-  width: 100%;
-  height: 100vh;
+  width: 90%;
+  height: 160%;
+  background: #fffaf0;
+  top: 20%;
+  left: 5%;
+  border-radius: 5px;
+  transform: translateY(100%);
+  transition: transform 1s ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.envelope.open .letter {
+  transform: translateY(-10%);
+}
+
+/* ================= SITE ================= */
+#mainContent {
+  display: none;
+}
+
+/* sections */
+.section {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
-  opacity: 0;
-  transform: scale(1.15);
-  transition: 1.5s ease;
-
-  color: #8B5E3C;
   text-align: center;
+  padding: 40px;
 }
 
-.section.active {
-  opacity: 1;
-  transform: scale(1);
+/* hero */
+.hero {
+  background: url("https://images.unsplash.com/photo-1520857014576-2c4f4c972b57") center/cover;
+  color: white;
 }
 
-.text {
-  opacity: 0;
-  transform: translateY(40px);
-  animation: reveal 2s forwards;
+/* venue */
+.venue {
+  background: url("https://images.unsplash.com/photo-1505236858219-8359eb29e329") center/cover;
+  color: white;
 }
 
-.delay1 { animation-delay: 1s; }
-.delay2 { animation-delay: 2s; }
+h1 { font-size: 3rem; }
+h2 { font-size: 1.4rem; }
 
-@keyframes reveal {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 🌟 PARTICLES */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
 </style>
 </head>
 
 <body>
 
-<div id="sunrise"></div>
-
-<!-- 🧧 ENVELOPE -->
+<!-- ENVELOPE -->
 <div id="envelopeScreen">
-  <div class="zoomWrapper">
-    <div class="envelope" onclick="openEnvelope()">
+  <div class="envelope" onclick="openEnvelope()">
 
-      <div class="flap"></div>
-      <div class="envelope-body"></div>
-      <div class="seal"></div>
+    <div class="flap"></div>
+    <div class="envelope-body"></div>
 
-      <div class="envelope-text">
-        Tap to Reveal Invitation
-      </div>
+    <div class="letter"></div>
 
-    </div>
+    <div class="tap-text">Tap to Reveal</div>
+    <div class="seal"></div>
+
   </div>
 </div>
 
-<canvas id="particles"></canvas>
+<!-- WEBSITE -->
+<div id="mainContent">
 
-<!-- 🎬 SCENES -->
-<div class="section" id="s1">
-  <h2 class="text">Two souls...</h2>
-  <h2 class="text delay1">One beautiful journey...</h2>
-</div>
+  <div class="section">
+    <h2>Two souls...</h2>
+    <h2>One beautiful journey...</h2>
+  </div>
 
-<div class="section" id="s2">
-  <h1 class="text delay1">Karan ❤️ Pankti</h1>
-</div>
+  <div class="section hero">
+    <h1>Karan ❤️ Pankti</h1>
+  </div>
 
-<div class="section" id="s3">
-  <h2 class="text">Save The Date</h2>
-  <h1 class="text delay1">26 November 2026</h1>
-  <h2 class="text delay2">Mumbai</h2>
-</div>
+  <div class="section">
+    <h2>Save The Date</h2>
+    <h1>26 November 2026</h1>
+    <h2>Mumbai</h2>
+  </div>
 
-<div class="section" id="s4">
-  <h2 class="text">Haldi 🌼</h2>
-  <h2 class="text delay1">Mehendi 🌿</h2>
-</div>
+  <div class="section">
+    <h2>Haldi 🌼</h2>
+    <h2>Mehendi 🌿</h2>
+  </div>
 
-<div class="section" id="s5">
-  <h2 class="text">Together with our families</h2>
-  <h2 class="text delay1">We invite you to celebrate our love</h2>
+  <div class="section venue">
+    <h2>Venue</h2>
+    <h1>Royal Palace Garden</h1>
+    <p>Mumbai, India</p>
+  </div>
+
 </div>
 
 <script>
-let scenes = ["s1","s2","s3","s4","s5"];
-let index = 0;
-
 function openEnvelope(){
-
-  document.querySelector(".zoomWrapper").classList.add("zoom");
   document.querySelector(".envelope").classList.add("open");
-  document.getElementById("sunrise").classList.add("active");
 
   setTimeout(() => {
     document.getElementById("envelopeScreen").style.display = "none";
-    playScenes();
+    document.getElementById("mainContent").style.display = "block";
   }, 1200);
 }
-
-function playScenes(){
-  if(index > 0){
-    document.getElementById(scenes[index-1]).classList.remove("active");
-  }
-  if(index < scenes.length){
-    document.getElementById(scenes[index]).classList.add("active");
-    index++;
-    setTimeout(playScenes, 4600);
-  }
-}
-
-/* particles */
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-for(let i=0;i<60;i++){
-  particles.push({
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    r: Math.random()*1.8,
-    d: Math.random()*0.7
-  });
-}
-
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "#D4AF37";
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fill();
-  });
-  update();
-}
-
-function update(){
-  particles.forEach(p=>{
-    p.y += p.d;
-    if(p.y > canvas.height) p.y = 0;
-  });
-}
-
-setInterval(draw,30);
 </script>
 
 </body>
