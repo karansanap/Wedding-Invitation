@@ -3,17 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Karan ❤️ Pankti</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Inter', sans-serif;
   background: #f7f0e6;
-  overflow-x: hidden;
   color: #5a3e2b;
+  overflow-x: hidden;
 }
 
 /* ================= ENVELOPE ================= */
@@ -36,7 +38,6 @@ body {
   animation: breathe 4s ease-in-out infinite;
 }
 
-/* realistic body */
 .envelope-body {
   position: absolute;
   width: 100%;
@@ -48,7 +49,6 @@ body {
     inset 0 0 20px rgba(255,255,255,0.06);
 }
 
-/* flap */
 .flap {
   position: absolute;
   width: 100%;
@@ -64,7 +64,6 @@ body {
   transform: rotateX(180deg);
 }
 
-/* wax seal */
 .seal {
   position: absolute;
   width: 65px;
@@ -77,22 +76,19 @@ body {
   box-shadow:
     0 10px 18px rgba(0,0,0,0.4),
     inset 0 0 8px rgba(255,255,255,0.2);
-  z-index: 4;
 }
 
-/* tap text */
 .tap-text {
   position: absolute;
   top: 45%;
   left: 50%;
   transform: translate(-50%,-50%);
-  font-size: 0.8rem;
-  color: #f1d48a;
+  font-size: 0.75rem;
   letter-spacing: 2px;
-  z-index: 5;
+  color: #f1d48a;
 }
 
-/* inner letter */
+/* letter */
 .letter {
   position: absolute;
   width: 90%;
@@ -117,12 +113,12 @@ body {
   100% { transform: scale(1); }
 }
 
-/* ================= WEBSITE ================= */
-
+/* ================= MAIN ================= */
 #mainContent {
   display: none;
 }
 
+/* sections */
 .section {
   min-height: 100vh;
   display: flex;
@@ -130,7 +126,16 @@ body {
   align-items: center;
   flex-direction: column;
   text-align: center;
-  padding: 40px;
+  padding: 60px 20px;
+
+  opacity: 0;
+  transform: translateY(60px) scale(0.98);
+  transition: all 1.2s ease;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 /* alternating colors */
@@ -142,8 +147,23 @@ body {
   background: #fff8ef;
 }
 
-h1 { font-size: 3rem; }
-h2 { font-size: 1.4rem; }
+/* typography */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin: 8px 0;
+}
+
+p {
+  max-width: 400px;
+  line-height: 1.6;
+}
 
 </style>
 </head>
@@ -156,7 +176,6 @@ h2 { font-size: 1.4rem; }
 
     <div class="flap"></div>
     <div class="envelope-body"></div>
-
     <div class="letter"></div>
 
     <div class="tap-text">Tap to Reveal</div>
@@ -203,8 +222,23 @@ function openEnvelope(){
   setTimeout(() => {
     document.getElementById("envelopeScreen").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
+    revealOnScroll(); // initial trigger
   }, 1200);
 }
+
+/* scroll animation */
+function revealOnScroll(){
+  const sections = document.querySelectorAll(".section");
+
+  sections.forEach(sec => {
+    const top = sec.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      sec.classList.add("visible");
+    }
+  });
+}
+
+window.addEventListener("scroll", revealOnScroll);
 </script>
 
 </body>
