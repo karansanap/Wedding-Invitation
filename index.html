@@ -6,7 +6,7 @@
 
 <title>Karan ❤️ Pankti</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -17,15 +17,24 @@ body {
   overflow-x: hidden;
 }
 
-/* cinematic glow layer */
-body::before {
-  content: "";
+/* ================= LIGHT EFFECT ================= */
+.light {
   position: fixed;
   width: 100%;
   height: 100%;
-  background:
-    radial-gradient(circle at center, rgba(255,220,150,0.15), transparent 60%);
-  z-index: -1;
+  background: radial-gradient(circle, rgba(255,220,150,0.8), transparent 70%);
+  opacity: 0;
+  z-index: 500;
+}
+
+.light.active {
+  animation: lightBurst 1.2s ease;
+}
+
+@keyframes lightBurst {
+  0% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 0.9; }
+  100% { opacity: 0; transform: scale(1.6); }
 }
 
 /* ================= ENVELOPE ================= */
@@ -36,9 +45,7 @@ body::before {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f7f0e6;
   z-index: 999;
-  transition: opacity 1.2s ease;
 }
 
 .envelope {
@@ -55,9 +62,7 @@ body::before {
   height: 100%;
   background: linear-gradient(145deg,#b30000,#6a0000);
   border-radius: 10px;
-  box-shadow:
-    0 30px 80px rgba(0,0,0,0.4),
-    inset 0 0 25px rgba(255,255,255,0.05);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
 }
 
 .flap {
@@ -84,12 +89,9 @@ body::before {
   top: 70%;
   left: 50%;
   transform: translate(-50%,-50%);
-  box-shadow:
-    0 12px 25px rgba(0,0,0,0.5),
-    inset 0 0 10px rgba(255,255,255,0.2);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.5);
 }
 
-/* shimmer */
 .tap-text {
   position: absolute;
   top: 52%;
@@ -99,45 +101,99 @@ body::before {
   letter-spacing: 3px;
   color: #f1d48a;
   z-index: 6;
-  animation: shimmer 3s infinite;
 }
 
-@keyframes shimmer {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
-}
-
-/* letter */
-.letter {
-  position: absolute;
-  width: 90%;
-  height: 160%;
-  background: #fffaf0;
-  top: 20%;
-  left: 5%;
-  border-radius: 6px;
-  transform: translateY(100%);
-  transition: transform 1.2s ease;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
-}
-
-.envelope.open .letter {
-  transform: translateY(-10%);
-}
-
-@keyframes breathe {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.03); }
-  100% { transform: scale(1); }
-}
-
-/* ================= MAIN ================= */
+/* ================= CARD ================= */
 #mainContent {
   display: none;
 }
 
-/* cinematic sections */
+.card-section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.invite-card {
+  width: 90%;
+  max-width: 420px;
+  background: #fffaf0;
+  padding: 40px 30px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid rgba(212,175,55,0.4);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+
+  /* animation start */
+  opacity: 0;
+  transform: translateY(120px) scale(0.95);
+}
+
+/* animate in */
+.invite-card.show {
+  animation: cardReveal 1.4s ease forwards;
+}
+
+@keyframes cardReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(120px) scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* subtle floating */
+.invite-card.show {
+  animation: cardReveal 1.4s ease forwards, float 4s ease-in-out infinite 1.4s;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+/* gold inner border */
+.invite-card::before {
+  content: "";
+  position: absolute;
+  inset: 15px;
+  border: 1px solid rgba(212,175,55,0.3);
+}
+
+/* text styling */
+.quote {
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.8;
+  margin-bottom: 20px;
+}
+
+.script {
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem;
+  margin: 20px 0;
+}
+
+.small {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  opacity: 0.7;
+}
+
+.amp {
+  font-size: 1.8rem;
+  margin: 15px 0;
+}
+
+/* ================= OTHER SECTIONS ================= */
 .section {
   min-height: 100vh;
   display: flex;
@@ -145,61 +201,25 @@ body::before {
   align-items: center;
   flex-direction: column;
   text-align: center;
-  padding: 80px 20px;
+  padding: 60px 20px;
 
   opacity: 0;
-  transform: translateY(80px) scale(0.97);
-  filter: blur(8px);
-
-  transition: all 1.6s ease;
+  transform: translateY(60px);
+  transition: 1.2s ease;
 }
 
 .section.visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
+  transform: translateY(0);
 }
 
-/* gold divider */
-.divider {
-  width: 100px;
-  height: 2px;
-  background: linear-gradient(to right, transparent, #D4AF37, transparent);
-  margin: 25px 0;
-}
-
-/* typography */
 h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 3.4rem;
-  letter-spacing: 1px;
+  font-size: 3rem;
 }
 
 h2 {
   font-weight: 300;
-  letter-spacing: 1px;
-  margin: 8px 0;
-}
-
-/* ================= LIGHT SWEEP ================= */
-.light {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255,220,150,0.8), transparent 70%);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 500;
-}
-
-.light.active {
-  animation: lightSweep 1.2s ease;
-}
-
-@keyframes lightSweep {
-  0% { opacity: 0; transform: scale(0.5); }
-  50% { opacity: 0.8; }
-  100% { opacity: 0; transform: scale(1.5); }
 }
 
 </style>
@@ -212,49 +232,41 @@ h2 {
 <!-- ENVELOPE -->
 <div id="envelopeScreen">
   <div class="envelope" onclick="openEnvelope()">
-
     <div class="flap"></div>
     <div class="envelope-body"></div>
-    <div class="letter"></div>
-
     <div class="tap-text">Tap to Reveal</div>
     <div class="seal"></div>
-
   </div>
 </div>
 
-<!-- WEBSITE -->
+<!-- MAIN -->
 <div id="mainContent">
 
-  <div class="section">
-    <h2>Two souls...</h2>
-    <div class="divider"></div>
-    <h2>One beautiful journey...</h2>
+  <!-- CARD -->
+  <div class="card-section">
+    <div class="invite-card" id="card">
+
+      <div class="quote">
+        "They alone are called husband and wife,<br>
+        who have one soul in two bodies."<br>
+        — Guru Amar Das Ji
+      </div>
+
+      <div class="script">Together With Their Families</div>
+
+      <div class="small">REQUEST THE HONOUR OF YOUR PRESENCE</div>
+
+      <div class="amp">&</div>
+
+      <div class="script">On This Auspicious Occasion</div>
+
+      <div class="small">TO CELEBRATE LOVE & UNION</div>
+
+    </div>
   </div>
 
   <div class="section">
     <h1>Karan ❤️ Pankti</h1>
-    <div class="divider"></div>
-  </div>
-
-  <div class="section">
-    <h2>Save The Date</h2>
-    <div class="divider"></div>
-    <h1>26 November 2026</h1>
-    <h2>Mumbai</h2>
-  </div>
-
-  <div class="section">
-    <h2>Haldi 🌼</h2>
-    <div class="divider"></div>
-    <h2>Mehendi 🌿</h2>
-  </div>
-
-  <div class="section">
-    <h2>Venue</h2>
-    <div class="divider"></div>
-    <h1>Grand Celebration Hall</h1>
-    <p>Mumbai, India</p>
   </div>
 
 </div>
@@ -265,23 +277,22 @@ function openEnvelope(){
   document.getElementById("light").classList.add("active");
 
   setTimeout(() => {
-    document.getElementById("envelopeScreen").style.opacity = "0";
-  }, 500);
-
-  setTimeout(() => {
     document.getElementById("envelopeScreen").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
-    revealOnScroll();
-  }, 1300);
+
+    setTimeout(() => {
+      document.getElementById("card").classList.add("show");
+    }, 200);
+
+  }, 1200);
 }
 
-/* cinematic scroll */
 function revealOnScroll(){
   const sections = document.querySelectorAll(".section");
 
   sections.forEach(sec => {
     const top = sec.getBoundingClientRect().top;
-    if(top < window.innerHeight - 120){
+    if(top < window.innerHeight - 100){
       sec.classList.add("visible");
     }
   });
