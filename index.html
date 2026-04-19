@@ -17,7 +17,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ================= LIGHT EFFECT ================= */
+/* LIGHT */
 .light {
   position: fixed;
   width: 100%;
@@ -37,7 +37,7 @@ body {
   100% { opacity: 0; transform: scale(1.6); }
 }
 
-/* ================= ENVELOPE ================= */
+/* ENVELOPE */
 #envelopeScreen {
   position: fixed;
   width: 100%;
@@ -53,27 +53,23 @@ body {
   height: 220px;
   position: relative;
   cursor: pointer;
-  animation: breathe 4s ease-in-out infinite;
 }
 
 .envelope-body {
-  position: absolute;
   width: 100%;
   height: 100%;
   background: linear-gradient(145deg,#b30000,#6a0000);
   border-radius: 10px;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
 }
 
 .flap {
   position: absolute;
   width: 100%;
   height: 60%;
-  background: linear-gradient(to bottom,#8b0000,#4d0000);
+  background: linear-gradient(#8b0000,#4d0000);
   clip-path: polygon(0 0,100% 0,50% 100%);
   transform-origin: top;
-  transition: transform 1.2s ease;
-  z-index: 3;
+  transition: 1.2s;
 }
 
 .envelope.open .flap {
@@ -89,7 +85,6 @@ body {
   top: 70%;
   left: 50%;
   transform: translate(-50%,-50%);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.5);
 }
 
 .tap-text {
@@ -100,14 +95,14 @@ body {
   font-size: 0.75rem;
   letter-spacing: 3px;
   color: #f1d48a;
-  z-index: 6;
 }
 
-/* ================= CARD ================= */
+/* MAIN */
 #mainContent {
   display: none;
 }
 
+/* CARD STYLE (REUSABLE) */
 .card-section {
   min-height: 100vh;
   display: flex;
@@ -124,55 +119,28 @@ body {
   text-align: center;
   border: 1px solid rgba(212,175,55,0.4);
   box-shadow: 0 30px 60px rgba(0,0,0,0.2);
-
-  /* animation start */
-  opacity: 0;
-  transform: translateY(120px) scale(0.95);
 }
 
-/* animate in */
-.invite-card.show {
+/* FIRST CARD ANIMATION */
+.invite-card.first {
+  opacity: 0;
+  transform: translateY(120px) scale(0.9);
+}
+
+.invite-card.first.show {
   animation: cardReveal 1.4s ease forwards;
 }
 
 @keyframes cardReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(120px) scale(0.9);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(-10px) scale(1.02);
-  }
-  100% {
-    transform: translateY(0) scale(1);
-  }
+  0% { opacity: 0; transform: translateY(120px) scale(0.9); }
+  60% { opacity: 1; transform: translateY(-10px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
 }
 
-/* subtle floating */
-.invite-card.show {
-  animation: cardReveal 1.4s ease forwards, float 4s ease-in-out infinite 1.4s;
-}
-
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0); }
-}
-
-/* gold inner border */
-.invite-card::before {
-  content: "";
-  position: absolute;
-  inset: 15px;
-  border: 1px solid rgba(212,175,55,0.3);
-}
-
-/* text styling */
+/* TEXT */
 .quote {
   font-size: 0.9rem;
   font-style: italic;
-  opacity: 0.8;
   margin-bottom: 20px;
 }
 
@@ -193,33 +161,9 @@ body {
   margin: 15px 0;
 }
 
-/* ================= OTHER SECTIONS ================= */
-.section {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  padding: 60px 20px;
-
-  opacity: 0;
-  transform: translateY(60px);
-  transition: 1.2s ease;
-}
-
-.section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-}
-
-h2 {
-  font-weight: 300;
+  font-size: 2.5rem;
 }
 
 </style>
@@ -242,9 +186,9 @@ h2 {
 <!-- MAIN -->
 <div id="mainContent">
 
-  <!-- CARD -->
+  <!-- FIRST CARD -->
   <div class="card-section">
-    <div class="invite-card" id="card">
+    <div class="invite-card first" id="card1">
 
       <div class="quote">
         "They alone are called husband and wife,<br>
@@ -265,8 +209,21 @@ h2 {
     </div>
   </div>
 
-  <div class="section">
-    <h1>Karan ❤️ Pankti</h1>
+  <!-- SECOND CARD (YOUR MAIN INFO) -->
+  <div class="card-section">
+    <div class="invite-card">
+
+      <div class="script">Karan ❤️ Pankti</div>
+
+      <div class="small">ARE GETTING MARRIED</div>
+
+      <div class="amp">•</div>
+
+      <h1>26 November 2026</h1>
+
+      <div class="small">MUMBAI</div>
+
+    </div>
   </div>
 
 </div>
@@ -281,24 +238,11 @@ function openEnvelope(){
     document.getElementById("mainContent").style.display = "block";
 
     setTimeout(() => {
-      document.getElementById("card").classList.add("show");
+      document.getElementById("card1").classList.add("show");
     }, 200);
 
   }, 1200);
 }
-
-function revealOnScroll(){
-  const sections = document.querySelectorAll(".section");
-
-  sections.forEach(sec => {
-    const top = sec.getBoundingClientRect().top;
-    if(top < window.innerHeight - 100){
-      sec.classList.add("visible");
-    }
-  });
-}
-
-window.addEventListener("scroll", revealOnScroll);
 </script>
 
 </body>
