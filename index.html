@@ -76,16 +76,21 @@ body {
   box-shadow:
     0 10px 18px rgba(0,0,0,0.4),
     inset 0 0 8px rgba(255,255,255,0.2);
+  z-index: 4;
 }
 
+/* ✅ FIXED TAP TEXT */
 .tap-text {
   position: absolute;
-  top: 45%;
+  top: 52%;
   left: 50%;
   transform: translate(-50%,-50%);
   font-size: 0.75rem;
   letter-spacing: 2px;
   color: #f1d48a;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0.9;
 }
 
 /* letter */
@@ -222,7 +227,7 @@ function openEnvelope(){
   setTimeout(() => {
     document.getElementById("envelopeScreen").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
-    revealOnScroll(); // initial trigger
+    revealOnScroll();
   }, 1200);
 }
 
