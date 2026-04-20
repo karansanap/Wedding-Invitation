@@ -38,7 +38,7 @@ body {
     linear-gradient(#f6efe6,#efe6d8);
 }
 
-/* ===== ULTRA REALISTIC ENVELOPE ===== */
+/* ===== ENVELOPE ===== */
 .envelope {
   width:360px;
   height:240px;
@@ -55,23 +55,18 @@ body {
   width:100%;
   height:100%;
   border-radius:14px;
-
-  background:
-    linear-gradient(145deg,#f5e6a3,#e0c46c,#caa85a,#e0c46c);
-
+  background:linear-gradient(145deg,#f5e6a3,#e0c46c,#caa85a,#e0c46c);
   box-shadow:
     inset 0 2px 6px rgba(255,255,255,0.7),
     inset 0 -6px 12px rgba(0,0,0,0.2),
     0 20px 40px rgba(0,0,0,0.2);
 }
 
-/* shine */
 .envelope-body::after {
   content:"";
   position:absolute;
   inset:0;
   border-radius:14px;
-
   background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
   animation:shine 4s infinite;
 }
@@ -96,7 +91,6 @@ body {
   transform:rotateX(180deg);
 }
 
-/* seal */
 .seal {
   position:absolute;
   width:70px;
@@ -122,7 +116,6 @@ body {
   color:#6b4f1d;
 }
 
-/* glow */
 .glow {
   position:absolute;
   width:100%;
@@ -156,11 +149,9 @@ body {
   padding:40px 25px;
   border-radius:18px;
   text-align:center;
-
   background:
     linear-gradient(#fffdf8,#f9f2e8),
     url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-
   box-shadow:
     0 25px 60px rgba(0,0,0,0.15),
     inset 0 1px 0 rgba(255,255,255,0.6);
@@ -201,27 +192,60 @@ body {
   opacity:0.6;
 }
 
-/* SCRATCH GRID */
+/* ===== SAVE THE DATE FIXED ===== */
+
+.save-title {
+  font-family:'Playfair Display', serif;
+  font-weight:500;
+  letter-spacing:1px;
+  margin-bottom:30px;
+  font-size:1.6rem;
+}
+
 .scratch-wrapper {
+  width:100%;
+  max-width:320px;
+  margin:auto;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  max-width:300px;
-  margin:auto;
+  gap:14px;
   text-align:center;
+}
+
+.scratch-label {
+  font-size:0.65rem;
+  letter-spacing:3px;
+  color:#8a7a65;
 }
 
 .scratch-box {
   position:relative;
   height:110px;
-  border-radius:12px;
+  border-radius:14px;
   overflow:hidden;
   border:1px solid var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+}
+
+.date-text {
+  font-family:'Playfair Display', serif;
+  font-size:1.5rem;
+  letter-spacing:1px;
+  z-index:1;
 }
 
 .scratch-box canvas {
   position:absolute;
   inset:0;
+}
+
+.scratch-hint {
+  font-size:0.6rem;
+  letter-spacing:3px;
+  color:#b39b6b;
 }
 
 /* FIRECRACKER */
@@ -244,7 +268,6 @@ body {
 
 <body>
 
-<!-- ENVELOPE -->
 <div id="envelopeScreen">
   <div class="envelope" onclick="openEnvelope()">
     <div class="glow"></div>
@@ -255,7 +278,6 @@ body {
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
 <div id="mainContent">
 
 <!-- FIRST SECTION -->
@@ -283,25 +305,25 @@ body {
   <div class="swipe">SWIPE ↓</div>
 </div>
 
-<!-- SCRATCH SECTION -->
+<!-- SAVE THE DATE -->
 <div class="section">
   <div class="invite-card" id="scratchCard">
 
-    <h2 style="font-family:Playfair Display;">Save the Date</h2>
+    <h2 class="save-title">Save the Date</h2>
 
     <div class="scratch-wrapper">
 
-      <div>MONTH</div>
-      <div>DAY</div>
-      <div>YEAR</div>
+      <div class="scratch-label">MONTH</div>
+      <div class="scratch-label">DAY</div>
+      <div class="scratch-label">YEAR</div>
 
-      <div class="scratch-box"><span>Nov</span><canvas></canvas></div>
-      <div class="scratch-box"><span>26</span><canvas></canvas></div>
-      <div class="scratch-box"><span>2026</span><canvas></canvas></div>
+      <div class="scratch-box"><span class="date-text">Nov</span><canvas></canvas></div>
+      <div class="scratch-box"><span class="date-text">26</span><canvas></canvas></div>
+      <div class="scratch-box"><span class="date-text">2026</span><canvas></canvas></div>
 
-      <div>SCRATCH</div>
-      <div>SCRATCH</div>
-      <div>SCRATCH</div>
+      <div class="scratch-hint">SCRATCH</div>
+      <div class="scratch-hint">SCRATCH</div>
+      <div class="scratch-hint">SCRATCH</div>
 
     </div>
 
@@ -315,8 +337,8 @@ function openEnvelope(){
   document.querySelector(".envelope").classList.add("open");
 
   setTimeout(()=>{
-    document.getElementById("envelopeScreen").style.display="none";
-    document.getElementById("mainContent").style.display="block";
+    envelopeScreen.style.display="none";
+    mainContent.style.display="block";
     initScratch();
   },1200);
 }
