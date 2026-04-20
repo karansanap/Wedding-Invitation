@@ -11,7 +11,6 @@
 <style>
 :root { --gold:#caa85a; }
 
-/* BODY */
 body {
   margin:0;
   font-family:'Inter', sans-serif;
@@ -20,7 +19,7 @@ body {
     linear-gradient(#f6efe6,#efe6d8);
 }
 
-/* ENVELOPE SCREEN */
+/* ENVELOPE */
 #envelopeScreen {
   position:fixed;
   width:100%;
@@ -31,7 +30,6 @@ body {
   z-index:999;
 }
 
-/* ENVELOPE */
 .envelope {
   width:360px;
   height:240px;
@@ -39,10 +37,7 @@ body {
   cursor:pointer;
   animation:breath 3s infinite;
 }
-
-@keyframes breath {
-  50% { transform:scale(1.05); }
-}
+@keyframes breath { 50% { transform:scale(1.05); } }
 
 .envelope-body {
   width:100%;
@@ -60,7 +55,6 @@ body {
   transform-origin:top;
   transition:1s;
 }
-
 .envelope.open .flap { transform:rotateX(180deg); }
 
 .seal {
@@ -114,54 +108,66 @@ body {
 }
 
 /* FOIL BORDER */
-.invite-card::before {
-  content:"";
-  position:absolute;
-  inset:12px;
-  border-radius:12px;
-  padding:1px;
-  background:linear-gradient(120deg,rgba(255,255,255,0.2),rgba(202,168,90,0.8),rgba(255,255,255,0.2));
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-          mask-composite:exclude;
-  animation:foilMove 4s infinite linear;
-}
-
+.invite-card::before,
 .invite-card::after {
   content:"";
   position:absolute;
-  inset:20px;
-  border-radius:10px;
+  border-radius:12px;
   padding:1px;
-  background:linear-gradient(120deg,rgba(255,255,255,0.1),rgba(202,168,90,0.6),rgba(255,255,255,0.1));
+  background:linear-gradient(120deg,#fff3,#caa85a,#fff3);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;
           mask-composite:exclude;
-  animation:foilMove 6s infinite linear;
+  animation:foilMove 5s infinite linear;
 }
+.invite-card::before { inset:12px; }
+.invite-card::after { inset:20px; }
 
 @keyframes foilMove {
-  0% { background-position:-200px 0; }
-  100% { background-position:200px 0; }
+  0% { background-position:-200px; }
+  100% { background-position:200px; }
+}
+
+/* GANPATI ICON */
+.ganpati {
+  width:50px;
+  margin:0 auto 15px;
+  display:block;
+  fill:url(#goldGradient);
+  animation:shine 4s infinite linear;
+}
+
+@keyframes shine {
+  0% { filter:brightness(1); }
+  50% { filter:brightness(1.4); }
+  100% { filter:brightness(1); }
 }
 
 /* TEXT */
+.quote {
+  font-size:0.85rem;
+  font-style:italic;
+  color:#6a6a6a;
+  margin-bottom:25px;
+}
+
 .script {
   font-family:'Great Vibes', cursive;
   font-size:2.8rem;
 }
+
 .parents {
   font-size:0.7rem;
   letter-spacing:2px;
   color:#8a7a65;
 }
+
 .amp {
   font-size:1.6rem;
   color:var(--gold);
   margin:10px 0;
 }
 
-/* SWIPE */
 .swipe {
   position:absolute;
   bottom:10px;
@@ -169,11 +175,8 @@ body {
   opacity:0.6;
 }
 
-/* SAVE DATE */
-.save-title {
-  font-family:'Playfair Display', serif;
-  margin-bottom:30px;
-}
+/* SAVE DATE (unchanged) */
+.save-title { font-family:'Playfair Display'; margin-bottom:30px; }
 
 .scratch-wrapper {
   display:grid;
@@ -181,12 +184,6 @@ body {
   gap:14px;
   max-width:320px;
   margin:auto;
-  text-align:center;
-}
-
-.scratch-label {
-  font-size:0.65rem;
-  letter-spacing:3px;
 }
 
 .scratch-box {
@@ -198,39 +195,18 @@ body {
   background:#fff;
 }
 
-/* TEXT BELOW */
 .date-text {
   position:absolute;
-  top:50%;
-  left:50%;
+  top:50%; left:50%;
   transform:translate(-50%,-50%);
   z-index:0;
-  font-family:'Playfair Display', serif;
   font-size:1.5rem;
 }
 
-/* SCRATCH LAYER */
 .scratch-box canvas {
   position:absolute;
   inset:0;
   z-index:2;
-}
-
-.scratch-hint {
-  font-size:0.6rem;
-  letter-spacing:3px;
-}
-
-/* PARTICLES */
-.particle {
-  position:absolute;
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  animation:burst 1s forwards;
-}
-@keyframes burst {
-  to { transform:translate(var(--x), var(--y)); opacity:0; }
 }
 </style>
 </head>
@@ -251,6 +227,24 @@ body {
 <div class="section">
   <div class="invite-card">
 
+    <!-- GANPATI SVG -->
+    <svg class="ganpati" viewBox="0 0 64 64">
+      <defs>
+        <linearGradient id="goldGradient">
+          <stop offset="0%" stop-color="#f5e6a3"/>
+          <stop offset="50%" stop-color="#caa85a"/>
+          <stop offset="100%" stop-color="#f5e6a3"/>
+        </linearGradient>
+      </defs>
+      <path d="M32 4c-8 0-14 6-14 14 0 4 2 8 5 10-2 2-3 5-3 8 0 7 6 12 12 12s12-5 12-12c0-3-1-6-3-8 3-2 5-6 5-10 0-8-6-14-14-14zm0 6c4 0 8 4 8 8s-4 8-8 8-8-4-8-8 4-8 8-8z"/>
+    </svg>
+
+    <div class="quote">
+      "They alone are called husband and wife,<br>
+      who have one soul in two bodies."<br>
+      — Guru Amar Das Ji
+    </div>
+
     <div class="script">Karan</div>
     <div class="parents">SON OF MR. & MRS. SANAP</div>
 
@@ -264,30 +258,6 @@ body {
   <div class="swipe">SWIPE ↓</div>
 </div>
 
-<div class="section">
-  <div class="invite-card" id="scratchCard">
-
-    <h2 class="save-title">Save the Date</h2>
-
-    <div class="scratch-wrapper">
-
-      <div class="scratch-label">MONTH</div>
-      <div class="scratch-label">DAY</div>
-      <div class="scratch-label">YEAR</div>
-
-      <div class="scratch-box"><span class="date-text">Nov</span><canvas></canvas></div>
-      <div class="scratch-box"><span class="date-text">26</span><canvas></canvas></div>
-      <div class="scratch-box"><span class="date-text">2026</span><canvas></canvas></div>
-
-      <div class="scratch-hint">SCRATCH</div>
-      <div class="scratch-hint">SCRATCH</div>
-      <div class="scratch-hint">SCRATCH</div>
-
-    </div>
-
-  </div>
-</div>
-
 </div>
 
 <script>
@@ -296,59 +266,7 @@ function openEnvelope(){
   setTimeout(()=>{
     envelopeScreen.style.display="none";
     mainContent.style.display="block";
-    initScratch();
   },1000);
-}
-
-function firecracker(origin){
-  for(let i=0;i<30;i++){
-    let p=document.createElement("div");
-    p.className="particle";
-
-    let angle=Math.random()*2*Math.PI;
-    let dist=60+Math.random()*40;
-
-    p.style.setProperty('--x', Math.cos(angle)*dist+'px');
-    p.style.setProperty('--y', Math.sin(angle)*dist+'px');
-
-    p.style.background=`hsl(${Math.random()*40+20},70%,60%)`;
-
-    origin.appendChild(p);
-    setTimeout(()=>p.remove(),1000);
-  }
-}
-
-function initScratch(){
-  document.querySelectorAll("canvas").forEach(canvas=>{
-    let ctx=canvas.getContext("2d");
-    canvas.width=canvas.parentElement.clientWidth;
-    canvas.height=canvas.parentElement.clientHeight;
-
-    ctx.fillStyle="#d4af37";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.globalCompositeOperation="destination-out";
-
-    let count=0,done=false;
-
-    canvas.addEventListener("touchmove",e=>{
-      e.preventDefault();
-      let r=canvas.getBoundingClientRect();
-      let x=e.touches[0].clientX-r.left;
-      let y=e.touches[0].clientY-r.top;
-
-      ctx.beginPath();
-      ctx.arc(x,y,15,0,Math.PI*2);
-      ctx.fill();
-
-      count++;
-      if(count>120 && !done){
-        done=true;
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        firecracker(document.getElementById("scratchCard"));
-      }
-    },{passive:false});
-  });
 }
 </script>
 
