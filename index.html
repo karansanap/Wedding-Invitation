@@ -6,23 +6,14 @@
 
 <title>Karan ❤️ Pankti</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin:0;
   font-family:'Inter', sans-serif;
-  background:#f7f0e6;
-  overflow-y:scroll;
-  scroll-snap-type:y mandatory;
-}
-
-/* ===== GOLD PARTICLES BACKGROUND ===== */
-canvas#bg {
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:0;
+  background:#f6efe6;
+  color:#444;
 }
 
 /* ===== ENVELOPE ===== */
@@ -33,7 +24,7 @@ canvas#bg {
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#f7f0e6;
+  background:#f6efe6;
   z-index:999;
 }
 
@@ -46,14 +37,13 @@ canvas#bg {
 }
 
 @keyframes breath {
-  0%,100% { transform:scale(1); }
-  50% { transform:scale(1.03); }
+  50% { transform:scale(1.04); }
 }
 
 .envelope-body {
   width:100%;
   height:100%;
-  background:linear-gradient(145deg,#b30000,#6a0000);
+  background:linear-gradient(145deg,#a30000,#5c0000);
   border-radius:10px;
 }
 
@@ -61,7 +51,7 @@ canvas#bg {
   position:absolute;
   width:100%;
   height:60%;
-  background:linear-gradient(#8b0000,#4d0000);
+  background:linear-gradient(#7a0000,#3a0000);
   clip-path:polygon(0 0,100% 0,50% 100%);
   transform-origin:top;
   transition:1.2s;
@@ -87,86 +77,116 @@ canvas#bg {
   top:52%;
   left:50%;
   transform:translate(-50%,-50%);
-  font-size:0.75rem;
+  font-size:0.7rem;
   letter-spacing:3px;
   color:#f1d48a;
 }
 
-/* ===== MAIN ===== */
-#mainContent { display:none; position:relative; z-index:1; }
+/* ===== SECTIONS ===== */
+#mainContent { display:none; }
 
 .section {
-  height:100vh;
+  min-height:85vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  scroll-snap-align:start;
-  position:relative;
+  padding:15px;
 }
 
-/* cinematic fade */
-.fade {
-  opacity:0;
-  transform:translateY(40px) scale(0.96);
-  transition:all 1s ease;
-}
-
-.fade.show {
-  opacity:1;
-  transform:translateY(0) scale(1);
-}
-
-/* card */
+/* ===== CARD ===== */
 .invite-card {
-  width:90%;
+  width:92%;
   max-width:420px;
-  background:#fffaf0;
-  padding:35px 25px;
-  border-radius:12px;
+  background:#fffdf8;
+  padding:45px 25px;
+  border-radius:18px;
   text-align:center;
-  border:1px solid rgba(212,175,55,0.4);
-  box-shadow:0 30px 80px rgba(0,0,0,0.25);
-  backdrop-filter:blur(6px);
+  position:relative;
+  box-shadow:0 25px 60px rgba(0,0,0,0.15);
 }
 
-/* typography */
-.script { font-family:'Great Vibes', cursive; font-size:2.5rem; }
-.small { font-size:0.7rem; letter-spacing:2px; }
-.quote { font-size:0.85rem; font-style:italic; }
-
-/* ===== SWIPE INDICATOR ===== */
-.swipe {
+/* GOLD CORNERS */
+.invite-card:before,
+.invite-card:after {
+  content:"";
   position:absolute;
-  bottom:20px;
-  font-size:0.7rem;
-  opacity:0.6;
-  animation:updown 1.5s infinite;
+  width:40px;
+  height:40px;
+  border:1px solid #d4af37;
 }
 
-@keyframes updown {
-  0%,100% { transform:translateY(0); }
-  50% { transform:translateY(8px); }
+.invite-card:before {
+  top:15px;
+  left:15px;
+  border-right:none;
+  border-bottom:none;
+}
+
+.invite-card:after {
+  bottom:15px;
+  right:15px;
+  border-left:none;
+  border-top:none;
+}
+
+/* ===== TEXT ===== */
+.symbol {
+  font-size:26px;
+  margin-bottom:15px;
+}
+
+.quote {
+  font-size:0.85rem;
+  font-style:italic;
+  line-height:1.6;
+  color:#6a6a6a;
+  margin-bottom:25px;
+}
+
+.script {
+  font-family:'Great Vibes', cursive;
+  font-size:2.8rem;
+  color:#3e3e3e;
+  margin:10px 0;
+}
+
+.parents {
+  font-size:0.7rem;
+  letter-spacing:2px;
+  color:#8a7a65;
+  margin-bottom:15px;
+}
+
+.amp {
+  font-size:1.6rem;
+  color:#c9a64b;
+  margin:10px 0;
 }
 
 /* ===== SCRATCH ===== */
+.scratch-container {
+  display:flex;
+  gap:12px;
+}
+
 .scratch-box {
   position:relative;
-  width:80px;
-  height:100px;
-  border-radius:10px;
+  width:85px;
+  height:110px;
+  border-radius:12px;
   overflow:hidden;
-  border:1px solid gold;
+  border:1px solid #d4af37;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:white;
+  font-family:'Playfair Display', serif;
+  background:#fff;
 }
 
-canvas.scratch {
+canvas {
   position:absolute;
 }
 
-/* confetti */
 .confetti {
   position:fixed;
   width:6px;
@@ -178,13 +198,10 @@ canvas.scratch {
 @keyframes fall {
   to { transform:translateY(100vh) rotate(720deg); }
 }
-
 </style>
 </head>
 
 <body>
-
-<canvas id="bg"></canvas>
 
 <!-- ENVELOPE -->
 <div id="envelopeScreen">
@@ -199,58 +216,62 @@ canvas.scratch {
 <!-- MAIN -->
 <div id="mainContent">
 
-  <!-- SECTION 1 -->
-  <div class="section">
-    <div class="invite-card fade" id="card1">
-      <div class="quote">"Two souls, one journey."</div>
-      <div class="script">Together With Their Families</div>
-      <div class="small">REQUEST THE HONOUR</div>
+<!-- FIRST CARD -->
+<div class="section">
+  <div class="invite-card" id="card">
+
+    <div class="symbol">ੴ</div>
+
+    <div class="quote">
+      "They alone are called husband and wife,<br>
+      who have one soul in two bodies."<br>
+      — Guru Amar Das Ji
     </div>
-    <div class="swipe">Swipe ↑</div>
+
+    <div class="script">Karan</div>
+    <div class="parents">SON OF MR. & MRS. SANAP</div>
+
+    <div class="amp">&</div>
+
+    <div class="script">Pankti</div>
+    <div class="parents">DAUGHTER OF MR. & MRS. JHAVERI</div>
+
   </div>
+</div>
 
-  <!-- SECTION 2 -->
-  <div class="section">
-    <div class="invite-card fade" id="scratchCard">
+<!-- SCRATCH -->
+<div class="section">
+  <div class="invite-card">
 
-      <div class="script">Save the Date</div>
+    <h2 style="font-family:Playfair Display;">Save the Date</h2>
 
-      <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
-        <div class="scratch-box"><span>Nov</span><canvas class="scratch"></canvas></div>
-        <div class="scratch-box"><span>26</span><canvas class="scratch"></canvas></div>
-        <div class="scratch-box"><span>2026</span><canvas class="scratch"></canvas></div>
-      </div>
+    <div class="scratch-container">
+
+      <div class="scratch-box"><span>Nov</span><canvas></canvas></div>
+      <div class="scratch-box"><span>26</span><canvas></canvas></div>
+      <div class="scratch-box"><span>2026</span><canvas></canvas></div>
 
     </div>
+
   </div>
+</div>
 
 </div>
 
 <script>
-/* OPEN */
 function openEnvelope(){
   document.querySelector(".envelope").classList.add("open");
+
   setTimeout(()=>{
     document.getElementById("envelopeScreen").style.display="none";
     document.getElementById("mainContent").style.display="block";
-    observe();
     initScratch();
   },1200);
 }
 
-/* FADE ON SCROLL */
-function observe(){
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting) e.target.classList.add("show");
-    });
-  });
-  document.querySelectorAll(".fade").forEach(el=>obs.observe(el));
-}
-
 /* CONFETTI */
 function confetti(){
-  for(let i=0;i<60;i++){
+  for(let i=0;i<70;i++){
     let c=document.createElement("div");
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
@@ -260,12 +281,13 @@ function confetti(){
   }
 }
 
-/* SCRATCH */
+/* SCRATCH FIXED (NO SCROLL) */
 function initScratch(){
-  document.querySelectorAll(".scratch").forEach(canvas=>{
+  document.querySelectorAll("canvas").forEach(canvas=>{
     let box=canvas.parentElement;
     canvas.width=box.offsetWidth;
     canvas.height=box.offsetHeight;
+
     let ctx=canvas.getContext("2d");
 
     let g=ctx.createLinearGradient(0,0,100,100);
@@ -277,10 +299,11 @@ function initScratch(){
 
     ctx.globalCompositeOperation="destination-out";
 
-    let count=0,done=false;
+    let count=0,done=false,isScratching=false;
 
     function scratch(x,y){
       if(done) return;
+
       ctx.beginPath();
       ctx.arc(x,y,12,0,Math.PI*2);
       ctx.fill();
@@ -290,62 +313,31 @@ function initScratch(){
         done=true;
         ctx.clearRect(0,0,canvas.width,canvas.height);
         confetti();
-
-        /* AUTO SCROLL */
-        setTimeout(()=>{
-          window.scrollTo({
-            top:window.innerHeight*2,
-            behavior:'smooth'
-          });
-        },800);
       }
     }
 
-    canvas.addEventListener("mousemove",e=>{
-      if(e.buttons!==1) return;
-      let r=canvas.getBoundingClientRect();
-      scratch(e.clientX-r.left,e.clientY-r.top);
+    canvas.addEventListener("touchstart",()=>{
+      isScratching=true;
+      document.body.style.overflow="hidden";
+    },{passive:false});
+
+    canvas.addEventListener("touchend",()=>{
+      isScratching=false;
+      document.body.style.overflow="auto";
     });
 
     canvas.addEventListener("touchmove",e=>{
+      if(!isScratching) return;
+      e.preventDefault();
+
       let r=canvas.getBoundingClientRect();
       scratch(
         e.touches[0].clientX-r.left,
         e.touches[0].clientY-r.top
       );
-    });
+    },{passive:false});
   });
 }
-
-/* GOLD PARTICLES BG */
-const bg=document.getElementById("bg");
-const ctx=bg.getContext("2d");
-bg.width=window.innerWidth;
-bg.height=window.innerHeight;
-
-let particles=[];
-for(let i=0;i<40;i++){
-  particles.push({
-    x:Math.random()*bg.width,
-    y:Math.random()*bg.height,
-    r:Math.random()*2,
-    dy:Math.random()*0.5+0.2
-  });
-}
-
-function animate(){
-  ctx.clearRect(0,0,bg.width,bg.height);
-  ctx.fillStyle="rgba(212,175,55,0.5)";
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fill();
-    p.y+=p.dy;
-    if(p.y>bg.height) p.y=0;
-  });
-  requestAnimationFrame(animate);
-}
-animate();
 </script>
 
 </body>
