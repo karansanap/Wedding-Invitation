@@ -17,32 +17,7 @@ body {
   overflow-x: hidden;
 }
 
-/* LOCK SCROLL */
-body.lock {
-  overflow: hidden;
-}
-
-/* LIGHT */
-.light {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(255,220,150,0.8), transparent 70%);
-  opacity: 0;
-  z-index: 500;
-}
-
-.light.active {
-  animation: lightBurst 1.2s ease;
-}
-
-@keyframes lightBurst {
-  0% { opacity: 0; transform: scale(0.5); }
-  50% { opacity: 0.9; }
-  100% { opacity: 0; transform: scale(1.6); }
-}
-
-/* ENVELOPE */
+/* ================= ENVELOPE ================= */
 #envelopeScreen {
   position: fixed;
   width: 100%;
@@ -51,6 +26,7 @@ body.lock {
   justify-content: center;
   align-items: center;
   z-index: 999;
+  background: #f7f0e6;
 }
 
 .envelope {
@@ -74,7 +50,7 @@ body.lock {
   background: linear-gradient(#8b0000,#4d0000);
   clip-path: polygon(0 0,100% 0,50% 100%);
   transform-origin: top;
-  transition: 1.2s;
+  transition: transform 1.2s ease;
 }
 
 .envelope.open .flap {
@@ -102,23 +78,21 @@ body.lock {
   color: #f1d48a;
 }
 
-/* MAIN */
+/* ================= MAIN ================= */
 #mainContent {
   display: none;
 }
 
-/* FIRST CARD FIXED */
-.card-fixed {
-  position: fixed;
-  width: 100%;
-  height: 100vh;
+/* SECTION */
+.section {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
-  background: #f7f0e6;
+  padding: 40px 20px;
 }
 
+/* CARD */
 .invite-card {
   width: 90%;
   max-width: 420px;
@@ -130,15 +104,16 @@ body.lock {
   box-shadow: 0 30px 60px rgba(0,0,0,0.2);
 
   opacity: 0;
-  transform: translateY(120px) scale(0.9);
+  transform: translateY(80px) scale(0.95);
 }
 
+/* ANIMATION */
 .invite-card.show {
-  animation: cardReveal 1.4s ease forwards;
+  animation: reveal 1.4s ease forwards;
 }
 
-@keyframes cardReveal {
-  0% { opacity: 0; transform: translateY(120px) scale(0.9); }
+@keyframes reveal {
+  0% { opacity: 0; transform: translateY(80px) scale(0.9); }
   60% { opacity: 1; transform: translateY(-10px) scale(1.02); }
   100% { transform: translateY(0) scale(1); }
 }
@@ -167,16 +142,6 @@ body.lock {
   margin: 15px 0;
 }
 
-/* SECOND SECTION */
-.section {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-}
-
 h1 {
   font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
@@ -186,8 +151,6 @@ h1 {
 </head>
 
 <body>
-
-<div class="light" id="light"></div>
 
 <!-- ENVELOPE -->
 <div id="envelopeScreen">
@@ -199,11 +162,11 @@ h1 {
   </div>
 </div>
 
-<!-- MAIN -->
+<!-- MAIN CONTENT -->
 <div id="mainContent">
 
-  <!-- FIXED CARD -->
-  <div class="card-fixed">
+  <!-- ✅ FIRST SECTION (CARD — NOW PERMANENT) -->
+  <div class="section">
     <div class="invite-card" id="card">
 
       <div class="quote">
@@ -225,19 +188,22 @@ h1 {
     </div>
   </div>
 
-  <!-- NEXT -->
+  <!-- SECOND SECTION -->
   <div class="section">
-    <h1>Karan ❤️ Pankti</h1>
+    <div class="invite-card">
+      <div class="script">Karan ❤️ Pankti</div>
+      <div class="small">ARE GETTING MARRIED</div>
+      <div class="amp">•</div>
+      <h1>26 November 2026</h1>
+      <div class="small">MUMBAI</div>
+    </div>
   </div>
 
 </div>
 
 <script>
 function openEnvelope(){
-  document.body.classList.add("lock");
-
   document.querySelector(".envelope").classList.add("open");
-  document.getElementById("light").classList.add("active");
 
   setTimeout(() => {
     document.getElementById("envelopeScreen").style.display = "none";
@@ -246,11 +212,6 @@ function openEnvelope(){
     setTimeout(() => {
       document.getElementById("card").classList.add("show");
     }, 200);
-
-    // unlock scroll after animation
-    setTimeout(() => {
-      document.body.classList.remove("lock");
-    }, 1800);
 
   }, 1200);
 }
