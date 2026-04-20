@@ -18,10 +18,9 @@ body {
   background:
     radial-gradient(circle at 50% 20%, rgba(255,255,255,0.6), transparent 60%),
     linear-gradient(#f6efe6,#efe6d8);
-  overflow-x:hidden;
 }
 
-/* ENVELOPE SCREEN */
+/* ENVELOPE */
 #envelopeScreen {
   position:fixed;
   width:100%;
@@ -29,95 +28,134 @@ body {
   display:flex;
   justify-content:center;
   align-items:center;
-  z-index:999;
-  background:
-    radial-gradient(circle at 50% 20%, rgba(255,255,255,0.6), transparent 60%),
-    linear-gradient(#f6efe6,#efe6d8);
 }
 
-/* ENVELOPE */
 .envelope {
   width:360px;
   height:240px;
   position:relative;
   cursor:pointer;
-  animation:breath 3s infinite;
 }
-@keyframes breath { 50% { transform:scale(1.04); } }
 
 .envelope-body {
-  width:100%; height:100%; border-radius:14px;
-  background:linear-gradient(145deg,#f5e6a3,#e0c46c,#caa85a,#e0c46c);
-  box-shadow:
-    inset 0 2px 6px rgba(255,255,255,0.7),
-    inset 0 -6px 12px rgba(0,0,0,0.2),
-    0 20px 40px rgba(0,0,0,0.2);
-}
-.envelope-body::after {
-  content:""; position:absolute; inset:0; border-radius:14px;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
-  animation:shine 4s infinite;
-}
-@keyframes shine {
-  0% { transform:translateX(-100%); }
-  100% { transform:translateX(100%); }
+  width:100%;
+  height:100%;
+  border-radius:14px;
+  background:linear-gradient(145deg,#f5e6a3,#e0c46c,#caa85a);
 }
 
 .flap {
-  position:absolute; width:100%; height:60%;
-  background:linear-gradient(145deg,#e0c46c,#caa85a,#b8954d);
+  position:absolute;
+  width:100%;
+  height:60%;
+  background:linear-gradient(145deg,#e0c46c,#caa85a);
   clip-path:polygon(0 0,100% 0,50% 100%);
   transform-origin:top;
-  transition:1.2s;
+  transition:1s;
 }
+
 .envelope.open .flap { transform:rotateX(180deg); }
 
 .seal {
-  position:absolute; width:70px; height:70px;
+  position:absolute;
+  width:70px;
+  height:70px;
   background:radial-gradient(circle,#b30000,#5a0000);
   border-radius:50%;
-  top:70%; left:50%; transform:translate(-50%,-50%);
+  top:70%;
+  left:50%;
+  transform:translate(-50%,-50%);
 }
 
 .tap-text {
-  position:absolute; top:50%; left:50%;
+  position:absolute;
+  top:50%;
+  left:50%;
   transform:translate(-50%,-50%);
-  font-size:0.7rem; letter-spacing:3px;
-  color:#6b4f1d;
+  font-size:0.7rem;
+  letter-spacing:3px;
 }
-
-.glow {
-  position:absolute; width:100%; height:100%;
-  background:radial-gradient(circle,#fff3c4,transparent 60%);
-  opacity:0; transition:1.2s;
-}
-.envelope.open .glow { opacity:1; }
 
 /* MAIN */
 #mainContent { display:none; }
 
-/* SECTION */
 .section {
   min-height:75vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  padding:10px;
-  position:relative;
 }
 
-/* CARD */
+/* ===== CARD ===== */
 .invite-card {
-  width:92%; max-width:420px;
-  padding:40px 25px;
+  width:92%;
+  max-width:420px;
+  padding:50px 30px;
   border-radius:18px;
+  position:relative;
   text-align:center;
+
   background:
     linear-gradient(#fffdf8,#f9f2e8),
     url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+
   box-shadow:
     0 25px 60px rgba(0,0,0,0.15),
-    inset 0 1px 0 rgba(255,255,255,0.6);
+    inset 0 0 0 1px rgba(202,168,90,0.25),
+    inset 0 8px 20px rgba(0,0,0,0.05);
+}
+
+/* ===== FOIL BORDER ===== */
+.invite-card::before {
+  content:"";
+  position:absolute;
+  inset:12px;
+  border-radius:12px;
+  padding:1px;
+
+  background:
+    linear-gradient(120deg,
+      rgba(255,255,255,0.2),
+      rgba(202,168,90,0.8),
+      rgba(255,255,255,0.2)
+    );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+          mask-composite:exclude;
+
+  animation:foilMove 4s infinite linear;
+}
+
+/* INNER FOIL */
+.invite-card::after {
+  content:"";
+  position:absolute;
+  inset:20px;
+  border-radius:10px;
+  padding:1px;
+
+  background:
+    linear-gradient(120deg,
+      rgba(255,255,255,0.1),
+      rgba(202,168,90,0.6),
+      rgba(255,255,255,0.1)
+    );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+          mask-composite:exclude;
+
+  animation:foilMove 6s infinite linear;
+}
+
+@keyframes foilMove {
+  0% { background-position:-200px 0; }
+  100% { background-position:200px 0; }
 }
 
 /* TEXT */
@@ -147,39 +185,26 @@ body {
   margin:10px 0;
 }
 
-.swipe {
-  position:absolute;
-  bottom:10px;
-  font-size:0.7rem;
-  opacity:0.6;
-}
-
-/* SAVE THE DATE */
+/* SAVE DATE */
 .save-title {
   font-family:'Playfair Display', serif;
-  font-weight:500;
-  letter-spacing:1px;
   margin-bottom:30px;
-  font-size:1.6rem;
 }
 
 .scratch-wrapper {
-  width:100%;
-  max-width:320px;
-  margin:auto;
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:14px;
+  max-width:320px;
+  margin:auto;
   text-align:center;
 }
 
 .scratch-label {
   font-size:0.65rem;
   letter-spacing:3px;
-  color:#8a7a65;
 }
 
-/* FIXED LAYERING */
 .scratch-box {
   position:relative;
   height:110px;
@@ -194,7 +219,7 @@ body {
 
 .date-text {
   position:absolute;
-  z-index:0; /* BELOW */
+  z-index:0;
   font-family:'Playfair Display', serif;
   font-size:1.5rem;
 }
@@ -202,25 +227,14 @@ body {
 .scratch-box canvas {
   position:absolute;
   inset:0;
-  z-index:2; /* ABOVE */
+  z-index:2;
 }
 
 .scratch-hint {
   font-size:0.6rem;
   letter-spacing:3px;
-  color:#b39b6b;
 }
 
-/* FIRECRACKER */
-.particle {
-  position:absolute;
-  width:5px; height:5px;
-  border-radius:50%;
-  animation:burst 1s forwards;
-}
-@keyframes burst {
-  to { transform:translate(var(--x), var(--y)); opacity:0; }
-}
 </style>
 </head>
 
@@ -228,7 +242,6 @@ body {
 
 <div id="envelopeScreen">
   <div class="envelope" onclick="openEnvelope()">
-    <div class="glow"></div>
     <div class="flap"></div>
     <div class="envelope-body"></div>
     <div class="tap-text">Tap to Reveal</div>
@@ -238,7 +251,6 @@ body {
 
 <div id="mainContent">
 
-<!-- FIRST -->
 <div class="section">
   <div class="invite-card">
 
@@ -246,8 +258,7 @@ body {
 
     <div class="quote">
       "They alone are called husband and wife,<br>
-      who have one soul in two bodies."<br>
-      — Guru Amar Das Ji
+      who have one soul in two bodies."
     </div>
 
     <div class="script">Karan</div>
@@ -259,13 +270,10 @@ body {
     <div class="parents">DAUGHTER OF MR. & MRS. JHAVERI</div>
 
   </div>
-
-  <div class="swipe">SWIPE ↓</div>
 </div>
 
-<!-- SAVE DATE -->
 <div class="section">
-  <div class="invite-card" id="scratchCard">
+  <div class="invite-card">
 
     <h2 class="save-title">Save the Date</h2>
 
@@ -296,82 +304,7 @@ function openEnvelope(){
   setTimeout(()=>{
     envelopeScreen.style.display="none";
     mainContent.style.display="block";
-    initScratch();
-  },1200);
-}
-
-function firecracker(origin){
-  for(let i=0;i<35;i++){
-    let p=document.createElement("div");
-    p.className="particle";
-
-    let angle=Math.random()*2*Math.PI;
-    let dist=60+Math.random()*50;
-
-    p.style.setProperty('--x', Math.cos(angle)*dist+'px');
-    p.style.setProperty('--y', Math.sin(angle)*dist+'px');
-
-    p.style.background=`hsl(${Math.random()*40+20},70%,65%)`;
-
-    origin.appendChild(p);
-    setTimeout(()=>p.remove(),1000);
-  }
-}
-
-function initScratch(){
-  document.querySelectorAll("canvas").forEach(canvas=>{
-    let box=canvas.parentElement;
-
-    canvas.width=box.clientWidth;
-    canvas.height=box.clientHeight;
-
-    let ctx=canvas.getContext("2d");
-
-    let g=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
-    g.addColorStop(0,"#d4af37");
-    g.addColorStop(1,"#f5e6a3");
-
-    ctx.fillStyle=g;
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.globalCompositeOperation="destination-out";
-
-    let count=0,done=false,isScratching=false;
-
-    function scratch(x,y){
-      if(done) return;
-
-      ctx.beginPath();
-      ctx.arc(x,y,14,0,Math.PI*2);
-      ctx.fill();
-
-      count++;
-
-      if(count>120){
-        done=true;
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        firecracker(document.getElementById("scratchCard"));
-      }
-    }
-
-    canvas.addEventListener("touchstart",()=>{
-      isScratching=true;
-      document.body.style.overflow="hidden";
-    },{passive:false});
-
-    canvas.addEventListener("touchend",()=>{
-      isScratching=false;
-      document.body.style.overflow="auto";
-    });
-
-    canvas.addEventListener("touchmove",e=>{
-      if(!isScratching) return;
-      e.preventDefault();
-
-      let r=canvas.getBoundingClientRect();
-      scratch(e.touches[0].clientX-r.left, e.touches[0].clientY-r.top);
-    },{passive:false});
-  });
+  },1000);
 }
 </script>
 
