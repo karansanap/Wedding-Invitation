@@ -11,7 +11,6 @@
 <style>
 :root { --gold:#caa85a; }
 
-/* BODY */
 body {
   margin:0;
   font-family:'Inter', sans-serif;
@@ -31,7 +30,6 @@ body {
   z-index:999;
 }
 
-/* GOLD ENVELOPE */
 .envelope {
   width:360px;
   height:240px;
@@ -126,52 +124,47 @@ body {
     inset 0 0 0 1px rgba(202,168,90,0.25);
 }
 
-/* EDGE DESIGN */
-.invite-card::before {
-  content:"";
-  position:absolute;
-  inset:12px;
-  border-radius:12px;
-  border:1px solid rgba(202,168,90,0.4);
-}
+/* ✨ MOVING FOIL BORDER */
+.invite-card::before,
 .invite-card::after {
   content:"";
   position:absolute;
-  inset:20px;
-  border-radius:10px;
-  border:1px solid rgba(202,168,90,0.25);
+  border-radius:12px;
+  padding:1px;
+  background:linear-gradient(120deg,transparent,#caa85a,transparent);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+          mask-composite:exclude;
+  animation:foilMove 5s infinite linear;
+}
+.invite-card::before { inset:12px; }
+.invite-card::after { inset:20px; animation-duration:7s; }
+
+@keyframes foilMove {
+  0% { background-position:-200px; }
+  100% { background-position:200px; }
 }
 
-/* GANPATI */
+/* 🐘 GANPATI SHIMMER */
 .ganpati {
   width:52px;
   margin-bottom:15px;
   fill:url(#goldGradient);
+  animation:ganpatiGlow 3s infinite ease-in-out;
+}
+@keyframes ganpatiGlow {
+  0%,100% { filter:brightness(1); }
+  50% { filter:brightness(1.4); }
 }
 
 /* TEXT */
-.quote {
-  font-size:0.85rem;
-  font-style:italic;
-  margin-bottom:25px;
-}
+.quote { font-size:0.85rem; font-style:italic; margin-bottom:25px; }
 
-.script {
-  font-family:'Great Vibes', cursive;
-  font-size:2.8rem;
-}
+.script { font-family:'Great Vibes', cursive; font-size:2.8rem; }
 
-.parents {
-  font-size:0.7rem;
-  letter-spacing:2px;
-  color:#8a7a65;
-}
+.parents { font-size:0.7rem; letter-spacing:2px; color:#8a7a65; }
 
-.amp {
-  font-size:1.6rem;
-  color:var(--gold);
-  margin:10px 0;
-}
+.amp { font-size:1.6rem; color:var(--gold); margin:10px 0; }
 
 .swipe {
   position:absolute;
@@ -230,6 +223,21 @@ canvas {
   letter-spacing:3px;
   color:#b39b6b;
 }
+
+/* 🎆 FIRECRACKER */
+.particle {
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation:burst 1s forwards;
+}
+@keyframes burst {
+  to {
+    transform:translate(var(--x), var(--y));
+    opacity:0;
+  }
+}
 </style>
 </head>
 
@@ -246,7 +254,6 @@ canvas {
 
 <div id="mainContent">
 
-<!-- FIRST -->
 <div class="section">
   <div class="invite-card">
 
@@ -280,7 +287,6 @@ canvas {
   <div class="swipe">SWIPE ↓</div>
 </div>
 
-<!-- SAVE DATE -->
 <div class="section">
   <div class="invite-card" id="scratchCard">
 
@@ -317,6 +323,26 @@ function openEnvelope(){
   },1000);
 }
 
+/* 🎆 FIRECRACKER */
+function firecracker(origin){
+  for(let i=0;i<40;i++){
+    let p=document.createElement("div");
+    p.className="particle";
+
+    let angle=Math.random()*2*Math.PI;
+    let dist=60+Math.random()*40;
+
+    p.style.setProperty('--x', Math.cos(angle)*dist+'px');
+    p.style.setProperty('--y', Math.sin(angle)*dist+'px');
+
+    p.style.background=`hsl(${Math.random()*40+20},70%,60%)`;
+
+    origin.appendChild(p);
+    setTimeout(()=>p.remove(),1000);
+  }
+}
+
+/* SCRATCH */
 function initScratch(){
   document.querySelectorAll("canvas").forEach(canvas=>{
     let ctx=canvas.getContext("2d");
@@ -328,6 +354,8 @@ function initScratch(){
 
     ctx.globalCompositeOperation="destination-out";
 
+    let count=0,done=false;
+
     canvas.addEventListener("touchmove",e=>{
       e.preventDefault();
       let r=canvas.getBoundingClientRect();
@@ -337,6 +365,14 @@ function initScratch(){
       ctx.beginPath();
       ctx.arc(x,y,15,0,Math.PI*2);
       ctx.fill();
+
+      count++;
+
+      if(count>120 && !done){
+        done=true;
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        firecracker(document.getElementById("scratchCard"));
+      }
     },{passive:false});
   });
 }
