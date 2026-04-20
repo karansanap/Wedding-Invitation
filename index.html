@@ -14,7 +14,6 @@ body {
   font-family: 'Inter', sans-serif;
   background: #f7f0e6;
   color: #5a3e2b;
-  overflow-x: hidden;
 }
 
 /* ================= ENVELOPE ================= */
@@ -89,7 +88,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+}
+
+/* ✅ STICKY FIRST SECTION */
+.first-section {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #f7f0e6;
 }
 
 /* CARD */
@@ -107,18 +113,17 @@ body {
   transform: translateY(80px) scale(0.95);
 }
 
-/* ANIMATION */
+/* animation */
 .invite-card.show {
-  animation: reveal 1.4s ease forwards;
+  animation: reveal 1.2s ease forwards;
 }
 
 @keyframes reveal {
   0% { opacity: 0; transform: translateY(80px) scale(0.9); }
-  60% { opacity: 1; transform: translateY(-10px) scale(1.02); }
-  100% { transform: translateY(0) scale(1); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* TEXT */
+/* text */
 .quote {
   font-size: 0.9rem;
   font-style: italic;
@@ -134,7 +139,6 @@ body {
 .small {
   font-size: 0.75rem;
   letter-spacing: 2px;
-  opacity: 0.7;
 }
 
 .amp {
@@ -162,11 +166,11 @@ h1 {
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div id="mainContent">
 
-  <!-- ✅ FIRST SECTION (CARD — NOW PERMANENT) -->
-  <div class="section">
+  <!-- ✅ FIRST SECTION (LOCKED VISUALLY) -->
+  <div class="section first-section">
     <div class="invite-card" id="card">
 
       <div class="quote">
