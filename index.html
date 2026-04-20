@@ -15,7 +15,7 @@ body {
   background:#f6efe6;
 }
 
-/* ===== ENVELOPE ===== */
+/* ENVELOPE */
 #envelopeScreen {
   position:fixed;
   width:100%;
@@ -76,10 +76,9 @@ body {
   color:#f1d48a;
 }
 
-/* ===== MAIN ===== */
+/* MAIN */
 #mainContent { display:none; }
 
-/* tighter sections */
 .section {
   min-height:75vh;
   display:flex;
@@ -153,7 +152,7 @@ body {
   margin:10px 0;
 }
 
-/* SWIPE ICON */
+/* SWIPE */
 .swipe {
   position:absolute;
   bottom:10px;
@@ -184,6 +183,15 @@ body {
   align-items:center;
   justify-content:center;
   background:#fff;
+}
+
+/* FIXED CANVAS */
+.scratch-box canvas {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
 }
 
 /* FIRECRACKER */
@@ -254,9 +262,20 @@ body {
 
     <div class="scratch-container">
 
-      <div class="scratch-box"><span>Nov</span><canvas></canvas></div>
-      <div class="scratch-box"><span>26</span><canvas></canvas></div>
-      <div class="scratch-box"><span>2026</span><canvas></canvas></div>
+      <div class="scratch-box">
+        <span>Nov</span>
+        <canvas></canvas>
+      </div>
+
+      <div class="scratch-box">
+        <span>26</span>
+        <canvas></canvas>
+      </div>
+
+      <div class="scratch-box">
+        <span>2026</span>
+        <canvas></canvas>
+      </div>
 
     </div>
 
@@ -276,7 +295,7 @@ function openEnvelope(){
   },1200);
 }
 
-/* FIRECRACKER CONFETTI */
+/* FIRECRACKER */
 function firecracker(origin){
   for(let i=0;i<40;i++){
     let p=document.createElement("div");
@@ -296,16 +315,17 @@ function firecracker(origin){
   }
 }
 
-/* SCRATCH */
+/* SCRATCH FIXED */
 function initScratch(){
   document.querySelectorAll("canvas").forEach(canvas=>{
     let box=canvas.parentElement;
-    canvas.width=box.offsetWidth;
-    canvas.height=box.offsetHeight;
+
+    canvas.width=box.clientWidth;
+    canvas.height=box.clientHeight;
 
     let ctx=canvas.getContext("2d");
 
-    let g=ctx.createLinearGradient(0,0,100,100);
+    let g=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
     g.addColorStop(0,"#d4af37");
     g.addColorStop(1,"#f5e6a3");
 
@@ -320,15 +340,14 @@ function initScratch(){
       if(done) return;
 
       ctx.beginPath();
-      ctx.arc(x,y,12,0,Math.PI*2);
+      ctx.arc(x,y,14,0,Math.PI*2);
       ctx.fill();
 
       count++;
 
-      if(count>100){
+      if(count>120){
         done=true;
         ctx.clearRect(0,0,canvas.width,canvas.height);
-
         firecracker(document.getElementById("scratchCard"));
       }
     }
