@@ -13,7 +13,6 @@ body {
   margin:0;
   font-family:'Inter', sans-serif;
   background:#f6efe6;
-  color:#444;
 }
 
 /* ===== ENVELOPE ===== */
@@ -33,11 +32,6 @@ body {
   height:220px;
   position:relative;
   cursor:pointer;
-  animation:breath 3s infinite;
-}
-
-@keyframes breath {
-  50% { transform:scale(1.04); }
 }
 
 .envelope-body {
@@ -82,27 +76,29 @@ body {
   color:#f1d48a;
 }
 
-/* ===== SECTIONS ===== */
+/* ===== MAIN ===== */
 #mainContent { display:none; }
 
+/* tighter sections */
 .section {
-  min-height:85vh;
+  min-height:75vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  padding:15px;
+  padding:10px 15px;
+  position:relative;
 }
 
-/* ===== CARD ===== */
+/* CARD */
 .invite-card {
   width:92%;
   max-width:420px;
   background:#fffdf8;
-  padding:45px 25px;
+  padding:40px 25px;
   border-radius:18px;
   text-align:center;
   position:relative;
-  box-shadow:0 25px 60px rgba(0,0,0,0.15);
+  box-shadow:0 20px 50px rgba(0,0,0,0.12);
 }
 
 /* GOLD CORNERS */
@@ -129,16 +125,12 @@ body {
   border-top:none;
 }
 
-/* ===== TEXT ===== */
-.symbol {
-  font-size:26px;
-  margin-bottom:15px;
-}
+/* TEXT */
+.symbol { font-size:26px; margin-bottom:15px; }
 
 .quote {
   font-size:0.85rem;
   font-style:italic;
-  line-height:1.6;
   color:#6a6a6a;
   margin-bottom:25px;
 }
@@ -146,7 +138,6 @@ body {
 .script {
   font-family:'Great Vibes', cursive;
   font-size:2.8rem;
-  color:#3e3e3e;
   margin:10px 0;
 }
 
@@ -154,7 +145,6 @@ body {
   font-size:0.7rem;
   letter-spacing:2px;
   color:#8a7a65;
-  margin-bottom:15px;
 }
 
 .amp {
@@ -163,7 +153,21 @@ body {
   margin:10px 0;
 }
 
-/* ===== SCRATCH ===== */
+/* SWIPE ICON */
+.swipe {
+  position:absolute;
+  bottom:10px;
+  font-size:0.7rem;
+  opacity:0.6;
+  animation:move 1.5s infinite;
+}
+
+@keyframes move {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(8px); }
+}
+
+/* SCRATCH */
 .scratch-container {
   display:flex;
   gap:12px;
@@ -179,25 +183,26 @@ body {
   display:flex;
   align-items:center;
   justify-content:center;
-  font-family:'Playfair Display', serif;
   background:#fff;
 }
 
-canvas {
+/* FIRECRACKER */
+.particle {
   position:absolute;
-}
-
-.confetti {
-  position:fixed;
   width:6px;
-  height:10px;
-  top:-10px;
-  animation:fall 3s linear forwards;
+  height:6px;
+  border-radius:50%;
+  pointer-events:none;
+  animation:burst 1s ease-out forwards;
 }
 
-@keyframes fall {
-  to { transform:translateY(100vh) rotate(720deg); }
+@keyframes burst {
+  to {
+    transform:translate(var(--x), var(--y));
+    opacity:0;
+  }
 }
+
 </style>
 </head>
 
@@ -216,9 +221,9 @@ canvas {
 <!-- MAIN -->
 <div id="mainContent">
 
-<!-- FIRST CARD -->
+<!-- FIRST SECTION -->
 <div class="section">
-  <div class="invite-card" id="card">
+  <div class="invite-card">
 
     <div class="symbol">ੴ</div>
 
@@ -237,11 +242,13 @@ canvas {
     <div class="parents">DAUGHTER OF MR. & MRS. JHAVERI</div>
 
   </div>
+
+  <div class="swipe">Swipe ↓</div>
 </div>
 
 <!-- SCRATCH -->
 <div class="section">
-  <div class="invite-card">
+  <div class="invite-card" id="scratchCard">
 
     <h2 style="font-family:Playfair Display;">Save the Date</h2>
 
@@ -269,19 +276,27 @@ function openEnvelope(){
   },1200);
 }
 
-/* CONFETTI */
-function confetti(){
-  for(let i=0;i<70;i++){
-    let c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},70%,60%)`;
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
+/* FIRECRACKER CONFETTI */
+function firecracker(origin){
+  for(let i=0;i<40;i++){
+    let p=document.createElement("div");
+    p.className="particle";
+
+    let angle=Math.random()*2*Math.PI;
+    let distance=80+Math.random()*60;
+
+    p.style.setProperty('--x', Math.cos(angle)*distance+'px');
+    p.style.setProperty('--y', Math.sin(angle)*distance+'px');
+
+    p.style.background=`hsl(${Math.random()*360},80%,60%)`;
+
+    origin.appendChild(p);
+
+    setTimeout(()=>p.remove(),1000);
   }
 }
 
-/* SCRATCH FIXED (NO SCROLL) */
+/* SCRATCH */
 function initScratch(){
   document.querySelectorAll("canvas").forEach(canvas=>{
     let box=canvas.parentElement;
@@ -307,12 +322,14 @@ function initScratch(){
       ctx.beginPath();
       ctx.arc(x,y,12,0,Math.PI*2);
       ctx.fill();
+
       count++;
 
       if(count>100){
         done=true;
         ctx.clearRect(0,0,canvas.width,canvas.height);
-        confetti();
+
+        firecracker(document.getElementById("scratchCard"));
       }
     }
 
