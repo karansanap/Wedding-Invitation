@@ -13,7 +13,16 @@ body {
   margin:0;
   font-family:'Inter', sans-serif;
   background:#f7f0e6;
-  color:#5a3e2b;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+}
+
+/* ===== GOLD PARTICLES BACKGROUND ===== */
+canvas#bg {
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:0;
 }
 
 /* ===== ENVELOPE ===== */
@@ -33,6 +42,12 @@ body {
   height:220px;
   position:relative;
   cursor:pointer;
+  animation:breath 3s infinite;
+}
+
+@keyframes breath {
+  0%,100% { transform:scale(1); }
+  50% { transform:scale(1.03); }
 }
 
 .envelope-body {
@@ -78,134 +93,98 @@ body {
 }
 
 /* ===== MAIN ===== */
-#mainContent {
-  display:none;
-}
+#mainContent { display:none; position:relative; z-index:1; }
 
-/* SECTION */
 .section {
-  min-height:100vh;
+  height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  flex-direction:column;
-  padding:40px 20px;
+  scroll-snap-align:start;
+  position:relative;
 }
 
-/* CARD */
+/* cinematic fade */
+.fade {
+  opacity:0;
+  transform:translateY(40px) scale(0.96);
+  transition:all 1s ease;
+}
+
+.fade.show {
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+/* card */
 .invite-card {
   width:90%;
   max-width:420px;
   background:#fffaf0;
-  padding:40px 30px;
+  padding:35px 25px;
   border-radius:12px;
   text-align:center;
   border:1px solid rgba(212,175,55,0.4);
-  box-shadow:0 30px 60px rgba(0,0,0,0.2);
+  box-shadow:0 30px 80px rgba(0,0,0,0.25);
+  backdrop-filter:blur(6px);
 }
 
-/* FIRST CARD ANIMATION */
-.first {
-  opacity:0;
-  transform:translateY(80px);
-}
-.first.show {
-  animation:fadeIn 1.2s forwards;
+/* typography */
+.script { font-family:'Great Vibes', cursive; font-size:2.5rem; }
+.small { font-size:0.7rem; letter-spacing:2px; }
+.quote { font-size:0.85rem; font-style:italic; }
+
+/* ===== SWIPE INDICATOR ===== */
+.swipe {
+  position:absolute;
+  bottom:20px;
+  font-size:0.7rem;
+  opacity:0.6;
+  animation:updown 1.5s infinite;
 }
 
-@keyframes fadeIn {
-  to { opacity:1; transform:translateY(0); }
-}
-
-/* TYPOGRAPHY */
-.quote { font-size:0.9rem; font-style:italic; margin-bottom:20px; }
-.script { font-family:'Great Vibes', cursive; font-size:2.5rem; margin:15px 0; }
-.small { font-size:0.75rem; letter-spacing:2px; }
-.amp { font-size:1.8rem; margin:10px 0; }
-
-h1 {
-  font-family:'Playfair Display', serif;
-  font-size:2.2rem;
+@keyframes updown {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(8px); }
 }
 
 /* ===== SCRATCH ===== */
-.scratch-title {
-  font-family:'Playfair Display', serif;
-  font-size:2rem;
-}
-
-.scratch-sub {
-  font-size:0.85rem;
-  margin-bottom:20px;
-}
-
-.scratch-container {
-  display:flex;
-  gap:15px;
-}
-
-.box-wrap {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-.label {
-  font-size:0.7rem;
-  margin-bottom:5px;
-}
-
 .scratch-box {
   position:relative;
-  width:90px;
-  height:110px;
-  border-radius:12px;
+  width:80px;
+  height:100px;
+  border-radius:10px;
   overflow:hidden;
-  border:1px solid #d4af37;
+  border:1px solid gold;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-family:'Playfair Display', serif;
-  font-size:1.2rem;
-  background:#fff;
+  background:white;
 }
 
-canvas {
+canvas.scratch {
   position:absolute;
-  top:0;
-  left:0;
 }
 
-/* sparkles */
-.sparkle {
-  position:absolute;
+/* confetti */
+.confetti {
+  position:fixed;
   width:6px;
-  height:6px;
-  background:gold;
-  border-radius:50%;
-  pointer-events:none;
-  animation:fade 0.6s forwards;
+  height:10px;
+  top:-10px;
+  animation:fall 3s linear forwards;
 }
 
-@keyframes fade {
-  to { opacity:0; transform:translateY(-10px); }
-}
-
-/* reveal glow */
-.revealed {
-  animation:glow 0.8s ease;
-}
-
-@keyframes glow {
-  0% { box-shadow:0 0 0 transparent; }
-  50% { box-shadow:0 0 20px rgba(212,175,55,0.6); }
-  100% { box-shadow:0 0 0 transparent; }
+@keyframes fall {
+  to { transform:translateY(100vh) rotate(720deg); }
 }
 
 </style>
 </head>
 
 <body>
+
+<canvas id="bg"></canvas>
 
 <!-- ENVELOPE -->
 <div id="envelopeScreen">
@@ -220,62 +199,26 @@ canvas {
 <!-- MAIN -->
 <div id="mainContent">
 
-  <!-- FIRST CARD -->
+  <!-- SECTION 1 -->
   <div class="section">
-    <div class="invite-card first" id="card">
-
-      <div class="quote">
-        "They alone are called husband and wife,<br>
-        who have one soul in two bodies."<br>
-        — Guru Amar Das Ji
-      </div>
-
+    <div class="invite-card fade" id="card1">
+      <div class="quote">"Two souls, one journey."</div>
       <div class="script">Together With Their Families</div>
-
-      <div class="small">REQUEST THE HONOUR OF YOUR PRESENCE</div>
-
-      <div class="amp">&</div>
-
-      <div class="script">On This Auspicious Occasion</div>
-
-      <div class="small">TO CELEBRATE LOVE & UNION</div>
-
+      <div class="small">REQUEST THE HONOUR</div>
     </div>
+    <div class="swipe">Swipe ↑</div>
   </div>
 
-  <!-- SCRATCH SECTION -->
+  <!-- SECTION 2 -->
   <div class="section">
-    <div class="invite-card">
+    <div class="invite-card fade" id="scratchCard">
 
-      <div class="scratch-title">Save the Date</div>
-      <div class="scratch-sub">Scratch below to reveal our wedding date</div>
+      <div class="script">Save the Date</div>
 
-      <div class="scratch-container">
-
-        <div class="box-wrap">
-          <div class="label">MONTH</div>
-          <div class="scratch-box">
-            <span>Nov</span>
-            <canvas></canvas>
-          </div>
-        </div>
-
-        <div class="box-wrap">
-          <div class="label">DAY</div>
-          <div class="scratch-box">
-            <span>26</span>
-            <canvas></canvas>
-          </div>
-        </div>
-
-        <div class="box-wrap">
-          <div class="label">YEAR</div>
-          <div class="scratch-box">
-            <span>2026</span>
-            <canvas></canvas>
-          </div>
-        </div>
-
+      <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
+        <div class="scratch-box"><span>Nov</span><canvas class="scratch"></canvas></div>
+        <div class="scratch-box"><span>26</span><canvas class="scratch"></canvas></div>
+        <div class="scratch-box"><span>2026</span><canvas class="scratch"></canvas></div>
       </div>
 
     </div>
@@ -284,75 +227,125 @@ canvas {
 </div>
 
 <script>
+/* OPEN */
 function openEnvelope(){
   document.querySelector(".envelope").classList.add("open");
-
   setTimeout(()=>{
     document.getElementById("envelopeScreen").style.display="none";
     document.getElementById("mainContent").style.display="block";
-    document.getElementById("card").classList.add("show");
+    observe();
     initScratch();
   },1200);
 }
 
-/* PREMIUM SCRATCH */
+/* FADE ON SCROLL */
+function observe(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) e.target.classList.add("show");
+    });
+  });
+  document.querySelectorAll(".fade").forEach(el=>obs.observe(el));
+}
+
+/* CONFETTI */
+function confetti(){
+  for(let i=0;i<60;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},70%,60%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+
+/* SCRATCH */
 function initScratch(){
-  document.querySelectorAll("canvas").forEach(canvas=>{
-    const box = canvas.parentElement;
-    canvas.width = box.offsetWidth;
-    canvas.height = box.offsetHeight;
+  document.querySelectorAll(".scratch").forEach(canvas=>{
+    let box=canvas.parentElement;
+    canvas.width=box.offsetWidth;
+    canvas.height=box.offsetHeight;
+    let ctx=canvas.getContext("2d");
 
-    const ctx = canvas.getContext("2d");
+    let g=ctx.createLinearGradient(0,0,100,100);
+    g.addColorStop(0,"#d4af37");
+    g.addColorStop(1,"#f5e6a3");
 
-    /* gold gradient */
-    const grad = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
-    grad.addColorStop(0,"#d4af37");
-    grad.addColorStop(1,"#f5e6a3");
-
-    ctx.fillStyle = grad;
+    ctx.fillStyle=g;
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
     ctx.globalCompositeOperation="destination-out";
 
-    let scratched=0;
+    let count=0,done=false;
 
     function scratch(x,y){
+      if(done) return;
       ctx.beginPath();
-      ctx.arc(x,y,14,0,Math.PI*2);
+      ctx.arc(x,y,12,0,Math.PI*2);
       ctx.fill();
+      count++;
 
-      scratched++;
-
-      /* sparkle */
-      const s=document.createElement("div");
-      s.className="sparkle";
-      s.style.left=x+"px";
-      s.style.top=y+"px";
-      box.appendChild(s);
-      setTimeout(()=>s.remove(),600);
-
-      if(scratched>120){
+      if(count>100){
+        done=true;
         ctx.clearRect(0,0,canvas.width,canvas.height);
-        box.classList.add("revealed");
+        confetti();
+
+        /* AUTO SCROLL */
+        setTimeout(()=>{
+          window.scrollTo({
+            top:window.innerHeight*2,
+            behavior:'smooth'
+          });
+        },800);
       }
     }
 
     canvas.addEventListener("mousemove",e=>{
       if(e.buttons!==1) return;
-      const r=canvas.getBoundingClientRect();
+      let r=canvas.getBoundingClientRect();
       scratch(e.clientX-r.left,e.clientY-r.top);
     });
 
     canvas.addEventListener("touchmove",e=>{
-      const r=canvas.getBoundingClientRect();
+      let r=canvas.getBoundingClientRect();
       scratch(
         e.touches[0].clientX-r.left,
         e.touches[0].clientY-r.top
       );
     });
-
   });
 }
+
+/* GOLD PARTICLES BG */
+const bg=document.getElementById("bg");
+const ctx=bg.getContext("2d");
+bg.width=window.innerWidth;
+bg.height=window.innerHeight;
+
+let particles=[];
+for(let i=0;i<40;i++){
+  particles.push({
+    x:Math.random()*bg.width,
+    y:Math.random()*bg.height,
+    r:Math.random()*2,
+    dy:Math.random()*0.5+0.2
+  });
+}
+
+function animate(){
+  ctx.clearRect(0,0,bg.width,bg.height);
+  ctx.fillStyle="rgba(212,175,55,0.5)";
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    p.y+=p.dy;
+    if(p.y>bg.height) p.y=0;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
 </script>
 
 </body>
