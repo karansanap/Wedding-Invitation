@@ -9,10 +9,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
+:root {
+  --gold:#caa85a;
+}
+
 body {
   margin:0;
   font-family:'Inter', sans-serif;
-  background:#f6efe6;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,0.6), transparent 60%),
+    linear-gradient(#f6efe6,#efe6d8);
+  overflow-x:hidden;
+}
+
+/* VIGNETTE */
+body::after {
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle,transparent 60%,rgba(0,0,0,0.08));
 }
 
 /* ENVELOPE */
@@ -23,22 +39,26 @@ body {
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#f6efe6;
   z-index:999;
 }
 
 .envelope {
-  width:340px;
-  height:220px;
+  width:360px;
+  height:240px;
   position:relative;
   cursor:pointer;
+  animation:breath 3s infinite;
+}
+
+@keyframes breath {
+  50% { transform:scale(1.05); }
 }
 
 .envelope-body {
   width:100%;
   height:100%;
   background:linear-gradient(145deg,#a30000,#5c0000);
-  border-radius:10px;
+  border-radius:12px;
 }
 
 .flap {
@@ -57,8 +77,8 @@ body {
 
 .seal {
   position:absolute;
-  width:65px;
-  height:65px;
+  width:70px;
+  height:70px;
   background:radial-gradient(circle,#b30000,#4a0000);
   border-radius:50%;
   top:70%;
@@ -68,7 +88,7 @@ body {
 
 .tap-text {
   position:absolute;
-  top:52%;
+  top:50%;
   left:50%;
   transform:translate(-50%,-50%);
   font-size:0.7rem;
@@ -79,47 +99,80 @@ body {
 /* MAIN */
 #mainContent { display:none; }
 
+/* SECTION */
 .section {
-  min-height:75vh;
+  min-height:80vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  padding:10px 15px;
-  position:relative;
+  padding:10px;
+  perspective:1000px;
 }
 
 /* CARD */
 .invite-card {
   width:92%;
   max-width:420px;
-  background:#fffdf8;
   padding:40px 25px;
   border-radius:18px;
   text-align:center;
   position:relative;
-  box-shadow:0 20px 50px rgba(0,0,0,0.12);
+
+  background:
+    linear-gradient(#fffdf8,#f9f2e8),
+    url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+
+  box-shadow:
+    0 30px 70px rgba(0,0,0,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  transform:translateY(30px);
+  opacity:0;
+  animation:fadeUp 1.2s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    transform:translateY(0);
+    opacity:1;
+  }
+}
+
+/* LIGHT */
+.invite-card::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:18px;
+  background:radial-gradient(circle at 50% 20%,rgba(255,255,255,0.5),transparent 60%);
 }
 
 /* GOLD CORNERS */
 .invite-card:before,
 .invite-card:after {
-  content:"";
-  position:absolute;
-  width:40px;
-  height:40px;
-  border:1px solid #d4af37;
+  pointer-events:none;
 }
 
 .invite-card:before {
+  content:"";
+  position:absolute;
   top:15px;
   left:15px;
+  width:40px;
+  height:40px;
+  border:1px solid var(--gold);
   border-right:none;
   border-bottom:none;
 }
 
 .invite-card:after {
+  content:"";
+  position:absolute;
   bottom:15px;
   right:15px;
+  width:40px;
+  height:40px;
+  border:1px solid var(--gold);
   border-left:none;
   border-top:none;
 }
@@ -132,6 +185,7 @@ body {
   font-style:italic;
   color:#6a6a6a;
   margin-bottom:25px;
+  line-height:1.6;
 }
 
 .script {
@@ -148,65 +202,72 @@ body {
 
 .amp {
   font-size:1.6rem;
-  color:#c9a64b;
+  color:var(--gold);
   margin:10px 0;
 }
 
 /* SWIPE */
 .swipe {
   position:absolute;
-  bottom:10px;
-  font-size:0.7rem;
+  bottom:15px;
+  font-size:0.65rem;
+  letter-spacing:2px;
   opacity:0.6;
   animation:move 1.5s infinite;
 }
 
 @keyframes move {
-  0%,100% { transform:translateY(0); }
   50% { transform:translateY(8px); }
 }
 
-/* SCRATCH */
+/* SCRATCH GRID */
+.scratch-wrapper {
+  max-width:300px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  text-align:center;
+}
+
 .scratch-labels {
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:8px;
   font-size:0.65rem;
   letter-spacing:2px;
   color:#8a7a65;
 }
 
-.scratch-container {
-  display:flex;
-  gap:12px;
-}
-
 .scratch-box {
   position:relative;
-  width:85px;
   height:110px;
   border-radius:12px;
   overflow:hidden;
-  border:1px solid #d4af37;
+  border:1px solid var(--gold);
   display:flex;
   align-items:center;
   justify-content:center;
   background:#fff;
 }
 
-.scratch-box canvas {
+/* SHIMMER */
+.scratch-box::before {
+  content:"";
   position:absolute;
-  top:0;
-  left:0;
-  width:100%;
+  width:200%;
   height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
+  animation:shine 3s infinite;
 }
 
-/* SCRATCH TEXT BELOW */
+@keyframes shine {
+  to { transform:translateX(100%); }
+}
+
+.scratch-box canvas {
+  position:absolute;
+  inset:0;
+}
+
 .scratch-hint {
-  display:flex;
-  justify-content:space-between;
-  margin-top:8px;
   font-size:0.6rem;
   letter-spacing:2px;
   color:#b39b6b;
@@ -215,10 +276,9 @@ body {
 /* FIRECRACKER */
 .particle {
   position:absolute;
-  width:6px;
-  height:6px;
+  width:5px;
+  height:5px;
   border-radius:50%;
-  pointer-events:none;
   animation:burst 1s ease-out forwards;
 }
 
@@ -233,7 +293,6 @@ body {
 
 <body>
 
-<!-- ENVELOPE -->
 <div id="envelopeScreen">
   <div class="envelope" onclick="openEnvelope()">
     <div class="flap"></div>
@@ -243,15 +302,11 @@ body {
   </div>
 </div>
 
-<!-- MAIN -->
 <div id="mainContent">
 
-<!-- FIRST SECTION -->
 <div class="section">
   <div class="invite-card">
-
     <div class="symbol">ੴ</div>
-
     <div class="quote">
       "They alone are called husband and wife,<br>
       who have one soul in two bodies."<br>
@@ -265,37 +320,30 @@ body {
 
     <div class="script">Pankti</div>
     <div class="parents">DAUGHTER OF MR. & MRS. JHAVERI</div>
-
   </div>
 
-  <div class="swipe">Swipe ↓</div>
+  <div class="swipe">SWIPE ↓</div>
 </div>
 
-<!-- SCRATCH -->
 <div class="section">
   <div class="invite-card" id="scratchCard">
 
     <h2 style="font-family:Playfair Display;">Save the Date</h2>
 
-    <!-- LABELS -->
-    <div class="scratch-labels">
-      <span>MONTH</span>
-      <span>DAY</span>
-      <span>YEAR</span>
-    </div>
+    <div class="scratch-wrapper">
 
-    <!-- BOXES -->
-    <div class="scratch-container">
+      <div class="scratch-labels">MONTH</div>
+      <div class="scratch-labels">DAY</div>
+      <div class="scratch-labels">YEAR</div>
+
       <div class="scratch-box"><span>Nov</span><canvas></canvas></div>
       <div class="scratch-box"><span>26</span><canvas></canvas></div>
       <div class="scratch-box"><span>2026</span><canvas></canvas></div>
-    </div>
 
-    <!-- BELOW TEXT -->
-    <div class="scratch-hint">
-      <span>SCRATCH</span>
-      <span>SCRATCH</span>
-      <span>SCRATCH</span>
+      <div class="scratch-hint">SCRATCH</div>
+      <div class="scratch-hint">SCRATCH</div>
+      <div class="scratch-hint">SCRATCH</div>
+
     </div>
 
   </div>
@@ -306,29 +354,27 @@ body {
 <script>
 function openEnvelope(){
   document.querySelector(".envelope").classList.add("open");
-
   setTimeout(()=>{
-    document.getElementById("envelopeScreen").style.display="none";
-    document.getElementById("mainContent").style.display="block";
+    envelopeScreen.style.display="none";
+    mainContent.style.display="block";
     initScratch();
   },1200);
 }
 
 function firecracker(origin){
-  for(let i=0;i<40;i++){
+  for(let i=0;i<35;i++){
     let p=document.createElement("div");
     p.className="particle";
 
     let angle=Math.random()*2*Math.PI;
-    let distance=80+Math.random()*60;
+    let dist=60+Math.random()*50;
 
-    p.style.setProperty('--x', Math.cos(angle)*distance+'px');
-    p.style.setProperty('--y', Math.sin(angle)*distance+'px');
+    p.style.setProperty('--x', Math.cos(angle)*dist+'px');
+    p.style.setProperty('--y', Math.sin(angle)*dist+'px');
 
-    p.style.background=`hsl(${Math.random()*360},80%,60%)`;
+    p.style.background=`hsl(${Math.random()*40+20},70%,65%)`;
 
     origin.appendChild(p);
-
     setTimeout(()=>p.remove(),1000);
   }
 }
@@ -384,10 +430,7 @@ function initScratch(){
       e.preventDefault();
 
       let r=canvas.getBoundingClientRect();
-      scratch(
-        e.touches[0].clientX-r.left,
-        e.touches[0].clientY-r.top
-      );
+      scratch(e.touches[0].clientX-r.left, e.touches[0].clientY-r.top);
     },{passive:false});
   });
 }
