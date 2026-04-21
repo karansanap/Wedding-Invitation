@@ -243,6 +243,14 @@ canvas {
   margin-top:20px;
 }
 
+#sparkles {
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:1;
+}
+
 .sparkle {
   position:absolute;
   width:6px;
@@ -251,6 +259,11 @@ canvas {
   border-radius:50%;
   opacity:0;
   animation:sparkleAnim 4s infinite;
+  z-index:2;
+}
+
+.envelope {
+  z-index:3;
 }
 
 @keyframes sparkleAnim {
