@@ -272,45 +272,67 @@ canvas {
 <!-- SECTION 1 -->
 <div class="section" id="section1">  
   <div class="invite-card">  
-    <!-- (unchanged content) -->
+    <svg class="ganpati" viewBox="0 0 64 64">
+      <defs>
+        <linearGradient id="goldGradient">
+          <stop offset="0%" stop-color="#f5e6a3"/>
+          <stop offset="50%" stop-color="#caa85a"/>
+          <stop offset="100%" stop-color="#f5e6a3"/>
+        </linearGradient>
+      </defs>
+      <path d="M32 4c-8 0-14 6-14 14 0 4 2 8 5 10-2 2-3 5-3 8 0 7 6 12 12 12s12-5 12-12c0-3-1-6-3-8 3-2 5-6 5-10 0-8-6-14-14-14z"/>
+    </svg>
+
+    <div class="quote">
+      "They alone are called husband and wife,<br>
+      who have one soul in two bodies."<br>
+      — Guru Amar Das Ji
+    </div>
+
     <div class="script">Karan</div>
+    <div class="parents">SON OF MR. & MRS. SANAP</div>
+
     <div class="script">Pankti</div>
+    <div class="parents">DAUGHTER OF MR. & MRS. JHAVERI</div>
   </div>
+
   <div class="swipe" onclick="scrollNext()">SWIPE ↓</div>
 </div>
 
 <!-- SECTION 2 -->
 <div class="section" id="section2">  
   <div class="invite-card" id="scratchCard">
+
     <h2 class="save-title">Save the Date</h2>
+
     <div class="scratch-wrapper">
+      <div class="scratch-label">MONTH</div>
+      <div class="scratch-label">DAY</div>
+      <div class="scratch-label">YEAR</div>
+
       <div class="scratch-box"><span class="date-text">Nov</span><canvas></canvas></div>
       <div class="scratch-box"><span class="date-text">26</span><canvas></canvas></div>
       <div class="scratch-box"><span class="date-text">2026</span><canvas></canvas></div>
+
+      <div class="scratch-hint">SCRATCH</div>
+      <div class="scratch-hint">SCRATCH</div>
+      <div class="scratch-hint">SCRATCH</div>
     </div>
+
   </div>
+
+  <!-- ✅ NEW SWIPE -->
   <div class="swipe" onclick="scrollToVideo()">SWIPE ↓</div>
 </div>
 
-<!-- SECTION 3 (VIDEO WITH SOUND) -->
+<!-- SECTION 3 -->
 <div class="section" id="section3">
   <div class="invite-card">
     <h2 class="video-title">A Glimpse of Our Journey</h2>
 
-    <div style="position:relative;">
-      <video id="weddingVideo" autoplay muted loop playsinline style="width:100%; border-radius:14px;">
-        <source src="wedding.mp4" type="video/mp4">
-      </video>
-
-      <div id="soundOverlay" onclick="enableSound()" style="
-        position:absolute; inset:0; display:flex;
-        align-items:center; justify-content:center;
-        background:rgba(0,0,0,0.3); color:#fff;
-        border-radius:14px; cursor:pointer;">
-        🔊 TAP FOR SOUND
-      </div>
-    </div>
-
+    <video autoplay muted loop playsinline style="width:100%; max-width:420px; border-radius:14px; box-shadow:0 20px 50px rgba(0,0,0,0.3);">
+      <source src="wedding.mp4" type="video/mp4">
+    </video>
   </div>
 </div>
 
@@ -330,20 +352,70 @@ function scrollNext(){
   document.getElementById("section2").scrollIntoView({behavior:"smooth"});
 }
 
+/* ✅ NEW FUNCTION */
 function scrollToVideo(){
   document.getElementById("section3").scrollIntoView({behavior:"smooth"});
 }
 
-function enableSound(){
-  let v=document.getElementById("weddingVideo");
-  let o=document.getElementById("soundOverlay");
-  v.muted=false;
-  v.play();
-  o.style.display="none";
+function firecracker(origin){
+  let rect = origin.getBoundingClientRect();
+
+  for(let i=0;i<70;i++){
+    let p=document.createElement("div");
+    p.className="particle";
+
+    let angle=Math.random()*2*Math.PI;
+    let dist=100+Math.random()*80;
+
+    p.style.left = rect.width/2 + "px";
+    p.style.top = rect.height/2 + "px";
+
+    p.style.setProperty('--x',Math.cos(angle)*dist+'px');
+    p.style.setProperty('--y',Math.sin(angle)*dist+'px');
+
+    p.style.background=`hsl(${Math.random()*40+20},80%,60%)`;
+
+    origin.appendChild(p);
+    setTimeout(()=>p.remove(),1000);
+  }
 }
 
-/* keep scratch + firecracker same */
-function initScratch(){ /* unchanged */ }
+function initScratch(){
+  document.querySelectorAll("canvas").forEach(canvas=>{
+    let ctx=canvas.getContext("2d");
+
+    canvas.width=canvas.offsetWidth;
+    canvas.height=canvas.offsetHeight;
+
+    ctx.fillStyle="#d4af37";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.globalCompositeOperation="destination-out";
+
+    let count=0,done=false;
+
+    canvas.addEventListener("touchmove",e=>{
+      e.preventDefault();
+      let r=canvas.getBoundingClientRect();
+      let x=e.touches[0].clientX-r.left;
+      let y=e.touches[0].clientY-r.top;
+
+      ctx.beginPath();
+      ctx.arc(x,y,18,0,Math.PI*2);
+      ctx.fill();
+
+      count++;
+
+      if(count>120 && !done){
+        done=true;
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        document.getElementById("revealSound").play();
+        firecracker(document.getElementById("scratchCard"));
+      }
+    },{passive:false});
+  });
+}
 </script>  
 
 </body>  
