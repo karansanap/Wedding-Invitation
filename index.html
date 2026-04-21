@@ -243,6 +243,23 @@ canvas {
   margin-top:20px;
 }
 
+.sparkle {
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:radial-gradient(circle, #fff, rgba(255,255,255,0));
+  border-radius:50%;
+  opacity:0;
+  animation:sparkleAnim 4s infinite;
+}
+
+@keyframes sparkleAnim {
+  0% { transform:translateY(0) scale(0.5); opacity:0; }
+  20% { opacity:1; }
+  50% { transform:translateY(-60px) scale(1); opacity:1; }
+  100% { transform:translateY(-120px) scale(0.3); opacity:0; }
+}
+
 .count-box {
   border:1px solid var(--gold);
   border-radius:12px;
@@ -281,7 +298,8 @@ canvas {
 <!-- ✅ ADDED BACKGROUND MUSIC -->
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
-<div id="envelopeScreen">  
+<div id="envelopeScreen">
+  <div id="sparkles"></div>  
   <div class="envelope" onclick="openEnvelope()">  
     <div class="flap"></div>  
     <div class="envelope-body"></div>  
@@ -516,6 +534,24 @@ function startCountdown(){
     document.getElementById("secs").innerText = Math.floor((diff%(1000*60))/1000);
   },1000);
 }
+
+function createSparkles(){
+  const container = document.getElementById("sparkles");
+
+  for(let i=0;i<25;i++){
+    let s = document.createElement("div");
+    s.className = "sparkle";
+
+    s.style.left = Math.random()*100 + "%";
+    s.style.top = (60 + Math.random()*40) + "%";
+
+    s.style.animationDelay = (Math.random()*4) + "s";
+
+    container.appendChild(s);
+  }
+}
+
+createSparkles();
 </script>  
 
 </body>  
