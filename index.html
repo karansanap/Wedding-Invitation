@@ -23,9 +23,9 @@ body {
   scroll-behavior:smooth;
 }
 
-/* 🔻 REDUCED GAP */
+/* SECTION */
 .section {
-  min-height:85vh; /* reduced from 100 */
+  min-height:85vh;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -53,7 +53,6 @@ body {
   animation:breath 3s infinite;
 }
 
-/* ✨ GLOW RESTORED */
 .envelope::before {
   content:"";
   position:absolute;
@@ -66,7 +65,6 @@ body {
 
 @keyframes breath { 50% { transform:scale(1.05); } }
 
-/* GOLD */
 .envelope-body {
   width:100%;
   height:100%;
@@ -78,7 +76,6 @@ body {
     0 20px 50px rgba(0,0,0,0.3);
 }
 
-/* ✨ SHINE */
 .envelope-body::after {
   content:"";
   position:absolute;
@@ -133,9 +130,31 @@ body {
   border-radius:18px;
   text-align:center;
   background:inherit;
+  position:relative;
   box-shadow:
     0 25px 60px rgba(0,0,0,0.15),
     inset 0 0 0 1px rgba(202,168,90,0.25);
+}
+
+/* 💎 GOLD EDGE ANIMATION */
+.invite-card::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:18px;
+  padding:1.5px;
+  background:linear-gradient(120deg,transparent,#caa85a,transparent);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  animation:edgeMove 4s linear infinite;
+}
+
+@keyframes edgeMove {
+  0% { background-position:-200px; }
+  100% { background-position:200px; }
 }
 
 /* GANPATI */
@@ -143,6 +162,12 @@ body {
   width:52px;
   margin-bottom:15px;
   fill:url(#goldGradient);
+  animation:ganpatiFloat 3s ease-in-out infinite;
+}
+
+@keyframes ganpatiFloat {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-6px); }
 }
 
 /* TEXT */
@@ -150,7 +175,7 @@ body {
 .script { font-family:'Great Vibes'; font-size:2.8rem; }
 .parents { font-size:0.7rem; letter-spacing:2px; color:#8a7a65; }
 
-/* ⬇️ SWIPE BACK */
+/* SWIPE */
 .swipe {
   position:absolute;
   bottom:10px;
@@ -158,9 +183,7 @@ body {
   opacity:0.6;
   animation:swipeMove 1.5s infinite;
 }
-
 @keyframes swipeMove {
-  0%,100% { transform:translateY(0); }
   50% { transform:translateY(10px); }
 }
 
@@ -172,11 +195,6 @@ body {
   grid-template-columns:repeat(3,1fr);
   gap:12px;
   text-align:center;
-}
-
-.scratch-label {
-  font-size:0.65rem;
-  letter-spacing:3px;
 }
 
 .scratch-box {
@@ -205,12 +223,7 @@ canvas {
   z-index:2;
 }
 
-.scratch-hint {
-  font-size:0.6rem;
-  letter-spacing:3px;
-}
-
-/* FIREWORK */
+/* 🎆 FIREWORK */
 .particle {
   position:absolute;
   width:6px;
@@ -226,7 +239,7 @@ canvas {
 
 <body>
 
-<audio id="revealSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b1d05.mp3?filename=success-1-6297.mp3"></audio>
+<audio id="revealSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b1d05.mp3"></audio>
 
 <div id="envelopeScreen">
   <div class="envelope" onclick="openEnvelope()">
@@ -253,12 +266,6 @@ canvas {
       <path d="M32 4c-8 0-14 6-14 14 0 4 2 8 5 10-2 2-3 5-3 8 0 7 6 12 12 12s12-5 12-12c0-3-1-6-3-8 3-2 5-6 5-10 0-8-6-14-14-14z"/>
     </svg>
 
-    <div class="quote">
-      "They alone are called husband and wife,<br>
-      who have one soul in two bodies."<br>
-      — Guru Amar Das Ji
-    </div>
-
     <div class="script">Karan</div>
     <div class="parents">SON OF MR. & MRS. SANAP</div>
 
@@ -266,7 +273,6 @@ canvas {
     <div class="parents">DAUGHTER OF MR. & MRS. JHAVERI</div>
 
   </div>
-
   <div class="swipe">SWIPE ↓</div>
 </div>
 
@@ -276,19 +282,9 @@ canvas {
     <h2 class="save-title">Save the Date</h2>
 
     <div class="scratch-wrapper">
-
-      <div class="scratch-label">MONTH</div>
-      <div class="scratch-label">DAY</div>
-      <div class="scratch-label">YEAR</div>
-
       <div class="scratch-box"><span class="date-text">Nov</span><canvas></canvas></div>
       <div class="scratch-box"><span class="date-text">26</span><canvas></canvas></div>
       <div class="scratch-box"><span class="date-text">2026</span><canvas></canvas></div>
-
-      <div class="scratch-hint">SCRATCH</div>
-      <div class="scratch-hint">SCRATCH</div>
-      <div class="scratch-hint">SCRATCH</div>
-
     </div>
 
   </div>
@@ -306,19 +302,24 @@ function openEnvelope(){
   },1000);
 }
 
+/* 🎆 FIRECRACKER FIXED */
 function firecracker(origin){
-  for(let i=0;i<50;i++){
+  let rect = origin.getBoundingClientRect();
+
+  for(let i=0;i<70;i++){
     let p=document.createElement("div");
     p.className="particle";
 
     let angle=Math.random()*2*Math.PI;
-    let dist=80+Math.random()*60;
+    let dist=100+Math.random()*80;
 
-    p.style.left="50%";
-    p.style.top="50%";
+    p.style.left = rect.width/2 + "px";
+    p.style.top = rect.height/2 + "px";
 
     p.style.setProperty('--x',Math.cos(angle)*dist+'px');
     p.style.setProperty('--y',Math.sin(angle)*dist+'px');
+
+    p.style.background=`hsl(${Math.random()*40+20},80%,60%)`;
 
     origin.appendChild(p);
     setTimeout(()=>p.remove(),1000);
@@ -358,7 +359,6 @@ function initScratch(){
         document.getElementById("revealSound").play();
         firecracker(document.getElementById("scratchCard"));
       }
-
     },{passive:false});
   });
 }
