@@ -23,7 +23,6 @@ body {
   scroll-behavior:smooth;
 }
 
-/* SECTION */
 .section {
   min-height:85vh;
   display:flex;
@@ -136,8 +135,9 @@ body {
     inset 0 0 0 1px rgba(202,168,90,0.25);
 }
 
-/* 💎 GOLD EDGE ANIMATION */
-.invite-card::before {
+/* 💎 EDGE DESIGN */
+.invite-card::before,
+.invite-card::after {
   content:"";
   position:absolute;
   inset:0;
@@ -149,7 +149,14 @@ body {
     linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;
   mask-composite:exclude;
+  pointer-events:none;
+}
+
+.invite-card::before {
   animation:edgeMove 4s linear infinite;
+}
+.invite-card::after {
+  animation:edgeMove 6s linear infinite reverse;
 }
 
 @keyframes edgeMove {
@@ -183,6 +190,7 @@ body {
   opacity:0.6;
   animation:swipeMove 1.5s infinite;
 }
+
 @keyframes swipeMove {
   50% { transform:translateY(10px); }
 }
@@ -195,6 +203,11 @@ body {
   grid-template-columns:repeat(3,1fr);
   gap:12px;
   text-align:center;
+}
+
+.scratch-label {
+  font-size:0.65rem;
+  letter-spacing:3px;
 }
 
 .scratch-box {
@@ -223,7 +236,12 @@ canvas {
   z-index:2;
 }
 
-/* 🎆 FIREWORK */
+.scratch-hint {
+  font-size:0.6rem;
+  letter-spacing:3px;
+}
+
+/* FIREWORK */
 .particle {
   position:absolute;
   width:6px;
@@ -266,6 +284,12 @@ canvas {
       <path d="M32 4c-8 0-14 6-14 14 0 4 2 8 5 10-2 2-3 5-3 8 0 7 6 12 12 12s12-5 12-12c0-3-1-6-3-8 3-2 5-6 5-10 0-8-6-14-14-14z"/>
     </svg>
 
+    <div class="quote">
+      "They alone are called husband and wife,<br>
+      who have one soul in two bodies."<br>
+      — Guru Amar Das Ji
+    </div>
+
     <div class="script">Karan</div>
     <div class="parents">SON OF MR. & MRS. SANAP</div>
 
@@ -273,6 +297,7 @@ canvas {
     <div class="parents">DAUGHTER OF MR. & MRS. JHAVERI</div>
 
   </div>
+
   <div class="swipe">SWIPE ↓</div>
 </div>
 
@@ -282,9 +307,19 @@ canvas {
     <h2 class="save-title">Save the Date</h2>
 
     <div class="scratch-wrapper">
+
+      <div class="scratch-label">MONTH</div>
+      <div class="scratch-label">DAY</div>
+      <div class="scratch-label">YEAR</div>
+
       <div class="scratch-box"><span class="date-text">Nov</span><canvas></canvas></div>
       <div class="scratch-box"><span class="date-text">26</span><canvas></canvas></div>
       <div class="scratch-box"><span class="date-text">2026</span><canvas></canvas></div>
+
+      <div class="scratch-hint">SCRATCH</div>
+      <div class="scratch-hint">SCRATCH</div>
+      <div class="scratch-hint">SCRATCH</div>
+
     </div>
 
   </div>
@@ -302,7 +337,6 @@ function openEnvelope(){
   },1000);
 }
 
-/* 🎆 FIRECRACKER FIXED */
 function firecracker(origin){
   let rect = origin.getBoundingClientRect();
 
