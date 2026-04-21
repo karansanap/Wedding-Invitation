@@ -31,228 +31,36 @@ body {
   scroll-snap-align:start;  
 }  
 
-#envelopeScreen {  
-  position:fixed;  
-  width:100%;  
-  height:100vh;  
-  display:flex;  
-  justify-content:center;  
-  align-items:center;  
-  z-index:999;  
-  background:inherit;  
-}  
+/* KEEP ALL YOUR EXISTING CSS SAME */
 
-.envelope {  
-  width:360px;  
-  height:240px;  
-  position:relative;  
-  cursor:pointer;  
-  animation:breath 3s infinite;  
-}  
-
-.envelope::before {  
-  content:"";  
-  position:absolute;  
-  inset:-30px;  
-  border-radius:20px;  
-  background:radial-gradient(circle, rgba(202,168,90,0.35), transparent 70%);  
-  filter:blur(20px);  
-  z-index:-1;  
-}  
-
-@keyframes breath { 50% { transform:scale(1.05); } }  
-
-.envelope-body {  
-  width:100%;  
-  height:100%;  
-  border-radius:14px;  
-  background:linear-gradient(145deg,#f5e6a3,#e0c46c,#caa85a,#b8954d);  
-  box-shadow:  
-    inset 0 2px 6px rgba(255,255,255,0.7),  
-    inset 0 -6px 12px rgba(0,0,0,0.3),  
-    0 20px 50px rgba(0,0,0,0.3);  
-}  
-
-.envelope-body::after {  
-  content:"";  
-  position:absolute;  
-  inset:0;  
-  border-radius:14px;  
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.5),transparent);  
-  animation:shine 4s infinite;  
-}  
-
-@keyframes shine {  
-  0% { transform:translateX(-100%); }  
-  100% { transform:translateX(100%); }  
-}  
-
-.flap {  
-  position:absolute;  
-  width:100%;  
-  height:60%;  
-  background:linear-gradient(145deg,#e0c46c,#caa85a,#b8954d);  
-  clip-path:polygon(0 0,100% 0,50% 100%);  
-  transform-origin:top;  
-  transition:1.2s;  
-}  
-
-.envelope.open .flap { transform:rotateX(180deg); }  
-
-.seal {  
-  position:absolute;  
-  width:70px;  
-  height:70px;  
-  background:radial-gradient(circle,#b30000,#5a0000);  
-  border-radius:50%;  
-  top:70%;  
-  left:50%;  
-  transform:translate(-50%,-50%);  
-}  
-
-.tap-text {  
-  position:absolute;  
-  top:48%;  
-  left:50%;  
-  transform:translate(-50%,-50%);  
-  font-size:0.7rem;  
-  letter-spacing:3px;  
-}  
-
-.invite-card {  
-  width:92%;  
-  max-width:420px;  
-  padding:45px 28px;  
-  border-radius:18px;  
-  text-align:center;  
-  background:inherit;  
-  position:relative;  
-  box-shadow:  
-    0 25px 60px rgba(0,0,0,0.15),  
-    inset 0 0 0 1px rgba(202,168,90,0.25);  
-}  
-
-.invite-card::before,  
-.invite-card::after {  
-  content:"";  
-  position:absolute;  
-  inset:0;  
-  border-radius:18px;  
-  padding:1.5px;  
-  background:linear-gradient(120deg,transparent,#caa85a,transparent);  
-  -webkit-mask:  
-    linear-gradient(#000 0 0) content-box,  
-    linear-gradient(#000 0 0);  
-  -webkit-mask-composite:xor;  
-  mask-composite:exclude;  
-}  
-
-.invite-card::before { animation:edgeMove 4s linear infinite; }  
-.invite-card::after { animation:edgeMove 6s linear infinite reverse; }  
-
-@keyframes edgeMove {  
-  0% { background-position:-200px; }  
-  100% { background-position:200px; }  
-}  
-
-.ganpati {  
-  width:60px;  
-  margin-bottom:15px;  
-  animation:ganpatiFloat 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 6px rgba(202,168,90,0.6));
+/* ✅ NEW COUNTDOWN STYLE */
+.countdown {
+  display:flex;
+  gap:20px;
+  justify-content:center;
+  margin-top:20px;
 }
 
-@keyframes ganpatiFloat {  
-  50% { transform:translateY(-6px); }  
-}  
+.count-box {
+  text-align:center;
+}
 
-.quote { font-size:0.85rem; margin-bottom:25px; font-style:italic; }  
-.script { font-family:'Great Vibes'; font-size:2.8rem; }  
-.parents { font-size:0.7rem; letter-spacing:2px; color:#8a7a65; }  
-
-.swipe {  
-  position:absolute;  
-  bottom:10px;  
-  font-size:0.7rem;  
-  opacity:0.6;  
-  animation:swipeMove 1.5s infinite;  
-  cursor:pointer;  
-}  
-
-@keyframes swipeMove {  
-  50% { transform:translateY(10px); }  
-}  
-
-.save-title { font-family:'Playfair Display'; margin-bottom:20px; }  
-
-.scratch-wrapper {  
-  display:grid;  
-  grid-template-columns:repeat(3,1fr);  
-  gap:12px;  
-  text-align:center;  
-}  
-
-.scratch-label {  
-  font-size:0.65rem;  
-  letter-spacing:3px;  
-}  
-
-.scratch-box {  
-  position:relative;  
-  height:105px;  
-  border-radius:14px;  
-  overflow:hidden;  
-  border:1px solid var(--gold);  
-  background:#fff;  
-}  
-
-.date-text {  
-  position:absolute;  
-  top:50%;  
-  left:50%;  
-  transform:translate(-50%,-50%);  
-  font-size:1.5rem;  
-  z-index:0;  
-}  
-
-canvas {  
-  position:absolute;  
-  inset:0;  
-  width:100%;  
-  height:100%;  
-  z-index:2;  
-}  
-
-.scratch-hint {  
-  font-size:0.6rem;  
-  letter-spacing:3px;  
-}  
-
-.particle {  
-  position:absolute;  
-  width:6px;  
-  height:6px;  
-  border-radius:50%;  
-  animation:burst 1s forwards;  
-}  
-
-@keyframes burst {  
-  to { transform:translate(var(--x),var(--y)); opacity:0; }  
-}  
-
-.video-title {
+.count-number {
+  font-size:2rem;
   font-family:'Playfair Display';
-  margin-bottom:20px;
 }
+
+.count-label {
+  font-size:0.6rem;
+  letter-spacing:2px;
+}
+
 </style>  
 </head>  
 
 <body>  
 
-<!-- EXISTING SOUND -->
 <audio id="revealSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b1d05.mp3"></audio>
-
-<!-- ✅ ADDED BACKGROUND MUSIC -->
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <div id="envelopeScreen">  
@@ -266,43 +74,11 @@ canvas {
 
 <div id="mainContent" style="display:none;">  
 
-<!-- SECTION 1 -->
+<!-- SECTION 1 (UNCHANGED) -->
 <div class="section" id="section1">  
   <div class="invite-card">  
-   <!-- ONLY CHANGE IS INSIDE THIS SVG -->
-<svg class="ganpati" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="ganeshGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f5e6a3"/>
-      <stop offset="50%" stop-color="#caa85a"/>
-      <stop offset="100%" stop-color="#f5e6a3"/>
-    </linearGradient>
-  </defs>
-
-  <!-- Head -->
-  <path fill="url(#ganeshGold)" d="M32 6c-9 0-15 6-15 14 0 5 2 9 6 11-3 2-4 6-4 9 0 8 6 13 13 13s13-5 13-13c0-3-1-7-4-9 4-2 6-6 6-11 0-8-6-14-15-14z"/>
-
-  <!-- Trunk -->
-  <path fill="url(#ganeshGold)" d="M32 28c-3 2-3 5-2 7 1 3 4 4 4 6 0 2-2 3-3 4 5-1 8-4 8-8 0-3-3-5-7-9z"/>
-
-  <!-- Left Ear -->
-  <path fill="url(#ganeshGold)" d="M17 24c-4 2-5 7-2 11 2 3 6 4 9 2-4-2-6-6-7-13z"/>
-
-  <!-- Right Ear -->
-  <path fill="url(#ganeshGold)" d="M47 24c4 2 5 7 2 11-2 3-6 4-9 2 4-2 6-6 7-13z"/>
-
-  <!-- Crown -->
-  <path fill="url(#ganeshGold)" d="M26 10h12l-2 4h-8z"/>
-
-  <!-- Tilak -->
-  <circle cx="32" cy="20" r="1.5" fill="#b8954d"/>
-
-  <!-- ✨ SHIMMER EFFECT -->
-  <rect x="-64" y="0" width="40" height="64" fill="rgba(255,255,255,0.25)">
-    <animate attributeName="x" from="-64" to="64" dur="3s" repeatCount="indefinite" />
-  </rect>
-</svg>
-
+    <!-- KEEP YOUR GANPATI SVG SAME -->
+    
     <div class="quote">
       "They alone are called husband and wife,<br>
       who have one soul in two bodies."<br>
@@ -319,10 +95,9 @@ canvas {
   <div class="swipe" onclick="scrollNext()">SWIPE ↓</div>
 </div>
 
-<!-- SECTION 2 -->
+<!-- SECTION 2 (UNCHANGED) -->
 <div class="section" id="section2">  
   <div class="invite-card" id="scratchCard">
-
     <h2 class="save-title">Save the Date</h2>
 
     <div class="scratch-wrapper">
@@ -338,13 +113,12 @@ canvas {
       <div class="scratch-hint">SCRATCH</div>
       <div class="scratch-hint">SCRATCH</div>
     </div>
-
   </div>
 
   <div class="swipe" onclick="scrollToVideo()">SWIPE ↓</div>
 </div>
 
-<!-- SECTION 3 -->
+<!-- SECTION 3 (VIDEO) -->
 <div class="section" id="section3">
   <div class="invite-card">
     <h2 class="video-title">A Glimpse of Our Journey</h2>
@@ -353,21 +127,51 @@ canvas {
       <source src="wedding.mp4" type="video/mp4">
     </video>
   </div>
+
+  <!-- ✅ NEW SWIPE -->
+  <div class="swipe" onclick="scrollToCountdown()">SWIPE ↓</div>
+</div>
+
+<!-- ✅ NEW SECTION 4 (COUNTDOWN) -->
+<div class="section" id="section4">
+  <div class="invite-card">
+    <h2 class="video-title">Countdown to Our Big Day</h2>
+
+    <div class="countdown">
+      <div class="count-box">
+        <div class="count-number" id="days">0</div>
+        <div class="count-label">DAYS</div>
+      </div>
+      <div class="count-box">
+        <div class="count-number" id="hours">0</div>
+        <div class="count-label">HOURS</div>
+      </div>
+      <div class="count-box">
+        <div class="count-number" id="minutes">0</div>
+        <div class="count-label">MIN</div>
+      </div>
+      <div class="count-box">
+        <div class="count-number" id="seconds">0</div>
+        <div class="count-label">SEC</div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 </div>  
 
 <script>  
+
 function openEnvelope(){
   document.querySelector(".envelope").classList.add("open");
-
-  // ✅ PLAY BACKGROUND MUSIC HERE
   document.getElementById("bgMusic").play();
 
   setTimeout(()=>{
     envelopeScreen.style.display="none";
     mainContent.style.display="block";
     initScratch();
+    startCountdown(); // ✅ added
   },1000);
 }
 
@@ -379,65 +183,33 @@ function scrollToVideo(){
   document.getElementById("section3").scrollIntoView({behavior:"smooth"});
 }
 
-function firecracker(origin){
-  let rect = origin.getBoundingClientRect();
-
-  for(let i=0;i<70;i++){
-    let p=document.createElement("div");
-    p.className="particle";
-
-    let angle=Math.random()*2*Math.PI;
-    let dist=100+Math.random()*80;
-
-    p.style.left = rect.width/2 + "px";
-    p.style.top = rect.height/2 + "px";
-
-    p.style.setProperty('--x',Math.cos(angle)*dist+'px');
-    p.style.setProperty('--y',Math.sin(angle)*dist+'px');
-
-    p.style.background=`hsl(${Math.random()*40+20},80%,60%)`;
-
-    origin.appendChild(p);
-    setTimeout(()=>p.remove(),1000);
-  }
+/* ✅ NEW */
+function scrollToCountdown(){
+  document.getElementById("section4").scrollIntoView({behavior:"smooth"});
 }
 
-function initScratch(){
-  document.querySelectorAll("canvas").forEach(canvas=>{
-    let ctx=canvas.getContext("2d");
+/* KEEP ALL YOUR EXISTING JS SAME */
 
-    canvas.width=canvas.offsetWidth;
-    canvas.height=canvas.offsetHeight;
+/* ✅ COUNTDOWN LOGIC */
+function startCountdown(){
+  const weddingDate = new Date("Nov 26, 2026 00:00:00").getTime();
 
-    ctx.fillStyle="#d4af37";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+  setInterval(()=>{
+    const now = new Date().getTime();
+    const diff = weddingDate - now;
 
-    ctx.globalCompositeOperation="destination-out";
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const m = Math.floor((diff%(1000*60*60))/(1000*60));
+    const s = Math.floor((diff%(1000*60))/1000);
 
-    let count=0,done=false;
-
-    canvas.addEventListener("touchmove",e=>{
-      e.preventDefault();
-      let r=canvas.getBoundingClientRect();
-      let x=e.touches[0].clientX-r.left;
-      let y=e.touches[0].clientY-r.top;
-
-      ctx.beginPath();
-      ctx.arc(x,y,18,0,Math.PI*2);
-      ctx.fill();
-
-      count++;
-
-      if(count>120 && !done){
-        done=true;
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-
-        document.getElementById("revealSound").play();
-        firecracker(document.getElementById("scratchCard"));
-      }
-    },{passive:false});
-  });
+    document.getElementById("days").innerText=d;
+    document.getElementById("hours").innerText=h;
+    document.getElementById("minutes").innerText=m;
+    document.getElementById("seconds").innerText=s;
+  },1000);
 }
+
 </script>  
 
 </body>  
