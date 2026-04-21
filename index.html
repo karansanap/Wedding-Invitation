@@ -236,6 +236,32 @@ canvas {
   animation:burst 1s forwards;  
 }  
 
+.countdown {
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  margin-top:20px;
+}
+
+.count-box {
+  border:1px solid var(--gold);
+  border-radius:12px;
+  padding:10px;
+  min-width:65px;
+  text-align:center;
+  background:#fff;
+}
+
+.count-box span {
+  font-size:1.4rem;
+  display:block;
+}
+
+.count-label {
+  font-size:0.6rem;
+  letter-spacing:2px;
+}
+
 @keyframes burst {  
   to { transform:translate(var(--x),var(--y)); opacity:0; }  
 }  
@@ -355,7 +381,37 @@ canvas {
   </div>
 </div>
 
+<div class="swipe" onclick="scrollToCountdown()">SWIPE ↓</div>
 </div>  
+
+<!-- SECTION 4 -->
+<div class="section" id="section4">
+  <div class="invite-card">
+    <h2 class="video-title">Countdown to Our Big Day</h2>
+
+    <div class="countdown">
+      <div class="count-box">
+        <span id="days">0</span>
+        <div class="count-label">DAYS</div>
+      </div>
+
+      <div class="count-box">
+        <span id="hours">0</span>
+        <div class="count-label">HOURS</div>
+      </div>
+
+      <div class="count-box">
+        <span id="mins">0</span>
+        <div class="count-label">MINS</div>
+      </div>
+
+      <div class="count-box">
+        <span id="secs">0</span>
+        <div class="count-label">SECS</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>  
 function openEnvelope(){
@@ -368,6 +424,7 @@ function openEnvelope(){
     envelopeScreen.style.display="none";
     mainContent.style.display="block";
     initScratch();
+    startCountdown();
   },1000);
 }
 
@@ -437,6 +494,23 @@ function initScratch(){
       }
     },{passive:false});
   });
+}
+
+function scrollToCountdown(){
+  document.getElementById("section4").scrollIntoView({behavior:"smooth"});
+}
+function startCountdown(){
+  const target = new Date("November 26, 2026 00:00:00").getTime();
+
+  setInterval(()=>{
+    const now = new Date().getTime();
+    const diff = target - now;
+
+    document.getElementById("days").innerText = Math.floor(diff/(1000*60*60*24));
+    document.getElementById("hours").innerText = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    document.getElementById("mins").innerText = Math.floor((diff%(1000*60*60))/(1000*60));
+    document.getElementById("secs").innerText = Math.floor((diff%(1000*60))/1000);
+  },1000);
 }
 </script>  
 
