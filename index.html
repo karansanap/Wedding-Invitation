@@ -31,7 +31,6 @@ body {
   scroll-snap-align:start;  
 }  
 
-/* ENVELOPE */  
 #envelopeScreen {  
   position:fixed;  
   width:100%;  
@@ -120,7 +119,6 @@ body {
   letter-spacing:3px;  
 }  
 
-/* CARD */  
 .invite-card {  
   width:92%;  
   max-width:420px;  
@@ -134,7 +132,6 @@ body {
     inset 0 0 0 1px rgba(202,168,90,0.25);  
 }  
 
-/* EDGE */  
 .invite-card::before,  
 .invite-card::after {  
   content:"";  
@@ -158,7 +155,6 @@ body {
   100% { background-position:200px; }  
 }  
 
-/* GANPATI */  
 .ganpati {  
   width:52px;  
   margin-bottom:15px;  
@@ -170,12 +166,10 @@ body {
   50% { transform:translateY(-6px); }  
 }  
 
-/* TEXT */  
 .quote { font-size:0.85rem; margin-bottom:25px; font-style:italic; }  
 .script { font-family:'Great Vibes'; font-size:2.8rem; }  
 .parents { font-size:0.7rem; letter-spacing:2px; color:#8a7a65; }  
 
-/* SWIPE */
 .swipe {  
   position:absolute;  
   bottom:10px;  
@@ -189,7 +183,6 @@ body {
   50% { transform:translateY(10px); }  
 }  
 
-/* SAVE DATE */  
 .save-title { font-family:'Playfair Display'; margin-bottom:20px; }  
 
 .scratch-wrapper {  
@@ -235,7 +228,6 @@ canvas {
   letter-spacing:3px;  
 }  
 
-/* FIREWORK */  
 .particle {  
   position:absolute;  
   width:6px;  
@@ -243,6 +235,7 @@ canvas {
   border-radius:50%;  
   animation:burst 1s forwards;  
 }  
+
 @keyframes burst {  
   to { transform:translate(var(--x),var(--y)); opacity:0; }  
 }  
@@ -256,7 +249,11 @@ canvas {
 
 <body>  
 
+<!-- EXISTING SOUND -->
 <audio id="revealSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b1d05.mp3"></audio>
+
+<!-- ✅ ADDED BACKGROUND MUSIC -->
+<audio id="bgMusic" src="music.mp3" loop></audio>
 
 <div id="envelopeScreen">  
   <div class="envelope" onclick="openEnvelope()">  
@@ -321,7 +318,6 @@ canvas {
 
   </div>
 
-  <!-- ✅ NEW SWIPE -->
   <div class="swipe" onclick="scrollToVideo()">SWIPE ↓</div>
 </div>
 
@@ -341,6 +337,10 @@ canvas {
 <script>  
 function openEnvelope(){
   document.querySelector(".envelope").classList.add("open");
+
+  // ✅ PLAY BACKGROUND MUSIC HERE
+  document.getElementById("bgMusic").play();
+
   setTimeout(()=>{
     envelopeScreen.style.display="none";
     mainContent.style.display="block";
@@ -352,7 +352,6 @@ function scrollNext(){
   document.getElementById("section2").scrollIntoView({behavior:"smooth"});
 }
 
-/* ✅ NEW FUNCTION */
 function scrollToVideo(){
   document.getElementById("section3").scrollIntoView({behavior:"smooth"});
 }
