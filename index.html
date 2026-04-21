@@ -269,7 +269,8 @@ canvas {
 <!-- SECTION 1 -->
 <div class="section" id="section1">  
   <div class="invite-card">  
-    <svg class="ganpati" viewBox="0 0 64 64">
+   <!-- ONLY CHANGE IS INSIDE THIS SVG -->
+<svg class="ganpati" viewBox="0 0 64 64">
   <defs>
     <linearGradient id="ganeshGold" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#f5e6a3"/>
@@ -295,6 +296,11 @@ canvas {
 
   <!-- Tilak -->
   <circle cx="32" cy="20" r="1.5" fill="#b8954d"/>
+
+  <!-- ✨ SHIMMER EFFECT -->
+  <rect x="-64" y="0" width="40" height="64" fill="rgba(255,255,255,0.25)">
+    <animate attributeName="x" from="-64" to="64" dur="3s" repeatCount="indefinite" />
+  </rect>
 </svg>
 
     <div class="quote">
