@@ -271,11 +271,36 @@ canvas {
 
 <!-- SECTION 1 -->
 <div class="section" id="section1">  
-  <div class="invite-card">  
-    <!-- GANESH SYMBOL REPLACED -->
-<img class="ganpati" 
-     src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Ganesha_statue.jpg" 
-     alt="Lord Ganesh" />
+  <svg class="ganpati" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="ganeshGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5e6a3"/>
+      <stop offset="50%" stop-color="#caa85a"/>
+      <stop offset="100%" stop-color="#f5e6a3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Stylized Ganesh outline -->
+  <path fill="url(#ganeshGold)" d="
+    M32 6
+    C24 6 18 12 18 20
+    C18 25 20 29 24 32
+    C22 34 21 37 21 40
+    C21 47 27 52 32 52
+    C37 52 43 47 43 40
+    C43 37 42 34 40 32
+    C44 29 46 25 46 20
+    C46 12 40 6 32 6
+    Z
+  "/>
+
+  <!-- small trunk curve -->
+  <path fill="none" stroke="url(#ganeshGold)" stroke-width="2" d="
+    M34 28
+    C36 30 36 34 33 36
+    C31 37 31 39 33 41
+  "/>
+</svg>
 
     <div class="quote">
       "They alone are called husband and wife,<br>
