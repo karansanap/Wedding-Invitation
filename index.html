@@ -159,12 +159,12 @@ body {
 }  
 
 /* GANPATI */  
-.ganpati {
-  width:52px;
-  margin-bottom:15px;
-  animation:ganpatiFloat 3s ease-in-out infinite;
-  filter: drop-shadow(0 4px 10px rgba(202,168,90,0.4));
-} 
+.ganpati {  
+  width:52px;  
+  margin-bottom:15px;  
+  fill:url(#goldGradient);  
+  animation:ganpatiFloat 3s ease-in-out infinite;  
+}  
 
 @keyframes ganpatiFloat {  
   50% { transform:translateY(-6px); }  
@@ -271,36 +271,17 @@ canvas {
 
 <!-- SECTION 1 -->
 <div class="section" id="section1">  
-  <svg class="ganpati" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="ganeshGold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f5e6a3"/>
-      <stop offset="50%" stop-color="#caa85a"/>
-      <stop offset="100%" stop-color="#f5e6a3"/>
-    </linearGradient>
-  </defs>
-
-  <!-- Stylized Ganesh outline -->
-  <path fill="url(#ganeshGold)" d="
-    M32 6
-    C24 6 18 12 18 20
-    C18 25 20 29 24 32
-    C22 34 21 37 21 40
-    C21 47 27 52 32 52
-    C37 52 43 47 43 40
-    C43 37 42 34 40 32
-    C44 29 46 25 46 20
-    C46 12 40 6 32 6
-    Z
-  "/>
-
-  <!-- small trunk curve -->
-  <path fill="none" stroke="url(#ganeshGold)" stroke-width="2" d="
-    M34 28
-    C36 30 36 34 33 36
-    C31 37 31 39 33 41
-  "/>
-</svg>
+  <div class="invite-card">  
+    <svg class="ganpati" viewBox="0 0 64 64">
+      <defs>
+        <linearGradient id="goldGradient">
+          <stop offset="0%" stop-color="#f5e6a3"/>
+          <stop offset="50%" stop-color="#caa85a"/>
+          <stop offset="100%" stop-color="#f5e6a3"/>
+        </linearGradient>
+      </defs>
+      <path d="M32 4c-8 0-14 6-14 14 0 4 2 8 5 10-2 2-3 5-3 8 0 7 6 12 12 12s12-5 12-12c0-3-1-6-3-8 3-2 5-6 5-10 0-8-6-14-14-14z"/>
+    </svg>
 
     <div class="quote">
       "They alone are called husband and wife,<br>
