@@ -156,11 +156,11 @@ body {
 }  
 
 .ganpati {  
-  width:52px;  
+  width:60px;  
   margin-bottom:15px;  
-  fill:url(#goldGradient);  
-  animation:ganpatiFloat 3s ease-in-out infinite;  
-}  
+  animation:ganpatiFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(202,168,90,0.6));
+}
 
 @keyframes ganpatiFloat {  
   50% { transform:translateY(-6px); }  
@@ -270,15 +270,32 @@ canvas {
 <div class="section" id="section1">  
   <div class="invite-card">  
     <svg class="ganpati" viewBox="0 0 64 64">
-      <defs>
-        <linearGradient id="goldGradient">
-          <stop offset="0%" stop-color="#f5e6a3"/>
-          <stop offset="50%" stop-color="#caa85a"/>
-          <stop offset="100%" stop-color="#f5e6a3"/>
-        </linearGradient>
-      </defs>
-      <path d="M32 4c-8 0-14 6-14 14 0 4 2 8 5 10-2 2-3 5-3 8 0 7 6 12 12 12s12-5 12-12c0-3-1-6-3-8 3-2 5-6 5-10 0-8-6-14-14-14z"/>
-    </svg>
+  <defs>
+    <linearGradient id="ganeshGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5e6a3"/>
+      <stop offset="50%" stop-color="#caa85a"/>
+      <stop offset="100%" stop-color="#f5e6a3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Head -->
+  <path fill="url(#ganeshGold)" d="M32 6c-9 0-15 6-15 14 0 5 2 9 6 11-3 2-4 6-4 9 0 8 6 13 13 13s13-5 13-13c0-3-1-7-4-9 4-2 6-6 6-11 0-8-6-14-15-14z"/>
+
+  <!-- Trunk -->
+  <path fill="url(#ganeshGold)" d="M32 28c-3 2-3 5-2 7 1 3 4 4 4 6 0 2-2 3-3 4 5-1 8-4 8-8 0-3-3-5-7-9z"/>
+
+  <!-- Left Ear -->
+  <path fill="url(#ganeshGold)" d="M17 24c-4 2-5 7-2 11 2 3 6 4 9 2-4-2-6-6-7-13z"/>
+
+  <!-- Right Ear -->
+  <path fill="url(#ganeshGold)" d="M47 24c4 2 5 7 2 11-2 3-6 4-9 2 4-2 6-6 7-13z"/>
+
+  <!-- Crown -->
+  <path fill="url(#ganeshGold)" d="M26 10h12l-2 4h-8z"/>
+
+  <!-- Tilak -->
+  <circle cx="32" cy="20" r="1.5" fill="#b8954d"/>
+</svg>
 
     <div class="quote">
       "They alone are called husband and wife,<br>
