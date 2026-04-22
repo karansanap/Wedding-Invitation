@@ -407,6 +407,44 @@ canvas {
   font-family:'Playfair Display';
   margin-bottom:20px;
 }
+#weddingFireworks{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:0;
+}
+
+#section6{
+  position:relative;
+}
+
+.big-firework{
+  position:absolute;
+  width:10px;
+  height:10px;
+}
+
+.big-spark{
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  animation:megaBurst 2.4s forwards;
+}
+
+@keyframes megaBurst{
+  0%{
+    transform:translate(0,0) scale(1);
+    opacity:1;
+  }
+
+  100%{
+    transform:translate(var(--x),var(--y)) scale(0.2);
+    opacity:0;
+  }
+}
+
 </style>  
 </head>  
 
@@ -606,6 +644,7 @@ Q43 116 58 114"/>
 
 <!-- SECTION 6 -->
 <div class="section" id="section6">
+<div id="weddingFireworks"></div>
   <div class="invite-card"
        style="
        display:flex;
@@ -789,6 +828,68 @@ function fireworksBurst(){
     }, i*500);
   }
 }
+
+function startWeddingFireworks(){
+
+setInterval(()=>{
+
+let container=document.getElementById("weddingFireworks");
+
+if(!container) return;
+
+let burst=document.createElement("div");
+burst.className="big-firework";
+
+burst.style.left=Math.random()*90+"%";
+burst.style.top=Math.random()*80+"%";
+
+for(let i=0;i<60;i++){
+
+let spark=document.createElement("div");
+spark.className="big-spark";
+
+let angle=Math.random()*Math.PI*2;
+let dist=80+Math.random()*140;
+
+spark.style.setProperty(
+'--x',
+Math.cos(angle)*dist+'px'
+);
+
+spark.style.setProperty(
+'--y',
+Math.sin(angle)*dist+'px'
+);
+
+spark.style.background=
+`hsl(${Math.random()*360},100%,65%)`;
+
+burst.appendChild(spark);
+}
+
+container.appendChild(burst);
+
+setTimeout(()=>{
+burst.remove();
+},2400);
+
+},900);
+
+}
+
+let fireworksStarted=false;
+
+window.addEventListener("scroll",()=>{
+
+let sec6=document.getElementById("section6");
+let pos=sec6.getBoundingClientRect().top;
+
+if(pos < window.innerHeight*0.7 && !fireworksStarted){
+fireworksStarted=true;
+startWeddingFireworks();
+}
+
+});
 
 </script>  
 
