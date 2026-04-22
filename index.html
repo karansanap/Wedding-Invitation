@@ -502,17 +502,24 @@ h2, .save-title, .video-title {
 function openEnvelope(){
   document.querySelector(".envelope").classList.add("open");
 
-  // ✅ PLAY BACKGROUND MUSIC HERE
   document.getElementById("bgMusic").play();
-fireworksBurst();
-  setTimeout(()=>{
-    envelopeScreen.style.display="none";
-    mainContent.style.display="block";
-    setTimeout(() => {
-    startCountdown();
-    createInsideSparkles();
-    initScratch();
-}, 1200);
+  fireworksBurst();
+
+  const envelopeScreen = document.getElementById("envelopeScreen");
+  const mainContent = document.getElementById("mainContent");
+
+  setTimeout(() => {
+    envelopeScreen.style.display = "none";
+    mainContent.style.display = "block";
+
+    // wait 1 frame so layout is ready
+    requestAnimationFrame(() => {
+      initScratch();
+      startCountdown();
+      createInsideSparkles();
+    });
+
+  }, 1000);
 }
 
 function scrollNext(){
