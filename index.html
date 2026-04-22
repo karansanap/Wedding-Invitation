@@ -430,68 +430,56 @@ canvas {
 <div class="section" id="section1">  
   <div class="invite-card">  
    <!-- ONLY CHANGE IS INSIDE THIS SVG -->
-<svg class="ganpati" viewBox="0 0 180 140">
+<svg class="ganpati" viewBox="0 0 120 120">
 
-  <!-- Shree symbol -->
-  <g fill="none"
-     stroke="#111"
-     stroke-width="5"
-     stroke-linecap="round"
-     stroke-linejoin="round">
+<defs>
+<linearGradient id="goldStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#f8e7a8"/>
+<stop offset="50%" stop-color="#d4af37"/>
+<stop offset="100%" stop-color="#b8891e"/>
+</linearGradient>
+</defs>
 
-    <path d="M28 38
-             Q18 26 28 18
-             Q42 8 55 20
-             Q62 28 58 38
-             Q54 50 38 50"/>
+<g fill="none"
+stroke="url(#goldStroke)"
+stroke-width="5"
+stroke-linecap="round"
+stroke-linejoin="round">
 
-    <path d="M38 50
-             Q58 58 52 76
-             Q46 92 28 82"/>
+<!-- Left ear -->
+<path d="M42 42 Q24 50 34 68 Q42 80 54 68"/>
 
-    <path d="M66 18
-             L66 88"/>
+<!-- Right ear -->
+<path d="M78 42 Q96 50 86 68 Q78 80 66 68"/>
 
-    <path d="M52 54
-             L82 54"/>
+<!-- Crown -->
+<path d="M52 18 L60 10 L68 18"/>
 
-    <!-- Ganpati head -->
-    <path d="M112 28
-             Q92 36 96 56
-             Q100 72 116 72"/>
+<!-- Face + trunk -->
+<path d="
+M60 32
+Q78 42 73 60
+Q68 76 54 82
+Q44 86 46 97
+Q48 110 63 106
+Q72 103 76 94"/>
 
-    <path d="M126 28
-             Q146 36 142 56
-             Q138 72 122 72"/>
+<!-- Trunk curl -->
+<path d="
+M54 82
+Q38 88 40 102
+Q43 116 58 114"/>
 
-    <!-- Crown -->
-    <path d="M111 18 L119 10 L127 18"/>
+<!-- Eye -->
+<path d="M65 48 q4 2 8 0"/>
 
-    <!-- Face + trunk -->
-    <path d="
-      M119 32
-      Q138 42 133 60
-      Q128 76 114 82
-      Q104 86 106 97
-      Q108 110 123 106
-      Q132 103 136 94"/>
+<!-- Tusk -->
+<path d="M51 66 q-9 3 -11 10"/>
 
-    <!-- trunk curl -->
-    <path d="
-      M114 82
-      Q98 88 100 102
-      Q103 116 118 114"/>
+<!-- Tilak -->
+<path d="M60 22 v8"/>
 
-    <!-- eye -->
-    <path d="M124 48 q4 2 8 0"/>
-
-    <!-- tusk -->
-    <path d="M111 66 q-9 3 -11 10"/>
-
-    <!-- tilak -->
-    <path d="M119 22 v8"/>
-
-  </g>
+</g>
 </svg>
 
     <div class="quote">
