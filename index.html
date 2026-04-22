@@ -508,10 +508,11 @@ fireworksBurst();
   setTimeout(()=>{
     envelopeScreen.style.display="none";
     mainContent.style.display="block";
-    initScratch();
+    setTimeout(() => {
     startCountdown();
-createInsideSparkles();
-  },1000);
+    createInsideSparkles();
+    initScratch();
+}, 1200);
 }
 
 function scrollNext(){
