@@ -236,6 +236,68 @@ canvas {
   animation:burst 1s forwards;  
 }  
 
+#petals{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;   /* changed from 1 */
+}
+
+.petal {
+  position:absolute;
+  width:18px;
+  height:18px;
+  background: radial-gradient(circle, #ff4d6d, #b3003c);
+  border-radius:50% 50% 50% 0;
+  transform:rotate(45deg);
+  opacity:0.8;
+  animation:fall 8s linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform:translateY(-100px) rotate(0deg);
+    opacity:0;
+  }
+  20% { opacity:1; }
+  100% {
+    transform:translateY(100vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+.ring {
+  position:relative;
+  display:inline-block;
+}
+
+.ring::after {
+  content:"";
+  position:absolute;
+  width:120%;
+  height:120%;
+  border:2px solid rgba(255,215,120,0.6);
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.5);
+  opacity:0;
+  animation:ringPulse 3s infinite;
+}
+
+@keyframes ringPulse {
+  0% {
+    transform:translate(-50%,-50%) scale(0.5);
+    opacity:0;
+  }
+  30% { opacity:1; }
+  100% {
+    transform:translate(-50%,-50%) scale(1.6);
+    opacity:0;
+  }
+}
+
 .countdown {
   display:flex;
   gap:12px;
@@ -281,7 +343,8 @@ canvas {
 <!-- ✅ ADDED BACKGROUND MUSIC -->
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
-<div id="envelopeScreen">  
+<div id="envelopeScreen">
+<div class="petals"></div>  
   <div class="envelope" onclick="openEnvelope()">  
     <div class="flap"></div>  
     <div class="envelope-body"></div>  
@@ -291,7 +354,7 @@ canvas {
 </div>  
 
 <div id="mainContent" style="display:none;">  
-
+<div class="petals"></div>
 <!-- SECTION 1 -->
 <div class="section" id="section1">  
   <div class="invite-card">  
@@ -516,6 +579,24 @@ function startCountdown(){
     document.getElementById("secs").innerText = Math.floor((diff%(1000*60))/1000);
   },1000);
 }
+
+function createPetals(){
+  document.querySelectorAll(".petals").forEach(container => {
+
+    for(let i=0;i<25;i++){
+      let p = document.createElement("div");
+      p.className = "petal";
+
+      p.style.left = Math.random()*100 + "%";
+      p.style.animationDelay = (Math.random()*8) + "s";
+
+      container.appendChild(p);
+    }
+
+  });
+}
+
+createPetals();
 </script>  
 
 </body>  
