@@ -292,6 +292,70 @@ canvas {
   100% { transform:translateY(-120px) scale(0.3); opacity:0; }
 }
 
+/* ❤️ HEART PARTICLES */
+#hearts {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:1;
+}
+
+.heart {
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:#ff4d6d;
+  transform:rotate(45deg);
+  opacity:0;
+  animation:heartFloat 6s infinite;
+  filter: drop-shadow(0 0 6px rgba(255,77,109,0.7));
+}
+
+.heart::before,
+.heart::after {
+  content:"";
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:#ff4d6d;
+  border-radius:50%;
+}
+
+.heart::before {
+  top:-7px;
+  left:0;
+}
+
+.heart::after {
+  left:-7px;
+  top:0;
+}
+
+.hearts {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:1;
+}
+
+@keyframes heartFloat {
+  0% {
+    transform:translateY(0) scale(0.6) rotate(45deg);
+    opacity:0;
+  }
+  20% { opacity:1; }
+  50% {
+    transform:translateY(-80px) scale(1) rotate(45deg);
+    opacity:1;
+  }
+  100% {
+    transform:translateY(-160px) scale(0.5) rotate(45deg);
+    opacity:0;
+  }
+}
+
 .video-title {
   font-family:'Playfair Display';
   margin-bottom:20px;
@@ -308,6 +372,7 @@ canvas {
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <div id="envelopeScreen">  
+<div class="hearts"></div>
   <div class="envelope" onclick="openEnvelope()">  
     <div class="flap"></div>  
     <div class="envelope-body"></div>  
@@ -317,7 +382,7 @@ canvas {
 </div>  
 
 <div id="mainContent" style="display:none;">  
-
+<div class="hearts"></div>
 <div id="sparklesInside"></div>
 <!-- SECTION 1 -->
 <div class="section" id="section1">  
@@ -559,6 +624,27 @@ function createInsideSparkles(){
     container.appendChild(s);
   }
 }
+
+function createHearts(){
+  document.querySelectorAll(".hearts").forEach(container => {
+
+    for(let i=0;i<30;i++){
+      let h = document.createElement("div");
+      h.className = "heart";
+
+      h.style.left = Math.random()*100 + "%";
+      h.style.top = Math.random()*100 + "%";
+
+      h.style.animationDelay = (Math.random()*5) + "s";
+
+      container.appendChild(h);
+    }
+
+  });
+}
+
+createHearts();
+
 </script>  
 
 </body>  
