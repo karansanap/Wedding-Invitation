@@ -11,19 +11,15 @@
 <style>  
 :root { --gold:#caa85a; }  
 
-body {
-  margin:0;
-  font-family:'Inter', sans-serif;
+body {  
+  margin:0;  
+  font-family:'Inter', sans-serif;  
+  background:  
+    linear-gradient(#fffdf8,#f9f2e8),  
+    url("https://www.transparenttextures.com/patterns/paper-fibers.png");  
 
-  background:
-    radial-gradient(circle at 20% 30%, rgba(255,182,193,0.25), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(255,105,180,0.2), transparent 40%),
-    linear-gradient(135deg, #1a0f13, #2a0f1c, #3a1325);
-
-  color:#fff;
-
-  scroll-snap-type:y mandatory;
-  scroll-behavior:smooth;
+  scroll-snap-type:y mandatory;  
+  scroll-behavior:smooth;  
 }  
 
 .section {  
@@ -43,8 +39,7 @@ body {
   justify-content:center;  
   align-items:center;  
   z-index:999;  
-  background:
-    radial-gradient(circle at center, #3a1325, #0d0508);  
+  background:inherit;  
 }  
 
 .envelope {  
@@ -130,8 +125,7 @@ body {
   padding:45px 28px;  
   border-radius:18px;  
   text-align:center;  
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px); 
+  background:inherit;  
   position:relative;  
   box-shadow:  
     0 25px 60px rgba(0,0,0,0.15),  
@@ -207,10 +201,9 @@ body {
   position:relative;  
   height:105px;  
   border-radius:14px;  
-  overflow:hidden;
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(6px);
-  border:1px solid rgba(255,215,120,0.6);
+  overflow:hidden;  
+  border:1px solid var(--gold);  
+  background:#fff;  
 }  
 
 .date-text {  
@@ -222,14 +215,13 @@ body {
   z-index:0;  
 }  
 
-canvas{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:20;   /* higher */
-  touch-action:none;
-}
+canvas {  
+  position:absolute;  
+  inset:0;  
+  width:100%;  
+  height:100%;  
+  z-index:2;  
+}  
 
 .scratch-hint {  
   font-size:0.6rem;  
@@ -252,102 +244,27 @@ canvas{
 }
 
 .count-box {
-  border:1px solid rgba(255,215,120,0.6);
+  border:1px solid var(--gold);
   border-radius:12px;
-  padding:12px;
-  min-width:70px;
+  padding:10px;
+  min-width:65px;
   text-align:center;
-
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(10px);
-
-  box-shadow:0 0 15px rgba(255,215,120,0.2);
+  background:#fff;
 }
 
 .count-box span {
-  font-size:1.6rem;
-  font-weight:600;
-  color:#fff;
-
-  text-shadow:0 0 8px rgba(255,255,255,0.6);
+  font-size:1.4rem;
+  display:block;
 }
 
 .count-label {
-  font-size:0.65rem;
+  font-size:0.6rem;
   letter-spacing:2px;
-  color:rgba(255,255,255,0.7);
 }
 
 @keyframes burst {  
   to { transform:translate(var(--x),var(--y)); opacity:0; }  
 }  
-
-h2, .save-title, .video-title {
-  color:#fff;
-  text-shadow:0 0 10px rgba(255,215,120,0.4);
-}
-
-#petals{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:0;   /* changed from 1 */
-}
-
-.petal {
-  position:absolute;
-  width:18px;
-  height:18px;
-  background: radial-gradient(circle, #ff4d6d, #b3003c);
-  border-radius:50% 50% 50% 0;
-  transform:rotate(45deg);
-  opacity:0.8;
-  animation:fall 8s linear infinite;
-}
-
-@keyframes fall {
-  0% {
-    transform:translateY(-100px) rotate(0deg);
-    opacity:0;
-  }
-  20% { opacity:1; }
-  100% {
-    transform:translateY(100vh) rotate(360deg);
-    opacity:0;
-  }
-}
-
-.ring {
-  position:relative;
-  display:inline-block;
-}
-
-.ring::after {
-  content:"";
-  position:absolute;
-  width:120%;
-  height:120%;
-  border:2px solid rgba(255,215,120,0.6);
-  border-radius:50%;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) scale(0.5);
-  opacity:0;
-  animation:ringPulse 3s infinite;
-}
-
-@keyframes ringPulse {
-  0% {
-    transform:translate(-50%,-50%) scale(0.5);
-    opacity:0;
-  }
-  30% { opacity:1; }
-  100% {
-    transform:translate(-50%,-50%) scale(1.6);
-    opacity:0;
-  }
-}
 
 .video-title {
   font-family:'Playfair Display';
@@ -365,7 +282,6 @@ h2, .save-title, .video-title {
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <div id="envelopeScreen">  
-<div class="petals"></div>
   <div class="envelope" onclick="openEnvelope()">  
     <div class="flap"></div>  
     <div class="envelope-body"></div>  
@@ -375,8 +291,7 @@ h2, .save-title, .video-title {
 </div>  
 
 <div id="mainContent" style="display:none;">  
-<div class="petals"></div>
-<div id="sparklesInside"></div>
+
 <!-- SECTION 1 -->
 <div class="section" id="section1">  
   <div class="invite-card">  
@@ -420,10 +335,10 @@ h2, .save-title, .video-title {
       — Guru Amar Das Ji
     </div>
 
-    <div class="script ring">Karan</div>
+    <div class="script">Karan</div>
     <div class="parents">SON OF MR. & MRS. SANAP</div>
 
-    <div class="script ring">Pankti</div>
+    <div class="script">Pankti</div>
     <div class="parents">DAUGHTER OF MR. & MRS. JHAVERI</div>
   </div>
 
@@ -502,24 +417,15 @@ h2, .save-title, .video-title {
 function openEnvelope(){
   document.querySelector(".envelope").classList.add("open");
 
+  // ✅ PLAY BACKGROUND MUSIC HERE
   document.getElementById("bgMusic").play();
-  fireworksBurst();
 
-  const envelopeScreen = document.getElementById("envelopeScreen");
-  const mainContent = document.getElementById("mainContent");
-
-  setTimeout(() => {
-    envelopeScreen.style.display = "none";
-    mainContent.style.display = "block";
-
-    // wait 1 frame so layout is ready
-    requestAnimationFrame(() => {
-      initScratch();
-      startCountdown();
-      createInsideSparkles();
-    });
-
-  }, 1000);
+  setTimeout(()=>{
+    envelopeScreen.style.display="none";
+    mainContent.style.display="block";
+    initScratch();
+    startCountdown();
+  },1000);
 }
 
 function scrollNext(){
@@ -558,92 +464,39 @@ function firecracker(origin){
 }
 
 function initScratch(){
-
   document.querySelectorAll("canvas").forEach(canvas=>{
+    let ctx=canvas.getContext("2d");
 
-    let ctx = canvas.getContext("2d");
+    canvas.width=canvas.offsetWidth;
+    canvas.height=canvas.offsetHeight;
 
-    let isDrawing = false;
-    let done = false;
+    ctx.fillStyle="#d4af37";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    // ✅ FIXED resize (no async inside)
-    function resize(){
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
+    ctx.globalCompositeOperation="destination-out";
 
-      ctx.fillStyle = "#d4af37";
-      ctx.fillRect(0,0,canvas.width,canvas.height);
+    let count=0,done=false;
 
-      ctx.globalCompositeOperation = "destination-out";
-    }
-
-    // run after layout stabilizes
-    setTimeout(resize, 100);
-    setTimeout(resize, 400);
-
-    window.addEventListener("resize", resize);
-
-    function scratch(e){
-      let r = canvas.getBoundingClientRect();
-
-      let x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
-      let y = (e.touches ? e.touches[0].clientY : e.clientY) - r.top;
+    canvas.addEventListener("touchmove",e=>{
+      e.preventDefault();
+      let r=canvas.getBoundingClientRect();
+      let x=e.touches[0].clientX-r.left;
+      let y=e.touches[0].clientY-r.top;
 
       ctx.beginPath();
-      ctx.arc(x, y, 20, 0, Math.PI * 2);
+      ctx.arc(x,y,18,0,Math.PI*2);
       ctx.fill();
-    }
 
-    // 🔥 SCRATCH EVENTS
-    canvas.addEventListener("touchstart", e => {
-      isDrawing = true;
-      scratch(e);
-    });
+      count++;
 
-    canvas.addEventListener("touchmove", e => {
-      if (!isDrawing) return;
-      e.preventDefault();
-      scratch(e);
-    }, {passive:false});
-
-    canvas.addEventListener("touchend", () => {
-      isDrawing = false;
-      checkReveal();   // ✅ FIX 1
-    });
-
-    canvas.addEventListener("mousedown", () => isDrawing = true);
-
-    canvas.addEventListener("mousemove", e => {
-      if (!isDrawing) return;
-      scratch(e);
-    });
-
-    canvas.addEventListener("mouseup", () => {
-      isDrawing = false;
-      checkReveal();   // ✅ FIX 2
-    });
-
-    // 🔥 REVEAL LOGIC
-    function checkReveal(){
-      if (done) return;
-
-      let pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
-      let transparent = 0;
-
-      for (let i = 3; i < pixels.length; i += 4) {
-        if (pixels[i] === 0) transparent++;
-      }
-
-      if (transparent > pixels.length * 0.25) {
-        done = true;
-
+      if(count>120 && !done){
+        done=true;
         ctx.clearRect(0,0,canvas.width,canvas.height);
 
         document.getElementById("revealSound").play();
         firecracker(document.getElementById("scratchCard"));
       }
-    }
-
+    },{passive:false});
   });
 }
 
@@ -663,56 +516,6 @@ function startCountdown(){
     document.getElementById("secs").innerText = Math.floor((diff%(1000*60))/1000);
   },1000);
 }
-
-function createPetals(){
-  document.querySelectorAll(".petals").forEach(container => {
-
-    for(let i=0;i<25;i++){
-      let p = document.createElement("div");
-      p.className = "petal";
-
-      p.style.left = Math.random()*100 + "%";
-      p.style.animationDelay = (Math.random()*8) + "s";
-
-      container.appendChild(p);
-    }
-
-  });
-}
-
-createPetals();
-
-function fireworksBurst(){
-  for(let i=0;i<6;i++){
-    setTimeout(()=>{
-      let burst = document.createElement("div");
-      burst.style.position = "fixed";
-      burst.style.left = Math.random()*100 + "%";
-      burst.style.top = Math.random()*100 + "%";
-      burst.style.pointerEvents = "none";
-
-      for(let j=0;j<40;j++){
-        let p = document.createElement("div");
-        p.className = "particle";
-
-        let angle = Math.random()*2*Math.PI;
-        let dist = 120 + Math.random()*80;
-
-        p.style.setProperty('--x',Math.cos(angle)*dist+'px');
-        p.style.setProperty('--y',Math.sin(angle)*dist+'px');
-
-        p.style.background = `hsl(${Math.random()*360},100%,60%)`;
-
-        burst.appendChild(p);
-      }
-
-      document.body.appendChild(burst);
-      setTimeout(()=>burst.remove(),1000);
-
-    }, i*200);
-  }
-}
-
 </script>  
 
 </body>  
