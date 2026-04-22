@@ -244,36 +244,62 @@ canvas {
   animation:burst 1s forwards;  
 }  
 
-#petals{
+/* ❤️ HEART PARTICLES */
+#hearts {
   position:fixed;
   inset:0;
   pointer-events:none;
   overflow:hidden;
-  z-index:0;   /* changed from 1 */
+  z-index:1;
 }
 
-.petal {
+.heart {
   position:absolute;
-  width:18px;
-  height:18px;
-  background: radial-gradient(circle, #ff4d6d, #b3003c);
-  border-radius:50% 50% 50% 0;
+  width:14px;
+  height:14px;
+  background:#ff4d6d;
   transform:rotate(45deg);
-  opacity:0.8;
-  animation:fall 8s linear infinite;
+  opacity:0;
+  animation:heartFloat 6s infinite;
+  filter: drop-shadow(0 0 6px rgba(255,77,109,0.7));
 }
 
-@keyframes fall {
+.heart::before,
+.heart::after {
+  content:"";
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:#ff4d6d;
+  border-radius:50%;
+}
+
+.heart::before {
+  top:-7px;
+  left:0;
+}
+
+.heart::after {
+  left:-7px;
+  top:0;
+}
+
+@keyframes heartFloat {
   0% {
-    transform:translateY(-100px) rotate(0deg);
+    transform:translateY(0) scale(0.6) rotate(45deg);
     opacity:0;
   }
   20% { opacity:1; }
+  50% {
+    transform:translateY(-80px) scale(1) rotate(45deg);
+    opacity:1;
+  }
   100% {
-    transform:translateY(100vh) rotate(360deg);
+    transform:translateY(-160px) scale(0.5) rotate(45deg);
     opacity:0;
   }
 }
+
 
 .ring {
   position:relative;
@@ -386,7 +412,7 @@ canvas {
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <div id="envelopeScreen">
-<div class="petals"></div>  
+<div class="hearts"></div>  
   <div class="envelope" onclick="openEnvelope()">  
     <div class="flap"></div>  
     <div class="envelope-body"></div>  
@@ -395,8 +421,8 @@ canvas {
   </div>  
 </div>  
 
-<div id="mainContent" style="display:none;">  
-<div class="petals"></div>
+<div id="mainContent" style="display:none;"> 
+<div class="hearts"></div>
 <!-- SECTION 1 -->
 <div class="section" id="section1">  
   <div class="invite-card">  
@@ -622,23 +648,25 @@ function startCountdown(){
   },1000);
 }
 
-function createPetals(){
-  document.querySelectorAll(".petals").forEach(container => {
+function createHearts(){
+  document.querySelectorAll(".hearts").forEach(container => {
 
-    for(let i=0;i<25;i++){
-      let p = document.createElement("div");
-      p.className = "petal";
+    for(let i=0;i<30;i++){
+      let h = document.createElement("div");
+      h.className = "heart";
 
-      p.style.left = Math.random()*100 + "%";
-      p.style.animationDelay = (Math.random()*8) + "s";
+      h.style.left = Math.random()*100 + "%";
+      h.style.top = Math.random()*100 + "%";
 
-      container.appendChild(p);
+      h.style.animationDelay = (Math.random()*5) + "s";
+
+      container.appendChild(h);
     }
 
   });
 }
 
-createPetals();
+createHearts();
 
 function fireworksBurst(){
   for(let i=0;i<6;i++){
