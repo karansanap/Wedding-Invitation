@@ -11,15 +11,19 @@
 <style>  
 :root { --gold:#caa85a; }  
 
-body {  
-  margin:0;  
-  font-family:'Inter', sans-serif;  
-  background:  
-    linear-gradient(#fffdf8,#f9f2e8),  
-    url("https://www.transparenttextures.com/patterns/paper-fibers.png");  
+body {
+  margin:0;
+  font-family:'Inter', sans-serif;
 
-  scroll-snap-type:y mandatory;  
-  scroll-behavior:smooth;  
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,182,193,0.25), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255,105,180,0.2), transparent 40%),
+    linear-gradient(135deg, #1a0f13, #2a0f1c, #3a1325);
+
+  color:#fff;
+
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
 }  
 
 .section {  
@@ -39,7 +43,8 @@ body {
   justify-content:center;  
   align-items:center;  
   z-index:999;  
-  background:inherit;  
+  background:
+    radial-gradient(circle at center, #3a1325, #0d0508);  
 }  
 
 .envelope {  
@@ -125,7 +130,8 @@ body {
   padding:45px 28px;  
   border-radius:18px;  
   text-align:center;  
-  background:inherit;  
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px); 
   position:relative;  
   box-shadow:  
     0 25px 60px rgba(0,0,0,0.15),  
