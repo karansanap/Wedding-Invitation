@@ -222,13 +222,14 @@ body {
   z-index:0;  
 }  
 
-canvas {  
-  position:absolute;  
-  inset:0;  
-  width:100%;  
-  height:100%;  
-  z-index:2;  
-}  
+canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:20;   /* higher */
+  touch-action:none;
+}
 
 .scratch-hint {  
   font-size:0.6rem;  
@@ -286,12 +287,12 @@ h2, .save-title, .video-title {
   text-shadow:0 0 10px rgba(255,215,120,0.4);
 }
 
-#petals {
+#petals{
   position:fixed;
   inset:0;
   pointer-events:none;
   overflow:hidden;
-  z-index:1;
+  z-index:0;   /* changed from 1 */
 }
 
 .petal {
@@ -364,7 +365,7 @@ h2, .save-title, .video-title {
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <div id="envelopeScreen">  
-<<div id="petals"></div>
+<div class="petals"></div>
   <div class="envelope" onclick="openEnvelope()">  
     <div class="flap"></div>  
     <div class="envelope-body"></div>  
@@ -374,7 +375,7 @@ h2, .save-title, .video-title {
 </div>  
 
 <div id="mainContent" style="display:none;">  
-<div id="petals"></div>
+<div class="petals"></div>
 <div id="sparklesInside"></div>
 <!-- SECTION 1 -->
 <div class="section" id="section1">  
@@ -603,7 +604,7 @@ function startCountdown(){
 }
 
 function createPetals(){
-  document.querySelectorAll("#petals").forEach(container => {
+  document.querySelectorAll(".petals").forEach(container => {
 
     for(let i=0;i<25;i++){
       let p = document.createElement("div");
