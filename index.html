@@ -566,6 +566,59 @@ Q43 116 58 114"/>
   </div>
 </div>
 
+<!-- SECTION 5 -->
+<div class="section" id="section5">
+  <div class="invite-card">
+
+    <h2 class="video-title">A Note From Our Hearts</h2>
+
+    <div style="
+      max-width:320px;
+      margin:auto;
+      line-height:2;
+      font-size:1rem;
+      font-style:italic;
+    ">
+      With hearts full of gratitude,  
+      we thank you for being part of our journey.  
+
+      Your love, blessings, and presence  
+      mean more to us than words can express.  
+
+      As we begin this beautiful new chapter,  
+      it would be our greatest joy  
+      to celebrate it with you.  
+
+      Thank you for holding us in your prayers  
+      and blessing our union with your love. ❤️
+    </div>
+
+  </div>
+
+  <div class="swipe" onclick="scrollToFinal()">SWIPE ↓</div>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section" id="section6">
+  <div class="invite-card"
+       style="
+       display:flex;
+       justify-content:center;
+       align-items:center;
+       min-height:260px;
+       ">
+
+      <div style="
+  font-family:'Great Vibes';
+  font-size:3rem;
+  letter-spacing:1px;
+">
+Till We Meet At The Wedding ❤️
+</div>
+
+  </div>
+</div>
+
 <script>  
 function openEnvelope(){
   document.querySelector(".envelope").classList.add("open");
@@ -591,6 +644,11 @@ function scrollToVideo(){
 
 function scrollToCountdown(){
   document.getElementById("section4").scrollIntoView({behavior:"smooth"});
+}
+
+function scrollToFinal(){
+  document.getElementById("section6")
+  .scrollIntoView({behavior:"smooth"});
 }
 
 function firecracker(origin){
