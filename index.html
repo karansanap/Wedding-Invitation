@@ -672,7 +672,7 @@ function createHearts(){
 createHearts();
 
 function fireworksBurst(){
-  for(let i=0;i<6;i++){
+  for(let i=0;i<4;i++){
     setTimeout(()=>{
       let burst = document.createElement("div");
       burst.style.position = "fixed";
@@ -680,7 +680,7 @@ function fireworksBurst(){
       burst.style.top = Math.random()*100 + "%";
       burst.style.pointerEvents = "none";
 
-      for(let j=0;j<40;j++){
+      for(let j=0;j<70;j++){
         let p = document.createElement("div");
         p.className = "particle";
 
@@ -696,9 +696,9 @@ function fireworksBurst(){
       }
 
       document.body.appendChild(burst);
-      setTimeout(()=>burst.remove(),1000);
+      setTimeout(()=>burst.remove(),2200);
 
-    }, i*200);
+    }, i*500);
   }
 }
 
