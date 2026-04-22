@@ -597,6 +597,38 @@ function createPetals(){
 }
 
 createPetals();
+
+function fireworksBurst(){
+  for(let i=0;i<6;i++){
+    setTimeout(()=>{
+      let burst = document.createElement("div");
+      burst.style.position = "fixed";
+      burst.style.left = Math.random()*100 + "%";
+      burst.style.top = Math.random()*100 + "%";
+      burst.style.pointerEvents = "none";
+
+      for(let j=0;j<40;j++){
+        let p = document.createElement("div");
+        p.className = "particle";
+
+        let angle = Math.random()*2*Math.PI;
+        let dist = 120 + Math.random()*80;
+
+        p.style.setProperty('--x',Math.cos(angle)*dist+'px');
+        p.style.setProperty('--y',Math.sin(angle)*dist+'px');
+
+        p.style.background = `hsl(${Math.random()*360},100%,60%)`;
+
+        burst.appendChild(p);
+      }
+
+      document.body.appendChild(burst);
+      setTimeout(()=>burst.remove(),1000);
+
+    }, i*200);
+  }
+}
+
 </script>  
 
 </body>  
