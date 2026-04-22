@@ -610,20 +610,7 @@ function startCountdown(){
   },1000);
 }
 
-function createInsideSparkles(){
-  const container = document.getElementById("sparklesInside");
 
-  for(let i=0;i<30;i++){
-    let s = document.createElement("div");
-    s.className = "sparkle";
-
-    s.style.left = Math.random()*100 + "%";
-    s.style.top = Math.random()*100 + "%";
-    s.style.animationDelay = (Math.random()*4) + "s";
-
-    container.appendChild(s);
-  }
-}
 
 function createHearts(){
   document.querySelectorAll(".hearts").forEach(container => {
