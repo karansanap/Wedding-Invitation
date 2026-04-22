@@ -11,16 +11,16 @@
 <style>  
 :root { --gold:#caa85a; }  
 
-body {
-  margin:0;
-  font-family:'Inter', sans-serif;
+body {  
+  margin:0;  
+  font-family:'Inter', sans-serif;  
+  background:  
+    linear-gradient(#fffdf8,#f9f2e8),  
+    url("https://www.transparenttextures.com/patterns/paper-fibers.png");  
 
-  background: radial-gradient(circle at center, #2b1d0e, #000000);
-  color: #f5e6c8; /* light text for dark bg */
-
-  scroll-snap-type:y mandatory;
-  scroll-behavior:smooth;
-}
+  scroll-snap-type:y mandatory;  
+  scroll-behavior:smooth;  
+}  
 
 .section {  
   min-height:85vh;  
@@ -31,16 +31,15 @@ body {
   scroll-snap-align:start;  
 }  
 
-#envelopeScreen {
-  position:fixed;
-  width:100%;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-
-  background: radial-gradient(circle at center, #2b1d0e, #000000);
+#envelopeScreen {  
+  position:fixed;  
+  width:100%;  
+  height:100vh;  
+  display:flex;  
+  justify-content:center;  
+  align-items:center;  
+  z-index:999;  
+  background:inherit;  
 }  
 
 .envelope {  
@@ -126,16 +125,12 @@ body {
   padding:45px 28px;  
   border-radius:18px;  
   text-align:center;  
-
-  /* ✨ CHANGE HERE */
-  background: rgba(255, 248, 220, 0.95);  /* soft cream */
-  backdrop-filter: blur(10px);
-
+  background:inherit;  
   position:relative;  
   box-shadow:  
-    0 25px 60px rgba(0,0,0,0.4),  
-    inset 0 0 0 1px rgba(202,168,90,0.3);  
-}
+    0 25px 60px rgba(0,0,0,0.15),  
+    inset 0 0 0 1px rgba(202,168,90,0.25);  
+}  
 
 .invite-card::before,  
 .invite-card::after {  
@@ -248,112 +243,6 @@ canvas {
   margin-top:20px;
 }
 
-#sparkles {
-  position:absolute;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
-  z-index:1;
-}
-#sparkles-main {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0; /* behind content */
-}
-
-/* Make sure content stays above sparkles */
-.section {
-  position: relative;
-  z-index: 2;
-}
-
-.sparkle {
-  position:absolute;
-  width:10px;
-  height:10px;
-  background: radial-gradient(circle, #fff, rgba(255,215,120,0));
-  filter: drop-shadow(0 0 12px #ffd700);
-  border-radius:50%;
-  opacity:0;
-  animation:sparkleAnim 4s infinite;
-  z-index:1;
-}
-
-#sparkles-main,
-#particles-bg {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-}
-
-#sparkles-main {
-  z-index: 1;
-}
-
-#particles-bg {
-  z-index: 0;
-}
-
-/* Floating golden particles */
-.particle-bg {
-  position:absolute;
-  width:4px;
-  height:4px;
-  background: radial-gradient(circle, #ffd700, transparent);
-  border-radius:50%;
-  opacity:0.6;
-  animation: floatUp 12s linear infinite;
-}
-
-body::before {
-  content:"";
-  position:fixed;
-  inset:0;
-  background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.7));
-  pointer-events:none;
-  z-index:0;
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(100vh) scale(0.5);
-    opacity:0;
-  }
-  20% { opacity:0.7; }
-  100% {
-    transform: translateY(-20vh) scale(1);
-    opacity:0;
-  }
-}
-
-/* Glow behind cards */
-.invite-card {
-  position:relative;
-  z-index:2;
-}
-
-.invite-card::after {
-  content:"";
-  position:absolute;
-  inset:-40px;
-  background: radial-gradient(circle, rgba(202,168,90,0.25), transparent 70%);
-  filter: blur(40px);
-  z-index:-1;
-}
-
-.envelope {
-  z-index:3;
-}
-
-@keyframes sparkleAnim {
-  0% { transform:translateY(0) scale(0.5); opacity:0; }
-  20% { opacity:1; }
-  50% { transform:translateY(-60px) scale(1); opacity:1; }
-  100% { transform:translateY(-120px) scale(0.3); opacity:0; }
-}
-
 .count-box {
   border:1px solid var(--gold);
   border-radius:12px;
@@ -377,6 +266,32 @@ body::before {
   to { transform:translate(var(--x),var(--y)); opacity:0; }  
 }  
 
+/* ✨ Pink sparkles for inside pages */
+#sparklesInside {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+.sparkle {
+  position:absolute;
+  width:10px;
+  height:10px;
+  background: radial-gradient(circle, #ff9ad5, rgba(255,105,180,0));
+  border-radius:50%;
+  opacity:0;
+  animation:sparkleAnim 4s infinite;
+  filter: drop-shadow(0 0 8px rgba(255,105,180,0.9));
+}
+
+@keyframes sparkleAnim {
+  0% { transform:translateY(0) scale(0.5); opacity:0; }
+  20% { opacity:1; }
+  50% { transform:translateY(-60px) scale(1); opacity:1; }
+  100% { transform:translateY(-120px) scale(0.3); opacity:0; }
+}
+
 .video-title {
   font-family:'Playfair Display';
   margin-bottom:20px;
@@ -392,8 +307,7 @@ body::before {
 <!-- ✅ ADDED BACKGROUND MUSIC -->
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
-<div id="envelopeScreen">
-  <div id="sparkles"></div>  
+<div id="envelopeScreen">  
   <div class="envelope" onclick="openEnvelope()">  
     <div class="flap"></div>  
     <div class="envelope-body"></div>  
@@ -403,8 +317,8 @@ body::before {
 </div>  
 
 <div id="mainContent" style="display:none;">  
-  <div id="sparkles-main"></div>
-  <div id="particles-bg"></div>
+
+<div id="sparklesInside"></div>
 <!-- SECTION 1 -->
 <div class="section" id="section1">  
   <div class="invite-card">  
@@ -530,17 +444,15 @@ body::before {
 function openEnvelope(){
   document.querySelector(".envelope").classList.add("open");
 
+  // ✅ PLAY BACKGROUND MUSIC HERE
   document.getElementById("bgMusic").play();
 
   setTimeout(()=>{
     envelopeScreen.style.display="none";
     mainContent.style.display="block";
-
-    createSparklesMain();  // ✨ gold sparkles
-    createParticles();     // ✨ floating particles
-
     initScratch();
     startCountdown();
+createInsideSparkles();
   },1000);
 }
 
@@ -633,54 +545,20 @@ function startCountdown(){
   },1000);
 }
 
-function createSparkles(){
-  const container = document.getElementById("sparkles");
+function createInsideSparkles(){
+  const container = document.getElementById("sparklesInside");
 
-  for(let i=0;i<25;i++){
+  for(let i=0;i<30;i++){
     let s = document.createElement("div");
     s.className = "sparkle";
 
     s.style.left = Math.random()*100 + "%";
     s.style.top = Math.random()*100 + "%";
-
     s.style.animationDelay = (Math.random()*4) + "s";
 
     container.appendChild(s);
   }
 }
-
-function createSparklesMain(){
-  const container = document.getElementById("sparkles-main");
-
-  for(let i=0;i<50;i++){
-    let s = document.createElement("div");
-    s.className = "sparkle";
-
-    s.style.left = Math.random()*100 + "%";
-    s.style.top = Math.random()*100 + "%";
-
-    s.style.animationDelay = (Math.random()*5) + "s";
-
-    container.appendChild(s);
-  }
-}
-
-function createParticles(){
-  const container = document.getElementById("particles-bg");
-
-  for(let i=0;i<30;i++){
-    let p = document.createElement("div");
-    p.className = "particle-bg";
-
-    p.style.left = Math.random()*100 + "%";
-    p.style.animationDelay = (Math.random()*10) + "s";
-    p.style.animationDuration = (8 + Math.random()*6) + "s";
-
-    container.appendChild(p);
-  }
-}
-
-createSparkles();
 </script>  
 
 </body>  
