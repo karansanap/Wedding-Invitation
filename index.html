@@ -565,16 +565,20 @@ function initScratch(){
 
     // 🔥 FIX 1: force correct size AFTER render
     function resize(){
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
+  requestAnimationFrame(() => {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
 
-      ctx.fillStyle = "#d4af37";
-      ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = "#d4af37";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-      ctx.globalCompositeOperation = "destination-out";
-    }
+    ctx.globalCompositeOperation = "destination-out";
+  });
+}
 
     resize();
+
+setTimeout(resize, 200);
     window.addEventListener("resize", resize);
 
     let isDrawing = false;
