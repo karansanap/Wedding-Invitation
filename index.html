@@ -334,6 +334,37 @@ canvas {
   to { transform:translate(var(--x),var(--y)); opacity:0; }  
 }  
 
+.ring {
+  position:relative;
+  display:inline-block;
+}
+
+.ring::after {
+  content:"";
+  position:absolute;
+  width:120%;
+  height:120%;
+  border:2px solid rgba(255,215,120,0.6);
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.5);
+  opacity:0;
+  animation:ringPulse 3s infinite;
+}
+
+@keyframes ringPulse {
+  0% {
+    transform:translate(-50%,-50%) scale(0.5);
+    opacity:0;
+  }
+  30% { opacity:1; }
+  100% {
+    transform:translate(-50%,-50%) scale(1.6);
+    opacity:0;
+  }
+}
+
 .video-title {
   font-family:'Playfair Display';
   margin-bottom:20px;
@@ -404,10 +435,10 @@ canvas {
       — Guru Amar Das Ji
     </div>
 
-    <div class="script">Karan</div>
+    <div class="script ring">Karan</div>
     <div class="parents">SON OF MR. & MRS. SANAP</div>
 
-    <div class="script">Pankti</div>
+    <div class="script ring">Pankti</div>
     <div class="parents">DAUGHTER OF MR. & MRS. JHAVERI</div>
   </div>
 
