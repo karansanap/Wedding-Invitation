@@ -161,16 +161,28 @@ body {
   100% { background-position:200px; }  
 }  
 
-.ganpati{
-  width:105px;
+.ganpati-om{
+  font-size:4.4rem;
+  line-height:1;
   margin-bottom:18px;
-  animation:ganpatiFloat 4s ease-in-out infinite;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,.15));
-}
+  font-weight:600;
 
-@keyframes ganpatiFloat {  
-  50% { transform:translateY(-6px); }  
-}  
+  background:linear-gradient(
+    180deg,
+    #f8e7a8,
+    #d4af37,
+    #b8891e
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  filter:
+   drop-shadow(0 0 4px rgba(212,175,55,.5))
+   drop-shadow(0 0 10px rgba(212,175,55,.25));
+
+  animation:ganpatiFloat 4s ease-in-out infinite;
+}
 
 .quote { font-size:0.85rem; margin-bottom:25px; font-style:italic; }  
 .script { font-family:'Great Vibes'; font-size:2.8rem; }  
@@ -472,57 +484,7 @@ canvas {
 <div class="section" id="section1">  
   <div class="invite-card">  
    <!-- ONLY CHANGE IS INSIDE THIS SVG -->
-<svg class="ganpati" viewBox="0 0 120 120">
-
-<defs>
-<linearGradient id="goldStroke" x1="0%" y1="0%" x2="100%" y2="100%">
-<stop offset="0%" stop-color="#f8e7a8"/>
-<stop offset="50%" stop-color="#d4af37"/>
-<stop offset="100%" stop-color="#b8891e"/>
-</linearGradient>
-</defs>
-
-<g fill="none"
-stroke="url(#goldStroke)"
-stroke-width="5"
-stroke-linecap="round"
-stroke-linejoin="round">
-
-<!-- Left ear -->
-<path d="M42 42 Q24 50 34 68 Q42 80 54 68"/>
-
-<!-- Right ear -->
-<path d="M78 42 Q96 50 86 68 Q78 80 66 68"/>
-
-<!-- Crown -->
-<path d="M52 18 L60 10 L68 18"/>
-
-<!-- Face + trunk -->
-<path d="
-M60 32
-Q78 42 73 60
-Q68 76 54 82
-Q44 86 46 97
-Q48 110 63 106
-Q72 103 76 94"/>
-
-<!-- Trunk curl -->
-<path d="
-M54 82
-Q38 88 40 102
-Q43 116 58 114"/>
-
-<!-- Eye -->
-<path d="M65 48 q4 2 8 0"/>
-
-<!-- Tusk -->
-<path d="M51 66 q-9 3 -11 10"/>
-
-<!-- Tilak -->
-<path d="M60 22 v8"/>
-
-</g>
-</svg>
+<div class="ganpati-om">ॐ</div>
 
     <div class="quote">
       "They alone are called husband and wife,<br>
