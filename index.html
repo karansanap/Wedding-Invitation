@@ -558,39 +558,84 @@ function firecracker(origin){
 }
 
 function initScratch(){
+
   document.querySelectorAll("canvas").forEach(canvas=>{
-    let ctx=canvas.getContext("2d");
 
-    canvas.width=canvas.offsetWidth;
-    canvas.height=canvas.offsetHeight;
+    let ctx = canvas.getContext("2d");
 
-    ctx.fillStyle="#d4af37";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    // 🔥 FIX 1: force correct size AFTER render
+    function resize(){
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
 
-    ctx.globalCompositeOperation="destination-out";
+      ctx.fillStyle = "#d4af37";
+      ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    let count=0,done=false;
+      ctx.globalCompositeOperation = "destination-out";
+    }
 
-    canvas.addEventListener("touchmove",e=>{
-      e.preventDefault();
-      let r=canvas.getBoundingClientRect();
-      let x=e.touches[0].clientX-r.left;
-      let y=e.touches[0].clientY-r.top;
+    resize();
+    window.addEventListener("resize", resize);
+
+    let isDrawing = false;
+    let done = false;
+
+    function scratch(e){
+      let r = canvas.getBoundingClientRect();
+      let x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+      let y = (e.touches ? e.touches[0].clientY : e.clientY) - r.top;
 
       ctx.beginPath();
-      ctx.arc(x,y,18,0,Math.PI*2);
+      ctx.arc(x, y, 20, 0, Math.PI * 2);
       ctx.fill();
+    }
 
-      count++;
+    // 🔥 TOUCH SUPPORT
+    canvas.addEventListener("touchstart", e => {
+      isDrawing = true;
+      scratch(e);
+    });
 
-      if(count>120 && !done){
-        done=true;
+    canvas.addEventListener("touchmove", e => {
+      if (!isDrawing) return;
+      e.preventDefault();
+      scratch(e);
+    }, {passive:false});
+
+    canvas.addEventListener("touchend", () => {
+      isDrawing = false;
+    });
+
+    // 🔥 MOUSE SUPPORT (IMPORTANT)
+    canvas.addEventListener("mousedown", () => isDrawing = true);
+    canvas.addEventListener("mouseup", () => isDrawing = false);
+
+    canvas.addEventListener("mousemove", e => {
+      if (!isDrawing) return;
+      scratch(e);
+    });
+
+    // 🔥 OPTIONAL: reveal trigger (simple fallback)
+    canvas.addEventListener("mouseup", () => {
+      if (done) return;
+
+      // check if mostly scratched (simple hack)
+      let pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+      let transparent = 0;
+
+      for (let i = 3; i < pixels.length; i += 4) {
+        if (pixels[i] === 0) transparent++;
+      }
+
+      if (transparent > pixels.length * 0.25) {
+        done = true;
         ctx.clearRect(0,0,canvas.width,canvas.height);
 
         document.getElementById("revealSound").play();
         firecracker(document.getElementById("scratchCard"));
       }
-    },{passive:false});
+    });
+
   });
 }
 
