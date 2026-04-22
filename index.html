@@ -11,15 +11,19 @@
 <style>  
 :root { --gold:#caa85a; }  
 
-body {  
-  margin:0;  
-  font-family:'Inter', sans-serif;  
-  background:  
-    linear-gradient(#fffdf8,#f9f2e8),  
-    url("https://www.transparenttextures.com/patterns/paper-fibers.png");  
+body {
+  margin:0;
+  font-family:'Inter', sans-serif;
 
-  scroll-snap-type:y mandatory;  
-  scroll-behavior:smooth;  
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,182,193,0.25), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255,105,180,0.2), transparent 40%),
+    linear-gradient(135deg, #1a0f13, #2a0f1c, #3a1325);
+
+  color:#fff;
+
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
 }  
 
 .section {  
@@ -39,7 +43,8 @@ body {
   justify-content:center;  
   align-items:center;  
   z-index:999;  
-  background:inherit;  
+  background:
+    radial-gradient(circle at center, #3a1325, #0d0508);  
 }  
 
 .envelope {  
@@ -266,34 +271,8 @@ canvas {
   to { transform:translate(var(--x),var(--y)); opacity:0; }  
 }  
 
-/* ✨ Pink sparkles for inside pages */
-#sparklesInside {
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-}
 
-.sparkle {
-  position:absolute;
-  width:10px;
-  height:10px;
-  background: radial-gradient(circle, #ff9ad5, rgba(255,105,180,0));
-  border-radius:50%;
-  opacity:0;
-  animation:sparkleAnim 4s infinite;
-  filter: drop-shadow(0 0 8px rgba(255,105,180,0.9));
-}
-
-@keyframes sparkleAnim {
-  0% { transform:translateY(0) scale(0.5); opacity:0; }
-  20% { opacity:1; }
-  50% { transform:translateY(-60px) scale(1); opacity:1; }
-  100% { transform:translateY(-120px) scale(0.3); opacity:0; }
-}
-
-/* ❤️ HEART PARTICLES */
-#hearts {
+#petals {
   position:fixed;
   inset:0;
   pointer-events:none;
@@ -301,57 +280,56 @@ canvas {
   z-index:1;
 }
 
-.heart {
+.petal {
   position:absolute;
-  width:14px;
-  height:14px;
-  background:#ff4d6d;
+  width:18px;
+  height:18px;
+  background: radial-gradient(circle, #ff4d6d, #b3003c);
+  border-radius:50% 50% 50% 0;
   transform:rotate(45deg);
-  opacity:0;
-  animation:heartFloat 6s infinite;
-  filter: drop-shadow(0 0 6px rgba(255,77,109,0.7));
+  opacity:0.8;
+  animation:fall 8s linear infinite;
 }
 
-.heart::before,
-.heart::after {
-  content:"";
-  position:absolute;
-  width:14px;
-  height:14px;
-  background:#ff4d6d;
-  border-radius:50%;
-}
-
-.heart::before {
-  top:-7px;
-  left:0;
-}
-
-.heart::after {
-  left:-7px;
-  top:0;
-}
-
-.hearts {
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:1;
-}
-
-@keyframes heartFloat {
+@keyframes fall {
   0% {
-    transform:translateY(0) scale(0.6) rotate(45deg);
+    transform:translateY(-100px) rotate(0deg);
     opacity:0;
   }
   20% { opacity:1; }
-  50% {
-    transform:translateY(-80px) scale(1) rotate(45deg);
-    opacity:1;
-  }
   100% {
-    transform:translateY(-160px) scale(0.5) rotate(45deg);
+    transform:translateY(100vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+.ring {
+  position:relative;
+  display:inline-block;
+}
+
+.ring::after {
+  content:"";
+  position:absolute;
+  width:120%;
+  height:120%;
+  border:2px solid rgba(255,215,120,0.6);
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.5);
+  opacity:0;
+  animation:ringPulse 3s infinite;
+}
+
+@keyframes ringPulse {
+  0% {
+    transform:translate(-50%,-50%) scale(0.5);
+    opacity:0;
+  }
+  30% { opacity:1; }
+  100% {
+    transform:translate(-50%,-50%) scale(1.6);
     opacity:0;
   }
 }
@@ -372,7 +350,7 @@ canvas {
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <div id="envelopeScreen">  
-<div class="hearts"></div>
+<<div id="petals"></div>
   <div class="envelope" onclick="openEnvelope()">  
     <div class="flap"></div>  
     <div class="envelope-body"></div>  
@@ -382,7 +360,7 @@ canvas {
 </div>  
 
 <div id="mainContent" style="display:none;">  
-<div class="hearts"></div>
+<div id="petals"></div>
 <div id="sparklesInside"></div>
 <!-- SECTION 1 -->
 <div class="section" id="section1">  
@@ -427,10 +405,10 @@ canvas {
       — Guru Amar Das Ji
     </div>
 
-    <div class="script">Karan</div>
+    <div class="script ring">Karan</div>
     <div class="parents">SON OF MR. & MRS. SANAP</div>
 
-    <div class="script">Pankti</div>
+    <div class="script ring">Pankti</div>
     <div class="parents">DAUGHTER OF MR. & MRS. JHAVERI</div>
   </div>
 
@@ -511,7 +489,7 @@ function openEnvelope(){
 
   // ✅ PLAY BACKGROUND MUSIC HERE
   document.getElementById("bgMusic").play();
-
+fireworksBurst();
   setTimeout(()=>{
     envelopeScreen.style.display="none";
     mainContent.style.display="block";
@@ -610,27 +588,54 @@ function startCountdown(){
   },1000);
 }
 
+function createPetals(){
+  document.querySelectorAll("#petals").forEach(container => {
 
+    for(let i=0;i<25;i++){
+      let p = document.createElement("div");
+      p.className = "petal";
 
-function createHearts(){
-  document.querySelectorAll(".hearts").forEach(container => {
+      p.style.left = Math.random()*100 + "%";
+      p.style.animationDelay = (Math.random()*8) + "s";
 
-    for(let i=0;i<30;i++){
-      let h = document.createElement("div");
-      h.className = "heart";
-
-      h.style.left = Math.random()*100 + "%";
-      h.style.top = Math.random()*100 + "%";
-
-      h.style.animationDelay = (Math.random()*5) + "s";
-
-      container.appendChild(h);
+      container.appendChild(p);
     }
 
   });
 }
 
-createHearts();
+createPetals();
+
+function fireworksBurst(){
+  for(let i=0;i<6;i++){
+    setTimeout(()=>{
+      let burst = document.createElement("div");
+      burst.style.position = "fixed";
+      burst.style.left = Math.random()*100 + "%";
+      burst.style.top = Math.random()*100 + "%";
+      burst.style.pointerEvents = "none";
+
+      for(let j=0;j<40;j++){
+        let p = document.createElement("div");
+        p.className = "particle";
+
+        let angle = Math.random()*2*Math.PI;
+        let dist = 120 + Math.random()*80;
+
+        p.style.setProperty('--x',Math.cos(angle)*dist+'px');
+        p.style.setProperty('--y',Math.sin(angle)*dist+'px');
+
+        p.style.background = `hsl(${Math.random()*360},100%,60%)`;
+
+        burst.appendChild(p);
+      }
+
+      document.body.appendChild(burst);
+      setTimeout(()=>burst.remove(),1000);
+
+    }, i*200);
+  }
+}
 
 </script>  
 
