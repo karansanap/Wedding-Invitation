@@ -563,29 +563,29 @@ function initScratch(){
 
     let ctx = canvas.getContext("2d");
 
-    // 🔥 FIX 1: force correct size AFTER render
-    function resize(){
-  requestAnimationFrame(() => {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-
-    ctx.fillStyle = "#d4af37";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    ctx.globalCompositeOperation = "destination-out";
-  });
-}
-
-    resize();
-
-setTimeout(resize, 200);
-    window.addEventListener("resize", resize);
-
     let isDrawing = false;
     let done = false;
 
+    // ✅ FIXED resize (no async inside)
+    function resize(){
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
+      ctx.fillStyle = "#d4af37";
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      ctx.globalCompositeOperation = "destination-out";
+    }
+
+    // run after layout stabilizes
+    setTimeout(resize, 100);
+    setTimeout(resize, 400);
+
+    window.addEventListener("resize", resize);
+
     function scratch(e){
       let r = canvas.getBoundingClientRect();
+
       let x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
       let y = (e.touches ? e.touches[0].clientY : e.clientY) - r.top;
 
@@ -594,7 +594,7 @@ setTimeout(resize, 200);
       ctx.fill();
     }
 
-    // 🔥 TOUCH SUPPORT
+    // 🔥 SCRATCH EVENTS
     canvas.addEventListener("touchstart", e => {
       isDrawing = true;
       scratch(e);
@@ -608,22 +608,25 @@ setTimeout(resize, 200);
 
     canvas.addEventListener("touchend", () => {
       isDrawing = false;
+      checkReveal();   // ✅ FIX 1
     });
 
-    // 🔥 MOUSE SUPPORT (IMPORTANT)
     canvas.addEventListener("mousedown", () => isDrawing = true);
-    canvas.addEventListener("mouseup", () => isDrawing = false);
 
     canvas.addEventListener("mousemove", e => {
       if (!isDrawing) return;
       scratch(e);
     });
 
-    // 🔥 OPTIONAL: reveal trigger (simple fallback)
     canvas.addEventListener("mouseup", () => {
+      isDrawing = false;
+      checkReveal();   // ✅ FIX 2
+    });
+
+    // 🔥 REVEAL LOGIC
+    function checkReveal(){
       if (done) return;
 
-      // check if mostly scratched (simple hack)
       let pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
       let transparent = 0;
 
@@ -633,12 +636,13 @@ setTimeout(resize, 200);
 
       if (transparent > pixels.length * 0.25) {
         done = true;
+
         ctx.clearRect(0,0,canvas.width,canvas.height);
 
         document.getElementById("revealSound").play();
         firecracker(document.getElementById("scratchCard"));
       }
-    });
+    }
 
   });
 }
