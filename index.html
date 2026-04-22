@@ -161,11 +161,11 @@ body {
   100% { background-position:200px; }  
 }  
 
-.ganpati {  
-  width:60px;  
-  margin-bottom:15px;  
-  animation:ganpatiFloat 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 6px rgba(202,168,90,0.6));
+.ganpati{
+  width:105px;
+  margin-bottom:18px;
+  animation:ganpatiFloat 4s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.15));
 }
 
 @keyframes ganpatiFloat {  
@@ -430,37 +430,68 @@ canvas {
 <div class="section" id="section1">  
   <div class="invite-card">  
    <!-- ONLY CHANGE IS INSIDE THIS SVG -->
-<svg class="ganpati" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="ganeshGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f5e6a3"/>
-      <stop offset="50%" stop-color="#caa85a"/>
-      <stop offset="100%" stop-color="#f5e6a3"/>
-    </linearGradient>
-  </defs>
+<svg class="ganpati" viewBox="0 0 180 140">
 
-  <!-- Head -->
-  <path fill="url(#ganeshGold)" d="M32 6c-9 0-15 6-15 14 0 5 2 9 6 11-3 2-4 6-4 9 0 8 6 13 13 13s13-5 13-13c0-3-1-7-4-9 4-2 6-6 6-11 0-8-6-14-15-14z"/>
+  <!-- Shree symbol -->
+  <g fill="none"
+     stroke="#111"
+     stroke-width="5"
+     stroke-linecap="round"
+     stroke-linejoin="round">
 
-  <!-- Trunk -->
-  <path fill="url(#ganeshGold)" d="M32 28c-3 2-3 5-2 7 1 3 4 4 4 6 0 2-2 3-3 4 5-1 8-4 8-8 0-3-3-5-7-9z"/>
+    <path d="M28 38
+             Q18 26 28 18
+             Q42 8 55 20
+             Q62 28 58 38
+             Q54 50 38 50"/>
 
-  <!-- Left Ear -->
-  <path fill="url(#ganeshGold)" d="M17 24c-4 2-5 7-2 11 2 3 6 4 9 2-4-2-6-6-7-13z"/>
+    <path d="M38 50
+             Q58 58 52 76
+             Q46 92 28 82"/>
 
-  <!-- Right Ear -->
-  <path fill="url(#ganeshGold)" d="M47 24c4 2 5 7 2 11-2 3-6 4-9 2 4-2 6-6 7-13z"/>
+    <path d="M66 18
+             L66 88"/>
 
-  <!-- Crown -->
-  <path fill="url(#ganeshGold)" d="M26 10h12l-2 4h-8z"/>
+    <path d="M52 54
+             L82 54"/>
 
-  <!-- Tilak -->
-  <circle cx="32" cy="20" r="1.5" fill="#b8954d"/>
+    <!-- Ganpati head -->
+    <path d="M112 28
+             Q92 36 96 56
+             Q100 72 116 72"/>
 
-  <!-- ✨ SHIMMER EFFECT -->
-  <rect x="-64" y="0" width="40" height="64" fill="rgba(255,255,255,0.25)">
-    <animate attributeName="x" from="-64" to="64" dur="3s" repeatCount="indefinite" />
-  </rect>
+    <path d="M126 28
+             Q146 36 142 56
+             Q138 72 122 72"/>
+
+    <!-- Crown -->
+    <path d="M111 18 L119 10 L127 18"/>
+
+    <!-- Face + trunk -->
+    <path d="
+      M119 32
+      Q138 42 133 60
+      Q128 76 114 82
+      Q104 86 106 97
+      Q108 110 123 106
+      Q132 103 136 94"/>
+
+    <!-- trunk curl -->
+    <path d="
+      M114 82
+      Q98 88 100 102
+      Q103 116 118 114"/>
+
+    <!-- eye -->
+    <path d="M124 48 q4 2 8 0"/>
+
+    <!-- tusk -->
+    <path d="M111 66 q-9 3 -11 10"/>
+
+    <!-- tilak -->
+    <path d="M119 22 v8"/>
+
+  </g>
 </svg>
 
     <div class="quote">
