@@ -26,14 +26,33 @@ body {
   scroll-behavior:smooth;
 }  
 
-.section {  
-  min-height:85vh;  
-  display:flex;  
-  justify-content:center;  
-  align-items:center;  
-  position:relative;  
-  scroll-snap-align:start;  
-}  
+.section{
+  min-height:85vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  scroll-snap-align:start;
+
+  opacity:0;
+  transform:translateY(70px) scale(.97);
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s ease;
+}
+
+.section.show{
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+.invite-card{
+  transition:transform 1.4s ease;
+}
+
+.section.show .invite-card{
+  transform:translateY(0);
+}
 
 #envelopeScreen {  
   position:fixed;  
@@ -903,6 +922,8 @@ let fireworksStarted=false;
 
 window.addEventListener("scroll",()=>{
 
+window.addEventListener("scroll",()=>{
+
 let sec6=document.getElementById("section6");
 let pos=sec6.getBoundingClientRect().top;
 
@@ -912,6 +933,25 @@ startWeddingFireworks();
 }
 
 });
+function revealSections(){
+
+const observer = new IntersectionObserver((entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show");
+}
+});
+},{
+threshold:.35
+});
+
+document.querySelectorAll(".section").forEach(sec=>{
+observer.observe(sec);
+});
+
+}
+
+revealSections();
 
 </script>  
 
