@@ -184,6 +184,32 @@ transform-origin:top;
 z-index:4;
 }
 
+
+/* OPEN SEQUENCE */
+
+.envelope.open .flap-top{
+transform:rotateX(180deg);
+transition:1s ease;
+}
+
+/* left opens second */
+.envelope.open .flap-left{
+transform:
+translateX(-12px)
+rotate(-18deg);
+
+transition:1s ease .55s;
+}
+
+/* right opens third */
+.envelope.open .flap-right{
+transform:
+translateX(12px)
+rotate(18deg);
+
+transition:1s ease .95s;
+}
+
 /* centered wax seal */
 .seal{
 position:fixed;
@@ -894,15 +920,16 @@ Kandivali West, Mumbai, Maharashtra 400067
 
 <script>  
 function openEnvelope(){
-  const env=document.querySelector(".envelope");
 
+const env=document.querySelector(".envelope");
 const seal=document.querySelector(".seal");
 
-seal.classList.add("crack");
+seal.style.transform="translate(-50%,-50%) scale(.7)";
+seal.style.opacity="0";
 
 setTimeout(()=>{
 env.classList.add("open");
-},650);
+},500);
 
 
   // ✅ PLAY BACKGROUND MUSIC HERE
