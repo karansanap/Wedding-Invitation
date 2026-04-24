@@ -590,6 +590,7 @@ canvas {
 position:fixed;
 inset:0;
 pointer-events:none;
+display:none
 z-index:3;
 
 background:
@@ -606,30 +607,27 @@ transform:scale(.2);
 }
 
 #sunGlow.burst{
-animation:sunriseBurst 1.8s ease forwards;
+display:block;
+animation:sunriseBurst 1.8s ease-out forwards;
 }
 
 @keyframes sunriseBurst{
 
 0%{
 opacity:0;
-transform:scale(.2);
+transform:scale(.15);
 }
 
-20%{
-opacity:1;
-transform:scale(1.4);
-}
-
-55%{
-opacity:.9;
-transform:scale(3.2);
+35%{
+opacity:.55;
+transform:scale(1.1);
 }
 
 100%{
 opacity:0;
-transform:scale(6);
+transform:scale(2);
 }
+
 }
 
 </style>  
