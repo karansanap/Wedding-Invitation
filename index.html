@@ -470,6 +470,40 @@ canvas {
   }
 }
 
+.varmala{
+position:absolute;
+left:50%;
+top:58%;
+transform:translateX(-50%) scale(.6);
+font-size:2.4rem;
+opacity:0;
+pointer-events:none;
+animation:varmalaDrop 4s ease forwards;
+}
+
+@keyframes varmalaDrop{
+
+0%{
+opacity:0;
+transform:translateX(-50%) translateY(-60px) scale(.4);
+}
+
+30%{
+opacity:1;
+transform:translateX(-50%) translateY(0) scale(1);
+}
+
+70%{
+opacity:1;
+transform:translateX(-50%) scale(1);
+}
+
+100%{
+opacity:0;
+transform:translateX(-50%) scale(1.08);
+}
+}
+
 </style>  
 </head>  
 
@@ -512,6 +546,9 @@ canvas {
 
     <div class="script ring">Pankti</div>
     <div class="parents">DAUGHTER OF MR. & MRS. JHAVERI</div>
+<div class="varmala">
+🌸💍🌸
+</div>
   </div>
 
   <div class="swipe" onclick="scrollNext()">SWIPE ↓</div>
@@ -912,6 +949,18 @@ startWeddingFireworks();
 }
 
 });
+
+setTimeout(()=>{
+
+let v=document.querySelector(".varmala");
+
+if(v){
+v.style.animation="none";
+v.offsetHeight; 
+v.style.animation="varmalaDrop 4s ease forwards";
+}
+
+},2500);
 
 </script>  
 
