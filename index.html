@@ -35,6 +35,120 @@ body {
   scroll-snap-align:start;  
 }  
 
+.envelope{
+position:fixed;
+inset:0;
+width:100vw;
+height:100vh;
+cursor:pointer;
+}
+
+/* REAL RED PAPER ENVELOPE */
+.envelope-body{
+position:absolute;
+inset:0;
+
+background:
+repeating-linear-gradient(
+45deg,
+rgba(255,255,255,.03) 0px,
+rgba(255,255,255,.03) 2px,
+transparent 2px,
+transparent 6px
+),
+linear-gradient(
+145deg,
+#7a1028,
+#5e0d1d,
+#431016
+);
+
+box-shadow:
+inset 0 2px 2px rgba(255,255,255,.08),
+inset 0 -12px 22px rgba(0,0,0,.35);
+}
+
+/* center fold line */
+.envelope-body:before{
+content:"";
+position:absolute;
+left:50%;
+top:42%;
+height:58%;
+width:2px;
+background:rgba(255,220,180,.3);
+transform:translateX(-50%);
+}
+
+/* bottom triangular fold */
+.envelope-body:after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:0;
+height:58%;
+clip-path:polygon(0 0,50% 100%,100% 0);
+border-top:2px solid rgba(255,220,180,.35);
+}
+
+/* BASE FLAPS */
+.flap{
+position:absolute;
+transition:1.2s;
+}
+
+/* left flap */
+.flap-left{
+left:0;
+bottom:0;
+width:50%;
+height:100%;
+background:linear-gradient(145deg,#701124,#531019);
+clip-path:polygon(0 0,100% 50%,0 100%);
+transform-origin:left center;
+z-index:3;
+}
+
+/* right flap */
+.flap-right{
+right:0;
+bottom:0;
+width:50%;
+height:100%;
+background:linear-gradient(145deg,#65101f,#451016);
+clip-path:polygon(100% 0,0 50%,100% 100%);
+transform-origin:right center;
+z-index:3;
+}
+
+/* top flap */
+.flap-top{
+top:0;
+left:0;
+width:100%;
+height:60%;
+background:linear-gradient(145deg,#8d1832,#681223);
+clip-path:polygon(0 0,100% 0,50% 100%);
+transform-origin:top;
+z-index:4;
+}
+
+/* sequential opening */
+.envelope.open .flap-left{
+transform:rotateY(-140deg);
+transition-delay:.25s;
+}
+
+.envelope.open .flap-right{
+transform:rotateY(140deg);
+transition-delay:.7s;
+}
+
+.envelope.open .flap-top{
+transform:rotateX(180deg);
+transition-delay:1.15s;
+}
 
 
 /* centered wax seal */
@@ -63,247 +177,6 @@ inset 0 2px 4px rgba(255,180,180,.35);
 z-index:1001;
 }
 
-/* FULL PAGE ENVELOPE */
-#envelopeScreen{
-position:fixed;
-inset:0;
-z-index:999;
-overflow:hidden;
-background:#0f2f2e;
-}
-
-/* whole screen becomes envelope */
-.envelope{
-position:absolute;
-inset:0;
-cursor:pointer;
-}
-
-/* floral textured paper */
-.envelope-body{
-position:absolute;
-inset:0;
-
-background:
-radial-gradient(circle at 20% 20%, rgba(255,215,120,.08), transparent 30%),
-radial-gradient(circle at 80% 70%, rgba(255,215,120,.08), transparent 35%),
-
-repeating-radial-gradient(
-circle at 30% 40%,
-rgba(255,255,255,.02) 0 8px,
-transparent 8px 22px
-),
-
-linear-gradient(
-135deg,
-#113d3a,
-#0d3431 40%,
-#123f3d 70%,
-#0b2a28
-);
-
-box-shadow:
-inset 0 0 100px rgba(0,0,0,.35);
-}
-
-
-/* gold border frame */
-.envelope-body:before{
-content:"";
-position:absolute;
-inset:18px;
-border:2px solid rgba(212,175,55,.7);
-border-radius:6px;
-}
-
-/* bottom folds */
-.envelope-body:after{
-content:"";
-position:absolute;
-left:0;
-right:0;
-bottom:0;
-height:55%;
-
-background:
-linear-gradient(145deg,#103632,#0c2c2a);
-
-clip-path:polygon(
-0 100%,
-0 35%,
-50% 0,
-100% 35%,
-100% 100%
-);
-
-border-top:2px solid rgba(212,175,55,.55);
-}
-
-
-/* giant top flap */
-.flap{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:55%;
-
-background:
-linear-gradient(145deg,#174b47,#0d312f);
-
-clip-path:polygon(
-0 0,
-100% 0,
-50% 100%
-);
-
-border-bottom:2px solid rgba(212,175,55,.75);
-
-transform-origin:top;
-transition:1.7s cubic-bezier(.2,.8,.2,1);
-
-box-shadow:
-0 20px 30px rgba(0,0,0,.35);
-}
-
-/* flap opens */
-.envelope.open .flap{
-transform:
-perspective(1200px)
-rotateX(180deg);
-}
-
-
-/* floral emblem on flap */
-.flap:after{
-content:"✦";
-position:absolute;
-left:50%;
-top:62%;
-transform:translate(-50%,-50%);
-font-size:72px;
-color:#d4af37;
-text-shadow:0 0 15px rgba(212,175,55,.4);
-}
-
-
-/* floating reveal text */
-.tap-text{
-position:fixed;
-left:50%;
-top:58%;
-transform:translateX(-50%);
-
-font-size:1rem;
-letter-spacing:6px;
-font-family:'Playfair Display';
-color:#f5d77a;
-
-text-shadow:
-0 0 8px rgba(212,175,55,.35);
-
-z-index:1002;
-
-animation:tapFloat 3s ease-in-out infinite;
-}
-
-@keyframes tapFloat{
-50%{
-transform:
-translateX(-50%)
-translateY(-12px);
-}
-}
-
-/* Tap text floating */
-.tap-text{
-position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-z-index:20;
-
-font-family:'Playfair Display';
-font-size:1rem;
-letter-spacing:8px;
-font-weight:500;
-
-color:#f4df8d;
-
-padding:18px 34px;
-border:1px solid rgba(235,205,110,.35);
-border-radius:50px;
-
-background:rgba(0,0,0,.12);
-backdrop-filter:blur(8px);
-
-box-shadow:
-0 0 20px rgba(212,175,55,.15),
-inset 0 0 12px rgba(255,220,120,.08);
-
-animation:
-tapFloat 4s ease-in-out infinite,
-tapGlow 3s ease-in-out infinite;
-}
-
-@keyframes tapFloat{
-0%,100%{
-transform:translate(-50%,-50%) translateY(0);
-}
-50%{
-transform:translate(-50%,-50%) translateY(-12px);
-}
-}
-
-@keyframes tapGlow{
-0%,100%{
-box-shadow:
-0 0 15px rgba(212,175,55,.15);
-}
-
-50%{
-box-shadow:
-0 0 35px rgba(212,175,55,.4);
-}
-}
-
-.tap-text:after{
-content:"⌄";
-display:block;
-margin-top:10px;
-font-size:1.4rem;
-animation:bounceArrow 1.8s infinite;
-}
-
-@keyframes bounceArrow{
-50%{ transform:translateY(8px); }
-}
-
-.mandala{
-position:absolute;
-left:50%;
-top:32%;
-transform:translateX(-50%);
-
-font-size:8rem;
-line-height:1;
-
-background:linear-gradient(
-180deg,
-#fff2b0,
-#d4af37,
-#a57a16
-);
-
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-
-filter:
-drop-shadow(0 0 10px rgba(212,175,55,.35));
-
-z-index:2;
-}
-
 /* crack effect */
 .seal.crack{
 transform:translate(-50%,-50%) scale(.82);
@@ -311,7 +184,22 @@ opacity:0;
 transition:.6s;
 }
 
+.tap-text{
+position:fixed;
+left:50%;
+top:42%;
+transform:translateX(-50%);
+letter-spacing:5px;
+color:#f5d77a;
+animation:tapFloat 3s ease-in-out infinite;
+z-index:1002;
+}
 
+@keyframes tapFloat{
+50%{
+transform:translateX(-50%) translateY(-10px);
+}
+}
 
 .seal-monogram{
  font-family:'Great Vibes', cursive;
@@ -674,8 +562,9 @@ canvas {
 <div class="flap flap-right"></div>
 <div class="flap flap-top"></div>
     <div class="envelope-body"></div>  
-    <div class="tap-text">Tap to Reveal</div>
-<div class="mandala">✺</div>  
+    <div class="tap-text">Tap to Reveal</div>  
+    <div class="seal">
+   <span class="seal-monogram">KP</span>
 </div>  
   </div>  
 </div>  
@@ -895,7 +784,7 @@ envelopeScreen.style.display="none";
 mainContent.style.display="block";
 initScratch();
 startCountdown();
-},1800);
+},2300);
 
 }
 
