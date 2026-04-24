@@ -35,120 +35,6 @@ body {
   scroll-snap-align:start;  
 }  
 
-.envelope{
-position:fixed;
-inset:0;
-width:100vw;
-height:100vh;
-cursor:pointer;
-}
-
-/* REAL RED PAPER ENVELOPE */
-.envelope-body{
-position:absolute;
-inset:0;
-
-background:
-repeating-linear-gradient(
-45deg,
-rgba(255,255,255,.03) 0px,
-rgba(255,255,255,.03) 2px,
-transparent 2px,
-transparent 6px
-),
-linear-gradient(
-145deg,
-#7a1028,
-#5e0d1d,
-#431016
-);
-
-box-shadow:
-inset 0 2px 2px rgba(255,255,255,.08),
-inset 0 -12px 22px rgba(0,0,0,.35);
-}
-
-/* center fold line */
-.envelope-body:before{
-content:"";
-position:absolute;
-left:50%;
-top:42%;
-height:58%;
-width:2px;
-background:rgba(255,220,180,.3);
-transform:translateX(-50%);
-}
-
-/* bottom triangular fold */
-.envelope-body:after{
-content:"";
-position:absolute;
-left:0;
-right:0;
-bottom:0;
-height:58%;
-clip-path:polygon(0 0,50% 100%,100% 0);
-border-top:2px solid rgba(255,220,180,.35);
-}
-
-/* BASE FLAPS */
-.flap{
-position:absolute;
-transition:1.2s;
-}
-
-/* left flap */
-.flap-left{
-left:0;
-bottom:0;
-width:50%;
-height:100%;
-background:linear-gradient(145deg,#701124,#531019);
-clip-path:polygon(0 0,100% 50%,0 100%);
-transform-origin:left center;
-z-index:3;
-}
-
-/* right flap */
-.flap-right{
-right:0;
-bottom:0;
-width:50%;
-height:100%;
-background:linear-gradient(145deg,#65101f,#451016);
-clip-path:polygon(100% 0,0 50%,100% 100%);
-transform-origin:right center;
-z-index:3;
-}
-
-/* top flap */
-.flap-top{
-top:0;
-left:0;
-width:100%;
-height:60%;
-background:linear-gradient(145deg,#8d1832,#681223);
-clip-path:polygon(0 0,100% 0,50% 100%);
-transform-origin:top;
-z-index:4;
-}
-
-/* sequential opening */
-.envelope.open .flap-left{
-transform:rotateY(-140deg);
-transition-delay:.25s;
-}
-
-.envelope.open .flap-right{
-transform:rotateY(140deg);
-transition-delay:.7s;
-}
-
-.envelope.open .flap-top{
-transform:rotateX(180deg);
-transition-delay:1.15s;
-}
 
 
 /* centered wax seal */
@@ -177,6 +63,189 @@ inset 0 2px 4px rgba(255,180,180,.35);
 z-index:1001;
 }
 
+/* FULL SCREEN */
+#envelopeScreen{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(135deg,#102d2d,#1b4948,#0f2424);
+z-index:9999;
+}
+
+/* Envelope */
+.envelope{
+position:relative;
+width:92vw;
+height:62vw;
+max-width:950px;
+max-height:560px;
+cursor:pointer;
+animation:breath 5s ease-in-out infinite;
+filter:drop-shadow(0 30px 50px rgba(0,0,0,.4));
+}
+
+/* Printed floral paper texture */
+.envelope-body{
+position:absolute;
+inset:0;
+border-radius:18px;
+overflow:hidden;
+
+background:
+url("https://www.transparenttextures.com/patterns/flowers.png"),
+radial-gradient(circle at 30% 30%,rgba(255,255,255,.08),transparent 40%),
+linear-gradient(145deg,#1f5d59,#174947,#103938);
+
+background-size:340px,auto,auto;
+
+box-shadow:
+inset 0 2px 2px rgba(255,255,255,.1),
+inset 0 -12px 20px rgba(0,0,0,.25);
+}
+
+/* Gold center ornament behind seal */
+.envelope-body:before{
+content:"";
+position:absolute;
+width:240px;
+height:240px;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+border-radius:50%;
+
+background:
+radial-gradient(circle,
+rgba(212,175,55,.35),
+transparent 70%);
+
+box-shadow:
+0 0 30px rgba(212,175,55,.2);
+
+z-index:1;
+}
+
+/* Printed gold border */
+.envelope-body:after{
+content:"";
+position:absolute;
+inset:16px;
+border:2px solid rgba(235,205,110,.55);
+border-radius:12px;
+z-index:1;
+}
+
+/* Side folds */
+.flap-left{
+position:absolute;
+left:0;
+bottom:0;
+width:50%;
+height:100%;
+background:
+linear-gradient(145deg,#1b524f,#143d3b);
+clip-path:polygon(0 0,100% 50%,0 100%);
+border-right:2px solid rgba(235,205,110,.35);
+z-index:2;
+transition:1.1s;
+}
+
+.flap-right{
+position:absolute;
+right:0;
+bottom:0;
+width:50%;
+height:100%;
+background:
+linear-gradient(145deg,#174543,#113433);
+clip-path:polygon(100% 0,0 50%,100% 100%);
+border-left:2px solid rgba(235,205,110,.35);
+z-index:2;
+transition:1.1s;
+}
+
+/* TOP FLAP */
+.flap-top{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:60%;
+background:
+linear-gradient(145deg,#2b706b,#184a48);
+clip-path:polygon(0 0,100% 0,50% 100%);
+border-bottom:2px solid rgba(235,205,110,.45);
+transform-origin:top;
+z-index:4;
+transition:1.3s;
+}
+
+/* Gold trim on flap like real card */
+.flap-top:before{
+content:"";
+position:absolute;
+left:12%;
+right:12%;
+top:14%;
+height:68%;
+border:3px solid rgba(241,220,120,.75);
+clip-path:polygon(0 0,100% 0,85% 100%,15% 100%);
+}
+
+/* OPENING SEQUENCE */
+.envelope.open .flap-top{
+transform:rotateX(180deg);
+}
+
+.envelope.open .flap-left{
+transform:translateX(-70%) rotate(-18deg);
+}
+
+.envelope.open .flap-right{
+transform:translateX(70%) rotate(18deg);
+}
+
+/* Tap text floating */
+.tap-text{
+position:fixed;
+top:42%;
+left:50%;
+transform:translateX(-50%);
+letter-spacing:5px;
+font-size:.82rem;
+color:#f4df8d;
+animation:tapFloat 3s infinite;
+z-index:1002;
+}
+
+.mandala{
+position:absolute;
+left:50%;
+top:32%;
+transform:translateX(-50%);
+
+font-size:8rem;
+line-height:1;
+
+background:linear-gradient(
+180deg,
+#fff2b0,
+#d4af37,
+#a57a16
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+filter:
+drop-shadow(0 0 10px rgba(212,175,55,.35));
+
+z-index:2;
+}
+
 /* crack effect */
 .seal.crack{
 transform:translate(-50%,-50%) scale(.82);
@@ -184,22 +253,7 @@ opacity:0;
 transition:.6s;
 }
 
-.tap-text{
-position:fixed;
-left:50%;
-top:42%;
-transform:translateX(-50%);
-letter-spacing:5px;
-color:#f5d77a;
-animation:tapFloat 3s ease-in-out infinite;
-z-index:1002;
-}
 
-@keyframes tapFloat{
-50%{
-transform:translateX(-50%) translateY(-10px);
-}
-}
 
 .seal-monogram{
  font-family:'Great Vibes', cursive;
@@ -562,7 +616,8 @@ canvas {
 <div class="flap flap-right"></div>
 <div class="flap flap-top"></div>
     <div class="envelope-body"></div>  
-    <div class="tap-text">Tap to Reveal</div>  
+    <div class="tap-text">Tap to Reveal</div>
+<div class="mandala">✺</div>  
     <div class="seal">
    <span class="seal-monogram">KP</span>
 </div>  
