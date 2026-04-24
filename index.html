@@ -843,13 +843,21 @@ function openEnvelope(){
 const env=document.querySelector(".envelope");
 const seal=document.querySelector(".seal");
 
-document.getElementById("sunGlow")
-.classList.add("burst");
-seal.classList.add("crack");
+/* open flaps immediately */
+env.classList.add("open");
 
 setTimeout(()=>{
-env.classList.add("open");
-},650);
+seal.classList.add("crack");
+},150);
+
+/* sunrise after flap starts moving */
+setTimeout(()=>{
+document.getElementById("sunGlow")
+.classList.add("burst");
+
+fireworksBurst();
+
+},350);
 
 
 const music=document.getElementById("bgMusic");
@@ -862,13 +870,11 @@ let fade=setInterval(()=>{
 if(vol<.45){
 vol+=.02;
 music.volume=vol;
-}
-else{
+}else{
 clearInterval(fade);
 }
 },600);
 
-fireworksBurst();
 
 setTimeout(()=>{
 envelopeScreen.style.display="none";
