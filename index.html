@@ -186,29 +186,53 @@ z-index:4;
 
 
 /* OPEN SEQUENCE */
+/* enable perspective */
+.envelope{
+perspective:1800px;
+transform-style:preserve-3d;
+}
 
+/* keep flaps 3D */
+.flap{
+transform-style:preserve-3d;
+backface-visibility:hidden;
+}
+
+
+/* TOP FLAP lifts backward */
 .envelope.open .flap-top{
-transform:rotateX(180deg);
-transition:1s ease;
+transform:
+rotateX(165deg);
+transition:
+1s cubic-bezier(.22,1,.36,1);
 }
 
-/* left opens second */
+
+/* LEFT fold swings outward */
 .envelope.open .flap-left{
-transform:
-translateX(-12px)
-rotate(-18deg);
+transform-origin:left center;
 
-transition:1s ease .55s;
+transform:
+rotateY(-72deg)
+translateX(-10px);
+
+transition:
+1.05s cubic-bezier(.22,1,.36,1) .55s;
 }
 
-/* right opens third */
+
+/* RIGHT fold swings outward */
 .envelope.open .flap-right{
-transform:
-translateX(12px)
-rotate(18deg);
+transform-origin:right center;
 
-transition:1s ease .95s;
+transform:
+rotateY(72deg)
+translateX(10px);
+
+transition:
+1.05s cubic-bezier(.22,1,.36,1) .95s;
 }
+
 
 /* centered wax seal */
 .seal{
@@ -313,7 +337,64 @@ translateY(-10px);
  color:#f8e7a8;
  transform:translateY(-2px); /* tiny optical centering */
 }
+.inner-letter{
+position:absolute;
+left:50%;
+bottom:12%;
 
+transform:
+translateX(-50%)
+translateY(70px);
+
+width:72%;
+height:180px;
+
+border-radius:10px;
+
+background:
+linear-gradient(
+180deg,
+#fff9ef,
+#f7eed8
+);
+
+box-shadow:
+0 12px 30px rgba(0,0,0,.28);
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+opacity:0;
+z-index:2;
+
+transition:
+transform 1.4s cubic-bezier(.22,1,.36,1) 1.7s,
+opacity .8s ease 1.7s;
+}
+
+.letter-text{
+font-family:'Great Vibes';
+font-size:2.2rem;
+color:#8a6730;
+}
+
+.letter-ornament{
+font-size:1.5rem;
+margin-bottom:14px;
+color:#caa85a;
+}
+
+
+/* slide letter out after flaps open */
+.envelope.open .inner-letter{
+opacity:1;
+
+transform:
+translateX(-50%)
+translateY(-55px);
+}
 .envelope-quote{
 position:absolute;
 top:35%;
@@ -730,6 +811,12 @@ transform:translateX(-50%) scale(1.08);
 <div class="floral br">❁</div>
     <div class="envelope-body"></div>  
     <div class="tap-text">Tap to Reveal</div>
+<div class="inner-letter">
+  <div class="letter-ornament">✦</div>
+  <div class="letter-text">
+    Karan & Pankti
+  </div>
+</div>
     <div class="seal">
    <span class="seal-monogram">KP</span>
 </div>  
@@ -954,7 +1041,7 @@ fireworksBurst()
     mainContent.style.display="block";
     initScratch();
     startCountdown();
-  },2300);
+  },3200);
 }
 
 function scrollNext(){
