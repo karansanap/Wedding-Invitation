@@ -284,15 +284,29 @@ transform:rotate(35deg);
 transform:rotate(-35deg);
 }
 
-.envelope-body:before{
-content:"";
-position:absolute;
-left:50%;
-top:42%;
-height:58%;
-width:1px;
-background:rgba(255,225,190,.18);
-transform:translateX(-50%);
+/* OPEN SEQUENCE */
+
+.envelope.open .flap-top{
+transform:rotateX(180deg);
+transition:1s ease;
+}
+
+/* left opens second */
+.envelope.open .flap-left{
+transform:
+translateX(-12px)
+rotate(-18deg);
+
+transition:1s ease .55s;
+}
+
+/* right opens third */
+.envelope.open .flap-right{
+transform:
+translateX(12px)
+rotate(18deg);
+
+transition:1s ease .95s;
 }
 
 /* monogram */
