@@ -586,6 +586,52 @@ canvas {
   }
 }
 
+#sunGlow{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:1200;
+
+background:
+radial-gradient(
+circle at center,
+rgba(255,255,255,1) 0%,
+rgba(255,245,220,.95) 22%,
+rgba(255,215,120,.55) 48%,
+transparent 72%
+);
+
+opacity:0;
+transform:scale(.2);
+}
+
+#sunGlow.burst{
+animation:sunriseBurst 1.8s ease forwards;
+}
+
+@keyframes sunriseBurst{
+
+0%{
+opacity:0;
+transform:scale(.2);
+}
+
+20%{
+opacity:1;
+transform:scale(1.4);
+}
+
+55%{
+opacity:.9;
+transform:scale(3.2);
+}
+
+100%{
+opacity:0;
+transform:scale(6);
+}
+}
+
 </style>  
 </head>  
 
@@ -597,6 +643,7 @@ canvas {
 <!-- ✅ ADDED BACKGROUND MUSIC -->
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
+<div id="sunGlow"></div>
 <div id="envelopeScreen">
 <div class="hearts"></div>  
   <div class="envelope" onclick="openEnvelope()">  
@@ -796,6 +843,8 @@ function openEnvelope(){
 const env=document.querySelector(".envelope");
 const seal=document.querySelector(".seal");
 
+document.getElementById("sunGlow")
+.classList.add("burst");
 seal.classList.add("crack");
 
 setTimeout(()=>{
